@@ -170,3 +170,11 @@ a.google span{
     }
     
 }
+
+.erroMSG{
+    color: #dd0000;
+    text-align: center;
+    background-color: #ff000040;
+    border-radius: 10px;
+    padding: 5px;
+}

@@ -146,3 +146,8 @@ header {
         gap: 15px;
     }
 }
+.profile_pic{
+    max-width: 55px;
+    border-radius: 50px;
+    cursor: pointer;
+}
