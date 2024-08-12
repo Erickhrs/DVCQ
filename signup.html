@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<!--=== Coding by CodingLab | www.codinglabweb.com === -->
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="./style/signup.css">
+    <link rel="stylesheet" href="./style/global.css">
+     
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title>Responsive Regisration Form </title> 
+</head>
+<body>
+    <div class="container">
+        <header>registre-se ! :)</header>
+
+        <form action="#">
+            <div class="form first">
+                <div class="details personal">
+                    <span class="title">Informações Pessoais</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Nome e Sobrenome</label>
+                            <input type="text" placeholder="Erick Rosa" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Data de Nascimento</label>
+                            <input type="date" placeholder="Enter birth date" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Email</label>
+                            <input type="text" placeholder="tierickrosa@gmail.com" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Número de telefone</label>
+                            <input type="number" placeholder="(xx) xxxxx-xxxx" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Genêro</label>
+                            <select required>
+                                <option disabled selected>Select gender</option>
+                                <option>Masculino</option>
+                                <option>Feminino</option>
+                                <option>Outro</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label>!!NÃO SEI AINDA</label>
+                            <input type="text" placeholder="Enter your ccupation" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details ID">
+                    <span class="title">Identity Details</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Tipo ID</label>
+                            <select required>
+                                <option disabled selected>Selecione o tipo de ID</option>
+                                <option>CNPJ</option>
+                                <option>CPF</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field">
+                            <label>CPF/CNPJ</label>
+                            <input type="number" placeholder="Enter ID number" required>
+                        </div>
+                    </div>
+
+                    <button class="nextBtn">
+                        <span class="btnText">Next</span>
+                        <i class="uil uil-navigator"></i>
+                    </button>
+                </div> 
+            </div>
+
+            <div class="form second">
+                <div class="details address">
+                    <span class="title">Address Details</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>CEP</label>
+                            <input type="number" placeholder="Digite seu CEP" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Estado</label>
+                            <select>
+                                <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espírito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraíba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantins</option>
+                              </select>
+                        </div>
+                        <div class="input-field">
+                            <label>Cidade</label>
+                            <input type="text" placeholder="Qual é sua cidade?" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Endereço</label>
+                            <input type="text" placeholder="Ex: Rua hum - 2004" >
+                        </div>
+                        <div class="input-field">
+                            <label>Bairro</label>
+                            <input type="text" placeholder="Ex: Jardim Floresta" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details family">
+                    <span class="title">Outro detalhes</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Senha</label>
+                            <input type="password" placeholder="Senha" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Confirme sua senha</label>
+                            <input type="password" placeholder="Senha" required>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <div class="backBtn">
+                            <i class="uil uil-navigator"></i>
+                            <span class="btnText">Back</span>
+                        </div>
+                        
+                        <button class="sumbit">
+                            <span class="btnText">Submit</span>
+                            <i class="uil uil-navigator"></i>
+                        </button>
+                    </div>
+                </div> 
+            </div>
+        </form>
+    </div>
+
+    <script src="./scripts/signup.js"></script>
+</body>
+</html>

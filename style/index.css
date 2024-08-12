@@ -1,0 +1,148 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    border-top: 4px solid var(--main-color);
+
+    padding: 10px 30px;
+    box-shadow: -2px 14px 20px -18px rgba(0, 0, 0, 0.1);
+}
+
+#nav-first-container,
+#nav-second-container {
+    display: flex;
+    text-align: center;
+}
+
+#nav-first-container {
+    gap: 30px;
+}
+
+#nav-first-container img {
+    width: 100px;
+    height: 80px;
+}
+
+#nav-first-container .searchInput {
+    margin: auto;
+    height: 30px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0 10px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+}
+
+#nav-first-container .searchInput:focus {
+    border-color: #4a852f8f;
+    box-shadow: 0 0 5px rgba(23, 82, 11, 0.5);
+}
+
+#nav-first-container ion-icon {
+    margin-top: auto;
+    margin-bottom: auto;
+    position: relative;
+    left: -20px;
+    cursor: pointer;
+}
+
+#nav-second-container {
+    margin-top: auto;
+    margin-bottom: auto;
+    gap: 30px;
+}
+
+#nav-second-container a {
+    color: var(--logo-blue);
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#nav-second-container a:hover {
+    color: var(--main-color);
+}
+
+#nav-second-container a:last-of-type {
+    color: white;
+    background-color: var(--main-color);
+    padding: 8px;
+    border-radius: 10px;
+}
+
+#nav-second-container ion-icon {
+    margin-top: auto;
+    margin-bottom: auto;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#nav-menus {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0px 35px 0px 35px;
+}
+
+#nav-menus li {
+    list-style: none;
+    cursor: pointer;
+}
+
+#nav-menus li a {
+    text-decoration: none;
+    cursor: pointer;
+    color: gray;
+}
+
+#nav-menus li a:hover {
+    color: var(--main-color);
+}
+
+#burguer {
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 30px;
+    cursor: pointer;
+    display: none;
+}
+
+
+
+
+/**RESPONSIVIDADE NAV*/
+@media (max-width: 600px) {
+    #nav-second-container {
+        display: none;
+    }
+
+    #nav-first-container .searchInput {
+        width: 65%;
+    }
+
+    header {
+        flex-direction: column;
+    }
+
+    #burguer {
+        display: block;
+    }
+
+    #nav-menus li {
+        font-size: 3vw;
+    }
+}
+
+@media (max-width: 970px) {
+    #nav-second-container a {
+        font-size: 1vw;
+    }
+
+    #nav-second-container {
+        margin-top: auto;
+        margin-bottom: auto;
+        gap: 15px;
+    }
+}
