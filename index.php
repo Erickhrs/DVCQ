@@ -14,45 +14,25 @@ session_start();
 </head>
 
 <body>
-    <header>
-        <div id="nav-first-container">
-            <img src="./assets/logo.svg" alt="logo dvc">
-            <input type="search" class="searchInput" placeholder="o que procura?">
-            <ion-icon name="search-outline"></ion-icon>
-            <ion-icon name="reorder-three-outline" id="burguer"></ion-icon>
-        </div>
-        <div id="nav-second-container">
-            <?php if(!isset($_SESSION['id'])){echo ' <a href="./login.php">Entrar</a>
-            <a href="./signup.html">Criar uma conta gratuitamente</a>
-            <ion-icon name="help-circle-outline" title="Central de ajuda"></ion-icon>';}?>
-            <div>
-                <img src="./assets/picc.jpg" alt="profile" class="profile_pic">
-            </div>
-
-        </div>
-
-    </header>
-    <nav>
-        <ul id="nav-menus">
-            <li><a href="#home">
-                    <ion-icon name="home-outline"></ion-icon> Início
-                </a></li>
-            <li><a href="#questions">
-                    <ion-icon name="book-outline"></ion-icon> Questões
-                </a></li>
-            <li><a href="#classes">
-                    <ion-icon name="albums-outline"></ion-icon> Aulas
-                </a></li>
-            <li><a href="#exams">
-                    <ion-icon name="copy-outline"></ion-icon> Concursos
-                </a></li>
-            <li><a href="#disciplines">
-                    <ion-icon name="school-outline"></ion-icon> Disciplinas
-                </a></li>
-        </ul>
-    </nav>
+    <?php require_once('./includes/navbar.php');?>
+    <?php require_once('./includes/nav_menu.php');?>
     <main id="root">
+        <nav id="home-menu">
+            <ul>
+                <li><a href="">
+                        <ion-icon name="rocket-outline"></ion-icon> Ambiente de estudos
+                    </a></li>
+                <li><a href="">
+                        <ion-icon name="document-text-outline"></ion-icon> Cadernos e Simulados
+                    </a></li>
+                <li><a href="">
+                        <ion-icon name="stats-chart-outline"></ion-icon> Meu Desempenho
+                    </a></li>
+            </ul>
+            <main id="home-menu-root">
 
+            </main>
+        </nav>
     </main>
 </body>
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>

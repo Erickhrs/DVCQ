@@ -1,0 +1,88 @@
+form {
+    background-color: var(--logo-blue);
+    padding: 20px 100px 20px 100px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+form #filter1 select {
+    width: 150px;
+    height: 45px;
+    padding: 10px 10px 10px 10px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: none;
+}
+
+form #filter1 input {
+    width: 150px;
+    height: 45px;
+    padding: 0px 10px 0px 10px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: none;
+}
+
+form #filter2 {
+    padding: 20px 0px 20px 0px;
+}
+
+form #filter2 span {
+    color: var(--green-todbg);
+    font-weight: bold;
+    padding-right: 40px;
+}
+
+form #filter2 label {
+    color: white;
+    padding-right: 40px;
+}
+
+form input:only-of-type[type="submit"] {
+    color: white;
+    background-color: var(--main-color);
+    padding: 8px 20px 8px 20px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+form button {
+    color: white;
+    background-color: var(--main-color);
+    padding: 8px 20px 8px 20px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+#root header {
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    border: none;
+    padding-bottom: 30px;
+    border-top: 1px solid rgba(128, 128, 128, 0.2);
+    border-bottom: 1px solid rgb(153, 152, 152);
+}
+
+#root header #filterDetails {
+    color: var(--logo-green);
+    padding: 0px;
+    margin: 0px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+#root header h1 {
+    font-weight: 500;
+    padding: 10px;
+    margin: 0px;
+}
