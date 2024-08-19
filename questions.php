@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once('./includes/connection.php');
+require_once('./includes/functions.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -24,59 +26,48 @@ session_start();
         </header>
         <form action="" method="get">
             <div id="filter1">
-                <input type="search" placeholder="Palavra chave">
+                <input type="search" placeholder="Palavra chave" name="keys">
                 <select id="discipline" name="discipline">
-                    <option value="">Disciplinas</option>
-                    <option value="">EXEMPLO 1</option>
-                    <option value="">EXEMPLO 2</option>
+                    <?php getOptions($mysqli, 'disciplines', 'discipline', 'Disciplina')?>
                 </select>
-                <select id="subjects" name="">
-                    <option value="">Assunto</option>
-                    <option value="">EXEMPLO 1</option>
-                    <option value="">EXEMPLO 2</option>
+                <select id="subjects" name="subject">
+                    <?php getOptions($mysqli, 'subjects', 'subject', 'Assunto')?>
                 </select>
-                <select id="banca" name="">
-                    <option value="">Banca</option>
-                    <option value="">EXEMPLO 1</option>
-                    <option value="">EXEMPLO 2</option>
+                <select id="banca" name="banca">
+                    <?php getOptions($mysqli, 'bancas', 'banca', 'Banca')?>
                 </select>
                 <select id="year" name="year">
                     <option value="">Ano</option>
                     <option value="">2004</option>
                     <option value="">2005</option>
                 </select>
-                <select id="job_position" name="job_position">
-                    <option value="">Cargo</option>
-                    <option value="">EXEMPLO 1</option>
-                    <option value="">EXEMPLO 2</option>
+                <select id="job_position" name="job_roles">
+                    <?php getOptions($mysqli, 'job_roles', 'job_role', 'Cargo')?>
                 </select>
                 <select id="grade_level" name="grade_level">
                     <option value="">Nível</option>
-                    <option value="">EXEMPLO 1</option>
-                    <option value="">EXEMPLO 2</option>
+                    <option value="fundamental">Fundamental</option>
+                    <option value="médio">Médio</option>
+                    <option value="superior">Superior</option>
                 </select>
                 <select id="course" name="course">
-                    <option value="">Formação</option>
-                    <option value="">EXEMPLO 1</option>
-                    <option value="">EXEMPLO 2</option>
+                    <?php getOptions($mysqli, 'courses', 'course', 'Formação')?>
                 </select>
-                <select id="area_of_expertise" name="area_of_expertise">
-                    <option value="">Atuação</option>
-                    <option value="">EXEMPLO 1</option>
-                    <option value="">EXEMPLO 2</option>
+                <select id="area_of_expertise" name="job_function">
+                    <?php getOptions($mysqli, 'job_functions', 'job_function', 'Atuação')?>
                 </select>
                 <select id="question_type" name="question_type">
-                    <option value="">Modalidade</option>
-                    <option value="">EXEMPLO 1</option>
-                    <option value="">EXEMPLO 2</option>
+                    <option value="mult">Múltipla Escolha</option>
+                    <option value="tf">Verdadeiro ou Falso</option>
                 </select>
                 <select id="level" name="level">
-                    <option value="">Dificuldadee</option>
-                    <option value="">EXEMPLO 1</option>
-                    <option value="">EXEMPLO 2</option>
+                    <option value="">Dificuldade</option>
+                    <option value="facil">Fácil</option>
+                    <option value="medio">Médio</option>
+                    <option value="dificil">Difícil</option>
                 </select>
             </div>
-            <div id="filter2">
+            <!-- <div id="filter2">
                 <span>Excluir Questões:</span>
                 <label for="opcao1">
                     <input type="checkbox" name="opcoes" value="opcao1"> Dos meus cadernos
@@ -100,7 +91,7 @@ session_start();
                 <label for="opcao7">
                     <input type="checkbox" name="opcoes" value="opcao7"> Minhas anotações
                 </label>
-            </div>
+                </div>-->
             <div id="btns">
                 <button>
                     <ion-icon name="reload-outline"></ion-icon> Limpar
