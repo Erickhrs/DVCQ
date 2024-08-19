@@ -1,5 +1,5 @@
 <?php
-echo '<nav>
+echo '<nav style="background-color: white!important;">
         <ul id="nav-menus">
             <li><a href="./index.php">
                     <ion-icon name="home-outline"></ion-icon> Início

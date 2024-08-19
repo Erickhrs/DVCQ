@@ -86,3 +86,130 @@ form button {
     padding: 10px;
     margin: 0px;
 }
+
+#questions_container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 80px;
+
+}
+
+.question {
+    border-radius: 20px;
+    background: white;
+    padding: 24px;
+    overflow-x: auto;
+    width: 65%;
+    text-align: left;
+}
+
+#options {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding-left: 25px;
+}
+
+.option {
+    width: 100%;
+    text-align: left;
+}
+
+/* Esconder o input rádio */
+input[type="radio"] {
+    display: none;
+}
+
+/* Estilizar o label para incluir a letra */
+input[type="radio"]+label:before {
+    content: attr(for);
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5em;
+    border: 1px solid var(--light-green);
+    /* Usando a cor principal que você gosta */
+    border-radius: 50%;
+    text-align: center;
+    margin-right: 10px;
+    color: var(--light-green);
+    /* Cor do texto */
+    cursor: pointer;
+}
+
+/* Estilizar o label quando o rádio estiver selecionado */
+input[type="radio"]:checked+label:before {
+    background-color: var(--green-todbg);
+    color: #ffffff;
+    /* Cor da letra ao selecionar */
+}
+
+#answerValidate {
+    width: fit-content;
+}
+
+#answerValidate:hover {
+    width: fit-content;
+    background-color: #90c66e;
+}
+
+#root #filter {
+    margin-bottom: 50px;
+}
+
+#question {
+    color: var(--logo-blue);
+    position: relative !important;
+}
+
+.question {
+    position: relative !important;
+    position: absolute;
+    top: 25px;
+    left: 10px;
+}
+
+#question_infos {
+    padding: 0px 0px 15px 0px;
+}
+
+.span_about {
+    background-color: #b3e295b0;
+    padding: 5px;
+    border-radius: 10px;
+    color: #58d309;
+}
+
+#question_tools {
+    display: flex;
+    justify-content: space-between;
+}
+
+#tools {
+    display: flex;
+    gap: 25px;
+    position: relative;
+    top: 8px;
+    padding-right: 27px;
+    font-size: small;
+}
+
+#tools span {
+    cursor: pointer;
+}
+
+#tools span:hover {
+    cursor: pointer;
+    color: var(--logo-blue);
+    font-weight: 500;
+    scale: 1.1;
+}
+
+.span_number_list {
+    background-color: #1d3969;
+    padding: 5px;
+    border-radius: 10px;
+    color: white;
+}

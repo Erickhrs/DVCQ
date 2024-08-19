@@ -1,6 +1,6 @@
 <?php
 echo '
-<header>
+<header style="background-color: white!important;">
     <div id="nav-first-container">
         <img src="./assets/logo.svg" alt="logo dvc">
         <input type="search" class="searchInput" placeholder="o que procura?">
