@@ -10,8 +10,51 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 // Calcula o OFFSET para a consulta SQL
 $offset = ($page - 1) * $records_per_page;
 
+// Construa a cláusula WHERE com base nos parâmetros do formulário
+$conditions = [];
+$params = [];
+$types = '';
+
+// Verifica e adiciona filtros baseados nos parâmetros do formulário
+if (!empty($_GET['keys'])) {
+    $conditions[] = "question LIKE '%" . $mysqli->real_escape_string($_GET['keys']) . "%'";
+}
+if (!empty($_GET['discipline'])) {
+    $conditions[] = "discipline = '" . $mysqli->real_escape_string($_GET['discipline']) . "'";
+}
+if (!empty($_GET['subject'])) {
+    $conditions[] = "subject = '" . $mysqli->real_escape_string($_GET['subject']) . "'";
+}
+if (!empty($_GET['banca'])) {
+    $conditions[] = "banca = '" . $mysqli->real_escape_string($_GET['banca']) . "'";
+}
+if (!empty($_GET['year'])) {
+    $conditions[] = "year = '" . $mysqli->real_escape_string($_GET['year']) . "'";
+}
+if (!empty($_GET['job_roles'])) {
+    $conditions[] = "job_role = '" . $mysqli->real_escape_string($_GET['job_roles']) . "'";
+}
+if (!empty($_GET['grade_level'])) {
+    $conditions[] = "grade_level = '" . $mysqli->real_escape_string($_GET['grade_level']) . "'";
+}
+if (!empty($_GET['course'])) {
+    $conditions[] = "course = '" . $mysqli->real_escape_string($_GET['course']) . "'";
+}
+if (!empty($_GET['job_function'])) {
+    $conditions[] = "job_function = '" . $mysqli->real_escape_string($_GET['job_function']) . "'";
+}
+if (!empty($_GET['question_type'])) {
+    $conditions[] = "question_type = '" . $mysqli->real_escape_string($_GET['question_type']) . "'";
+}
+if (!empty($_GET['level'])) {
+    $conditions[] = "level = '" . $mysqli->real_escape_string($_GET['level']) . "'";
+}
+
+// Adiciona a cláusula WHERE à consulta SQL se houver filtros
+$where_clause = !empty($conditions) ? 'WHERE ' . implode(' AND ', $conditions) : '';
+
 // Consulta SQL para contar o número total de registros
-$total_query = "SELECT COUNT(*) AS total FROM questions";
+$total_query = "SELECT COUNT(*) AS total FROM questions $where_clause";
 $total_result = $mysqli->query($total_query);
 $total_row = $total_result->fetch_assoc();
 $total_records = $total_row['total'];
@@ -20,18 +63,17 @@ $total_records = $total_row['total'];
 $total_pages = ceil($total_records / $records_per_page);
 
 // Consulta SQL para buscar as questões da página atual
-$query = "SELECT * FROM questions WHERE question_type = 'mult' LIMIT $offset, $records_per_page";
+$query = "SELECT * FROM questions $where_clause LIMIT $offset, $records_per_page";
 $result = $mysqli->query($query);
 
 // Função para obter alternativas por ID da questão e alternativa
 function getAlternative($mysqli, $question_id, $alternative) {
-    $stmt = $mysqli->prepare("SELECT answer FROM answers WHERE questions_ID = ? AND alternative = ? LIMIT 1");
-    $stmt->bind_param("ss", $question_id, $alternative);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $question_id = $mysqli->real_escape_string($question_id);
+    $alternative = $mysqli->real_escape_string($alternative);
+    $query = "SELECT answer FROM answers WHERE questions_ID = '$question_id' AND alternative = '$alternative' LIMIT 1";
+    $result = $mysqli->query($query);
     $row = $result->fetch_assoc();
-    $stmt->close();
-    return $row ? strip_tags($row['answer'] ) : 'Não disponível';
+    return $row ? strip_tags($row['answer']) : 'Não disponível';
 }
 
 // Verifica se há resultados
@@ -78,7 +120,7 @@ if ($result && $result->num_rows > 0) {
         echo '</form>';
     }
 } else {
-    echo 'Nenhuma questão encontrada.';
+    echo '<span style="text-align: center;">Nenhuma questão encontrad</span>';
 }
 
 // Exibe links de navegação para as páginas
