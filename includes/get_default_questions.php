@@ -93,15 +93,28 @@ if ($result && $result->num_rows > 0) {
         echo '    <span id="question">' . $row['question'] . '</span>'; 
         echo '    <div id="options">';
         
-        foreach (['A', 'B', 'C', 'D', 'E'] as $option) {
-            $alternative_style = "";
-            // Obtém a alternativa para a opção atual
-            $alternative_text = getAlternative($mysqli, $row['ID'], $option);
-            $alternative_style = $alternative_text == 'Não disponível' ? 'display: none !important;' : '';
-            echo '    <div class="option" style="'.$alternative_style.'">';
-            echo '        <input type="radio" id="' . $option . $row['ID'] . '" name="answer' . $row['ID'] . '" value="' . $option . '">';
-            echo '        <label for="' . $option . $row['ID'] . '" data-content="' . $option . '" style="'.$alternative_style.'">'  . $alternative_text . '</label>';
+        if ($row['question_type'] == 'tf') {
+            // Se a questão for do tipo verdadeiro ou falso
+            echo '    <div class="option">';
+            echo '        <input type="radio" id="True' . $row['ID'] . '" name="answer' . $row['ID'] . '" value="True">';
+            echo '        <label for="True' . $row['ID'] . '" data-content="V">Verdadeiro</label>';
             echo '    </div>';
+            echo '    <div class="option">';
+            echo '        <input type="radio" id="False' . $row['ID'] . '" name="answer' . $row['ID'] . '" value="False">';
+            echo '        <label for="False' . $row['ID'] . '" data-content="F">Falso</label>';
+            echo '    </div>';
+        } else {
+            // Para outros tipos de questões
+            foreach (['A', 'B', 'C', 'D', 'E'] as $option) {
+                $alternative_style = "";
+                // Obtém a alternativa para a opção atual
+                $alternative_text = getAlternative($mysqli, $row['ID'], $option);
+                $alternative_style = $alternative_text == 'Não disponível' ? 'display: none !important;' : '';
+                echo '    <div class="option" style="'.$alternative_style.'">';
+                echo '        <input type="radio" id="' . $option . $row['ID'] . '" name="answer' . $row['ID'] . '" value="' . $option . '">';
+                echo '        <label for="' . $option . $row['ID'] . '" data-content="' . $option . '" style="'.$alternative_style.'">'  . $alternative_text . '</label>';
+                echo '    </div>';
+            }
         }
 
         echo '    </div>';
