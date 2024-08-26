@@ -75,7 +75,7 @@ if(!isset($_SESSION['id'])) {
                     <h2>Você não pode acessar esta página porque não está logado</h2>.<p><a class=\"link\" href=\"./index.php\">Entrar</a></p>
                 </div>
             </div>
-        </body>
-        </html>");
+        </body><?php include_once('./includes/footer.php')?>
+         </html>");
 }
 ?>

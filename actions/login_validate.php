@@ -83,6 +83,6 @@ if(isset($_POST['email'], $_POST['password'])) {
 
 <body>
     <div class="loader"></div>
-</body>
+</body><?php include_once('./includes/footer.php')?>
 
-</html>
+ </html>

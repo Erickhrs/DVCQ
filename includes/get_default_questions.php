@@ -123,7 +123,7 @@ if ($result && $result->num_rows > 0) {
         echo '        <div id="tools">';
         echo '            <span><ion-icon name="heart-outline"></ion-icon> Gostei</span>';
         echo '            <span><ion-icon name="chatbox-outline"></ion-icon> Gabarito</span>';
-        echo '            <span><i class="bx bx-paperclip"></i>Gabarito</span>';
+        echo '            <span><i class="bx bx-paperclip"></i>Anexados</span>';
         echo '            <span><ion-icon name="chatbubbles-outline"></ion-icon>Comentários</span>';
         echo '            <span><ion-icon name="analytics-outline"></ion-icon>Estátisticas</span>';
         echo '            <span><ion-icon name="document-outline"></ion-icon>Criar Anotações</span>';

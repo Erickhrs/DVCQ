@@ -144,10 +144,14 @@ require_once('./includes/functions.php');
             <div id="questions_container">
                 <?php include_once('./includes/get_default_questions.php'); ?>
             </div>
+            <div>
+
+            </div>
         </div>
 
     </main>
-</body>
+
+</body><?php include_once('./includes/footer.php')?>
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 <script src="./scripts/spa.js" type="module"></script>
 <script src="./scripts/global.js"></script>

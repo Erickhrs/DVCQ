@@ -76,6 +76,6 @@ session_start();
 
     <!-- JavaScript -->
     <script src="./scripts/login.js"></script>
-</body>
+</body><?php include_once('./includes/footer.php')?>
 
-</html>
+ </html>

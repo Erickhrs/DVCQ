@@ -26,9 +26,9 @@ session_start();
             <a href="/">Voltar para a Página Inicial</a>
         </div>
     </main>
-</body>
+</body><?php include_once('./includes/footer.php')?>
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 <script src="./scripts/spa.js" type="module"></script>
 <script src="./scripts/global.js"></script>
 
-</html>
+ </html>
