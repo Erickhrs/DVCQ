@@ -20,23 +20,18 @@ $total_records = $total_row['total'];
 $total_pages = ceil($total_records / $records_per_page);
 
 // Consulta SQL para buscar as questões da página atual
-$query = "SELECT * FROM questions LIMIT $offset, $records_per_page";
+$query = "SELECT * FROM questions WHERE question_type = 'mult' LIMIT $offset, $records_per_page";
 $result = $mysqli->query($query);
 
-// Função para obter alternativas por ID da questão
-function getAlternativesByQuestionId($mysqli, $question_id) {
-    $stmt = $mysqli->prepare("SELECT alternative, answer FROM answers WHERE questions_ID = ? ORDER BY ID ASC");
-    $stmt->bind_param("i", $question_id);
+// Função para obter alternativas por ID da questão e alternativa
+function getAlternative($mysqli, $question_id, $alternative) {
+    $stmt = $mysqli->prepare("SELECT answer FROM answers WHERE questions_ID = ? AND alternative = ? LIMIT 1");
+    $stmt->bind_param("ss", $question_id, $alternative);
     $stmt->execute();
     $result = $stmt->get_result();
-    $alternatives = [];
-
-    while ($row = $result->fetch_assoc()) {
-        $alternatives[$row['answer']] = $row['alternative'];
-    }
-
+    $row = $result->fetch_assoc();
     $stmt->close();
-    return $alternatives;
+    return $row ? strip_tags($row['answer'] ) : 'Não disponível';
 }
 
 // Verifica se há resultados
@@ -45,27 +40,25 @@ if ($result && $result->num_rows > 0) {
         // Exibe as informações da questão
         echo '<form class="question">';
         echo '    <div id="question_infos">';
-        echo '        <span class="span_number_list">#' . htmlspecialchars($row['ID']) . '</span>';
-        echo '        <span class="span_about">' . htmlspecialchars($row['adms_ID']) . '</span>';
-        echo '        <span class="span_about">' . htmlspecialchars($row['year']) . '</span>';
-        echo '        <span class="span_about">' . htmlspecialchars($row['banca']) . '</span>';
-        echo '        <span class="span_about">' . htmlspecialchars($row['level']) . '</span>';
-        echo '        <span class="span_about">' . htmlspecialchars($row['question_type']) . '</span>';
-        echo '        <span class="span_about">' . htmlspecialchars($row['subject']) . '</span>';
-        echo '        <span class="span_about">' . htmlspecialchars($row['course']) . '</span>';
+        echo '        <span class="span_number_list">#' . $row['ID'] . '</span>';
+        echo '        <span class="span_about">' . $row['year'] . '</span>';
+        echo '        <span class="span_about">' . $row['banca'] . '</span>';
+        echo '        <span class="span_about">' . $row['level'] . '</span>';
+        echo '        <span class="span_about">' . $row['question_type'] . '</span>';
+        echo '        <span class="span_about">' . $row['subject'] . '</span>';
+        echo '        <span class="span_about">' . $row['course'] . '</span>';
         echo '    </div>';
-        echo '    <span id="question">' . $row['question'] . '</span>'; // Não usa htmlspecialchars aqui
+        echo '    <span id="question">' . $row['question'] . '</span>'; 
         echo '    <div id="options">';
         
-        // Obtém alternativas para a questão atual
-        $alternatives = getAlternativesByQuestionId($mysqli, $row['ID']);
-        
         foreach (['A', 'B', 'C', 'D', 'E'] as $option) {
-            // Verifica se a alternativa existe para a opção atual
-            $alternative_text = isset($alternatives[$option]) ? $alternatives[$option] : 'Não disponível';
-            echo '    <div class="option">';
+            $alternative_style = "";
+            // Obtém a alternativa para a opção atual
+            $alternative_text = getAlternative($mysqli, $row['ID'], $option);
+            $alternative_style = $alternative_text == 'Não disponível' ? 'display: none !important;' : '';
+            echo '    <div class="option" style="'.$alternative_style.'">';
             echo '        <input type="radio" id="' . $option . $row['ID'] . '" name="answer' . $row['ID'] . '" value="' . $option . '">';
-            echo '        <label for="' . $option . $row['ID'] . '" data-content="' . $option . '">' . "OPÇÃO " . $option . ': ' . htmlspecialchars($alternative_text) . '</label>';
+            echo '        <label for="' . $option . $row['ID'] . '" data-content="' . $option . '" style="'.$alternative_style.'">'  . $alternative_text . '</label>';
             echo '    </div>';
         }
 
@@ -73,6 +66,7 @@ if ($result && $result->num_rows > 0) {
         echo '    <div id="question_tools">';
         echo '        <button type="submit" id="answerValidate">Responder</button>';
         echo '        <div id="tools">';
+        echo '            <span><ion-icon name="heart-outline"></ion-icon> Gostei</span>';
         echo '            <span><ion-icon name="chatbox-outline"></ion-icon> Gabarito</span>';
         echo '            <span><i class="bx bx-paperclip"></i>Gabarito</span>';
         echo '            <span><ion-icon name="chatbubbles-outline"></ion-icon>Comentários</span>';

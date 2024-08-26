@@ -103,9 +103,15 @@ require_once('./includes/functions.php');
                 <input type="submit" value="FILTRAR">
             </div>
         </form>
-        <div id="questions_container">
-            <?php include_once('./includes/get_default_questions.php'); ?>
+        <div>
+            <div id="ads_container">
+
+            </div>
+            <div id="questions_container">
+                <?php include_once('./includes/get_default_questions.php'); ?>
+            </div>
         </div>
+
     </main>
 </body>
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>

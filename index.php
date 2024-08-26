@@ -14,8 +14,10 @@ session_start();
 </head>
 
 <body>
-    <?php require_once('./includes/navbar.php');?>
-    <?php require_once('./includes/nav_menu.php');?>
+   <div style="background-color: white;">
+        <?php require_once('./includes/navbar.php');?>
+        <?php require_once('./includes/nav_menu.php');?>
+    </div>
     <main id="root">
         <nav id="home-menu">
             <ul>
