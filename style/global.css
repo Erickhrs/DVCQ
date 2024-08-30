@@ -29,3 +29,17 @@ body {
 #root {
     animation: fadeIn 1s ease-in-out;
 }
+.active{
+   color: #b3e295!important;
+}
+.card_container{
+    border-radius: 20px;
+    background: white;
+    padding: 24px;
+    overflow-x: auto;
+    width: 95%;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+
+}

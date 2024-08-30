@@ -1,0 +1,88 @@
+.grid1{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 15px;
+}
+.grid2{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+
+}
+.grid3{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+
+}
+.grid3 div{
+    background-color: #80808012;
+    border-radius: 4px;
+    height: 200px;
+}
+.grid3 div:nth-child(1){
+    text-align: center;
+}
+.grid1 div{
+    background-color: #80808012;
+    border-radius: 4px;
+    height: 200px;
+}
+
+#stat_container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#stat_filter{
+    margin: 30px;
+}
+#stat_filter form{
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.horizontal-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Espaçamento entre os elementos */
+    align-items: center; /* Alinha verticalmente no centro */
+    justify-content: center;
+    background-color: #1d3969;
+    color: white;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .horizontal-form div {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .horizontal-form label {
+    margin-right: 5px;
+  }
+  
+  .horizontal-form select {
+    padding: 5px;
+    border: none;
+    border-radius: 10px;
+  }
+  
+  .horizontal-form button {
+    padding: 5px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .horizontal-form button:hover {
+    background-color: #45a049;
+  }
+  

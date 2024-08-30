@@ -14,7 +14,7 @@ session_start();
 </head>
 
 <body>
-   <div style="background-color: white;">
+    <div style="background-color: white;">
         <?php require_once('./includes/navbar.php');?>
         <?php require_once('./includes/nav_menu.php');?>
     </div>
@@ -27,12 +27,12 @@ session_start();
                 <li><a href="">
                         <ion-icon name="document-text-outline"></ion-icon> Cadernos e Simulados
                     </a></li>
-                <li><a href="">
+                <li><a href="./statistics.php">
                         <ion-icon name="stats-chart-outline"></ion-icon> Meu Desempenho
                     </a></li>
             </ul>
             <main id="home-menu-root">
-
+              
             </main>
         </nav>
     </main>
@@ -41,4 +41,4 @@ session_start();
 <script src="./scripts/spa.js" type="module"></script>
 <script src="./scripts/global.js"></script>
 
- </html>
+</html>
