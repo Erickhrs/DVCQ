@@ -132,4 +132,7 @@ session_start();
 <script src="./scripts/spa.js" type="module"></script>
 <script src="./scripts/global.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="./scripts/protect.js"></script>
+
 </html>

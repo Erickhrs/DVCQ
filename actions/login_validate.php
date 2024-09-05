@@ -15,11 +15,10 @@ if(isset($_POST['email'], $_POST['password'])) {
 
         // Verifica se a senha está correta
         if(password_verify($password, $hashedPassword)) {
-            session_regenerate_id();
             // Define as variáveis de sessão
             $_SESSION['id'] = $usuario['ID'];
-            $_SESSION['name'] = $usuario['name'];
-
+            $_SESSION['name'] = $usuario['name'];          
+            session_regenerate_id();
             header("Location: ../index.php");
             exit;
         } else {
@@ -85,4 +84,4 @@ if(isset($_POST['email'], $_POST['password'])) {
     <div class="loader"></div>
 </body><?php include_once('./includes/footer.php')?>
 
- </html>
+</html>

@@ -15,15 +15,20 @@ session_start();
 </head>
 
 <body>
-   <div style="background-color: white;">
+    <div style="background-color: white;">
         <?php require_once('./includes/navbar.php');?>
         <?php require_once('./includes/nav_menu.php');?>
     </div>
     <main id="root">
-        <div class="container">
-            <h1>404</h1>
-            <p>Página Não Encontrada</p>
-            <a href="/">Voltar para a Página Inicial</a>
+        <link rel="stylesheet" href="./style/protect.css">
+        <div class="not-user-container">
+
+            <ion-icon name="sad-outline"></ion-icon>
+            <h1>
+                Quem é você?
+            </h1>
+            <p>parece que você não está conectado...</p>
+            <a href="./login.php">Fazer Login</a>
         </div>
     </main>
 </body><?php include_once('./includes/footer.php')?>
@@ -31,4 +36,4 @@ session_start();
 <script src="./scripts/spa.js" type="module"></script>
 <script src="./scripts/global.js"></script>
 
- </html>
+</html>

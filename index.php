@@ -18,7 +18,7 @@ session_start();
         <?php require_once('./includes/navbar.php');?>
         <?php require_once('./includes/nav_menu.php');?>
     </div>
-    <main id="root">
+    <main id="root" class="protected_content">
         <nav id="home-menu">
             <ul>
                 <li><a href="./index.php" class="active">
@@ -42,5 +42,8 @@ session_start();
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 <script src="./scripts/spa.js" type="module"></script>
 <script src="./scripts/global.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="./scripts/protect.js"></script>
 
 </html>

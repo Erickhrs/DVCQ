@@ -1,0 +1,39 @@
+.not-user-container {
+background-color: #fc8c8c36;
+color: red;
+padding: 25px;
+max-width: 500px;
+margin-left: auto;
+margin-right: auto;
+border-radius: 10px;
+text-align: center;
+margin-top: 50px;
+}
+.not-user-container h1 {
+font-size: 3rem;
+margin: 0;
+display: flex;
+justify-content: center;
+flex-direction: column;
+
+}
+.not-user-container p {
+font-size: 15px;
+margin: 0.5rem 0 2rem;
+}
+.not-user-container a {
+display: inline-block;
+padding: 0.5rem 1rem;
+font-size: 1rem;
+color: white;
+background-color: #4CAF50;
+text-decoration: none;
+border-radius: 5px;
+transition: background-color 0.3s;
+}
+.not-user-container a:hover {
+background-color: #45a049;
+}
+.not-user-container ion-icon{
+font-size: 60px;
+}

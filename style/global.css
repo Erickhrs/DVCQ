@@ -32,14 +32,6 @@ body {
 .active{
    color: #b3e295!important;
 }
-.card_container{
-    border-radius: 20px;
-    background: white;
-    padding: 24px;
-    overflow-x: auto;
-    width: 95%;
-    text-align: left;
-    margin-left: auto;
-    margin-right: auto;
-
+.protected_content{
+    display: none;
 }

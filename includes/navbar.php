@@ -17,7 +17,7 @@ if (!isset($_SESSION["id"])) {
 } else { 
     echo '
         <div>
-            <a href="#profile" style="background-color: transparent">
+            <a href="./profile.php" style="background-color: transparent">
                 <img src="./assets/picc.jpg" alt="profile" class="profile_pic">
             </a>
         </div>';

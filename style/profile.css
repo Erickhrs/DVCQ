@@ -1,0 +1,105 @@
+#root {
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding-bottom: 70px;
+}
+
+/* Seção principal de informações do usuário */
+.user-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.user-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 3px solid #FFCE26;
+}
+
+.user-name {
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+#infos {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    color: #4CAF50;
+}
+
+/* Container para alinhar Informações Pessoais e Endereço lado a lado */
+.user-info-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* Seções de informações */
+.user-info-section {
+    flex: 1;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* Estilo das informações dentro de cada seção */
+.user-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.user-info-group {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.user-info-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.user-info-group p {
+    margin: 0;
+}
+
+/* Ajuste para telas menores */
+@media (max-width: 800px) {
+    .user-info-container {
+        flex-direction: column;
+    }
+
+    .user-info {
+        grid-template-columns: 1fr;
+    }
+}
+
+footer{
+    margin-top: 0px!important;
+}
+.user-info-section h2{
+    display: flex;
+    gap: 10px;
+}
+#settings button{
+    background-color: var(--logo-blue);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+#settings button:hover{
+    background-color: #4CAF50;
+}
