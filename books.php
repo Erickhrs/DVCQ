@@ -10,6 +10,7 @@ session_start();
     <link rel="shortcut icon" href="./assets/logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="./style/global.css">
     <link rel="stylesheet" href="./style/index.css">
+    <link rel="stylesheet" href="./style/books.css">
     <title>DVC - QUESTÕES</title>
 </head>
 
@@ -21,10 +22,10 @@ session_start();
     <main id="root">
         <nav id="home-menu">
             <ul>
-                <li><a href="./index.php" class="active">
+                <li><a href="./index.php">
                         <ion-icon name="rocket-outline"></ion-icon> Ambiente de estudos
                     </a></li>
-                <li><a href="./books.php">
+                <li><a href="./books.php" class="active">
                         <ion-icon name="document-text-outline"></ion-icon> Cadernos e Simulados
                     </a></li>
                 <li><a href="./statistics.php">
@@ -32,9 +33,13 @@ session_start();
                     </a></li>
             </ul>
             <main id="home-menu-root">
-                <div class="card_container">
-                    <h1>oi</h1>
-                </div>
+                <nav id="nav-tools">
+                    <select name="page" id="page">
+                        <option value="book">Caderno</option>
+                        <option value="exam">Simulados</option>
+                    </select>
+                    <button>Criar<i class='bx bx-plus'></i></button>
+                </nav>
             </main>
         </nav>
     </main>

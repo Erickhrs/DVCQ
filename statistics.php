@@ -22,10 +22,10 @@ session_start();
     <main id="root">
         <nav id="home-menu">
             <ul>
-                <li><a href="">
+                <li><a href="./index.php">
                         <ion-icon name="rocket-outline"></ion-icon> Ambiente de estudos
                     </a></li>
-                <li><a href="">
+                <li><a href="./books.php">
                         <ion-icon name="document-text-outline"></ion-icon> Cadernos e Simulados
                     </a></li>
                 <li><a href="./statistics.php" class="active">
