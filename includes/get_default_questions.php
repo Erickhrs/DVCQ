@@ -94,16 +94,16 @@ if ($result && $result->num_rows > 0) {
         echo '    <div id="options">';
         
         if ($row['question_type'] == 'tf') {
-            // Se a questão for do tipo verdadeiro ou falso
+            // Se a questão for do tipo verdadeiro ou falso, use valores 0 e 1
             echo '    <div class="option">';
-            echo '        <input type="radio" id="True' . $row['ID'] . '" name="answer' . $row['ID'] . '" value="True">';
+            echo '        <input type="radio" id="True' . $row['ID'] . '" name="answer' . $row['ID'] . '" value="1">';
             echo '        <label for="True' . $row['ID'] . '" data-content="V">Verdadeiro</label>';
             echo '    </div>';
             echo '    <div class="option">';
-            echo '        <input type="radio" id="False' . $row['ID'] . '" name="answer' . $row['ID'] . '" value="False">';
+            echo '        <input type="radio" id="False' . $row['ID'] . '" name="answer' . $row['ID'] . '" value="0">';
             echo '        <label for="False' . $row['ID'] . '" data-content="F">Falso</label>';
             echo '    </div>';
-        } else {
+        }else {
             // Para outros tipos de questões
             foreach (['A', 'B', 'C', 'D', 'E'] as $option) {
                 $alternative_style = "";
