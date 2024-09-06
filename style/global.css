@@ -17,17 +17,25 @@ body {
     --light-green: #6aac41;
     --green-todbg: #b3e295;
 }
-@keyframes fadeIn {
+@keyframes fadeInUp {
     from {
         opacity: 0;
+        transform: translateY(20px); /* Ajuste o valor conforme necessário */
     }
     to {
         opacity: 1;
+        transform: translateY(0);
     }
 }
 
-#root {
-    animation: fadeIn 1s ease-in-out;
+/* Aplica a animação a todos os elementos dentro de #root, exceto ao home-menu */
+#root > :not(#home-menu) {
+    animation: fadeInUp 1s ease-in-out;
+}
+
+/* Adiciona a animação ao footer, se necessário */
+footer {
+    animation: fadeInUp 1s ease-in-out;
 }
 .active{
    color: #b3e295!important;
@@ -35,3 +43,27 @@ body {
 .protected_content{
     display: none;
 }
+
+
+ 
+ ::-webkit-scrollbar {
+     width: 8px;
+ }
+ 
+ ::-webkit-scrollbar-track {
+     background: #000000;
+ }
+   
+ ::-webkit-scrollbar-thumb {
+     -webkit-border-radius: 3px;
+     border-radius: 3px;
+     background: var(--logo-blue);
+ }
+ 
+ ::-webkit-scrollbar-thumb:hover {
+     -webkit-border-radius: 3px;
+     border-radius: 3px;
+     background: white;
+ }
+
+ 
