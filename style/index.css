@@ -151,7 +151,9 @@ header {
     max-width: 25px;
     border-radius: 50px;
     cursor: pointer;
-    padding: 20px;
+    position: relative;
+    top: 5px;
+    right: 5px;
 }
 
 #home-menu ul{

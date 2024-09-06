@@ -8,6 +8,7 @@ margin-right: auto;
 border-radius: 10px;
 text-align: center;
 margin-top: 50px;
+margin-bottom: 10%;
 }
 .not-user-container h1 {
 font-size: 3rem;
@@ -15,7 +16,6 @@ margin: 0;
 display: flex;
 justify-content: center;
 flex-direction: column;
-
 }
 .not-user-container p {
 font-size: 15px;

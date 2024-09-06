@@ -92,14 +92,21 @@ footer{
     display: flex;
     gap: 10px;
 }
-#settings button{
+#settings button, .exit{
     background-color: var(--logo-blue);
     color: white;
     padding: 10px;
     border-radius: 10px;
     border: none;
     cursor: pointer;
+    text-decoration: none;
 }
 #settings button:hover{
     background-color: #4CAF50;
+}
+.exit{
+    background-color: #d80000;
+}
+.exit:hover{
+    background-color: #ff3838;
 }

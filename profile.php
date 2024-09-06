@@ -57,6 +57,10 @@ session_start();
                 <ion-icon name="calendar-outline"></ion-icon>
                 Ver histórico de atividade
             </button>
+            <a href="logout.php" class="exit">
+                <ion-icon name="exit-outline"></ion-icon>
+                Desconectar
+            </a>
         </section>
 
         <!-- Main User Information Container for Personal and Address Information -->
