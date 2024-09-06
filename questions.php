@@ -14,6 +14,7 @@ require_once('./includes/functions.php');
     <link rel="stylesheet" href="./style/global.css">
     <link rel="stylesheet" href="./style/index.css">
     <link rel="stylesheet" href="./style/questions.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <title>DVC - QUESTÕES</title>
 </head>
 
@@ -174,9 +175,12 @@ require_once('./includes/functions.php');
 </body><?php include_once('./includes/footer.php')?>
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 
-
+<script src="./scripts/questions.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="./scripts/spa.js" type="module"></script>
 <script src="./scripts/answer_validator.js"></script>
 <script src="./scripts/global.js"></script>
+
 
 </html>

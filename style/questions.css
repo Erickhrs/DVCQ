@@ -1,3 +1,4 @@
+@import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
 form {
     background-color: var(--logo-blue);
     padding: 20px 100px 20px 100px;
@@ -331,4 +332,50 @@ input[type="radio"]:checked+label:before {
     font-size: 50px;
     color: #e74c3c;
     margin-bottom: 20px;
+}
+
+.swal2-toast {
+    --swal2-toast-progress-bar-color: #FFCE26; /* Cor da barra de progresso */
+}
+.liked {
+    color: #FF66B2; /* Cor rosa quando o ícone é clicado */
+}
+.gabarito{
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 95%;
+    padding: 15px;
+    width: 95%;
+    background-color: #e8f9c7;
+    display: none;
+}
+.gabarito span{
+    background-color: var(--green-todbg);
+    color: #42832b;
+    padding: 5px;
+    border-radius: 10px;
+}
+.comments{
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 95%;
+    padding: 15px;
+    width: 95%;
+    background-color: #e8f9c7;
+    display:none;
+}
+.charts{
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 95%;
+    padding: 15px;
+    width: 95%;
+    background-color: #e8f9c7;
+    display:none;
 }

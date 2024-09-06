@@ -121,15 +121,32 @@ if ($result && $result->num_rows > 0) {
         echo '    <div id="question_tools">';
         echo '        <button type="submit" id="answerValidate">Responder</button>';
         echo '        <div id="tools">';
-        echo '            <span><ion-icon name="heart-outline"></ion-icon> Gostei</span>';
-        echo '            <span><ion-icon name="chatbox-outline"></ion-icon> Gabarito</span>';
-        echo '            <span><i class="bx bx-paperclip"></i>Anexados</span>';
-        echo '            <span><ion-icon name="chatbubbles-outline"></ion-icon>Comentários</span>';
-        echo '            <span><ion-icon name="analytics-outline"></ion-icon>Estátisticas</span>';
+        echo '            <span class ="likeBtn"><ion-icon name="heart-outline"></ion-icon> Gostei</span>';
+        echo '            <span class ="toggle" data-target="' . "gabarito_" . $row['ID'] . '"><ion-icon name="chatbox-outline"></ion-icon> Gabarito</span>';
+        echo '            <span class="toggle" data-target="' . "comments_" . $row['ID'] . '"><ion-icon  name="chatbubbles-outline" ></ion-icon>Comentários</span>';
+        echo '            <span class="toggle" data-target="' . "est_" . $row['ID'] . '"><ion-icon name="analytics-outline"></ion-icon>Estátisticas</span>';
         echo '            <span><ion-icon name="document-outline"></ion-icon>Criar Anotações</span>';
         echo '            <span><ion-icon name="flag-outline"></ion-icon>Erro</span>';
         echo '        </div>';
         echo '    </div>';
+        echo '<div id="' . "gabarito_" . $row['ID'] . '" class="gabarito animate__animated animate__zoomIn">
+        <span><ion-icon name="chatbox-outline"></ion-icon> Gabarito:</span>
+        <p>
+        Wikipedia relies entirely on volunteers to create and maintain its content. That often works well, but there are tasks that volunteers don’t enjoy doing, and topics where volunteers are missing.
+        </p>
+        <span><i class="bx bx-paperclip"></i> Anexados:</span>
+        <p>
+        Wikipedia relies entirely on volunteers to create and maintain its content. That often works well, but there are tasks that volunteers don’t enjoy doing, and topics where volunteers are missing.
+        </p>
+        </div>';
+    echo '<div id="' . "est_" . $row['ID'] . '" class="charts animate__animated animate__zoomIn">
+        <span>DESEMPENHO GERAL (ACERTOS ERROS) - ALTernativas marcadas em colunas</span>
+        <canvas id="chart' . $row['ID'] . '"></canvas>
+        <canvas id="chart' . $row['ID'] . '"></canvas>
+        </div>';
+    echo '<div id="' . "comments_" . $row['ID'] . '" class="comments animate__animated animate__zoomIn">
+        <span>* AQUI FICARÁ OS COMENTÁRIOS *</span>
+        </div>'; 
         echo '</form>';
     }
 } else {
