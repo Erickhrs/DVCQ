@@ -24,7 +24,7 @@ require_once('./includes/functions.php');
     </div>
 
     <main id="root">
-        <header>
+        <header style="display: none;">
             <h1>Questões</h1>
             <p id="filterDetails">DETALHES FILTRO ATUAL</p>
         </header>
@@ -142,7 +142,13 @@ require_once('./includes/functions.php');
 
             </div>
             <div id="questions_container">
-                <?php include_once('./includes/get_default_questions.php'); ?>
+                <?php 
+                if (isset($_SESSION['id'])){
+                    include_once('./includes/get_default_questions.php'); 
+                } else {
+                    include_once('./includes/not_registered_question.php'); 
+                }
+                ?>
             </div>
             <div>
 
@@ -150,6 +156,20 @@ require_once('./includes/functions.php');
         </div>
 
     </main>
+
+    <!-- Modal -->
+    <div id="notConnectedModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeModal">&times;</span>
+            <div class="icon">
+                <ion-icon name="sad-outline"></ion-icon>
+            </div>
+            <h2>Você não está conectado</h2>
+            <p>Para visualizar todas as alternativas, você precisa estar logado. Caso não tenha uma conta, faça login ou
+                assine um plano para ter acesso ilimitado.</p>
+            <a href="./login.php" class="login-link">Ir para Login</a>
+        </div>
+    </div>
 
 </body><?php include_once('./includes/footer.php')?>
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
