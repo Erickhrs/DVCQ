@@ -125,8 +125,8 @@ if ($result && $result->num_rows > 0) {
         echo '            <span class ="toggle" data-target="' . "gabarito_" . $row['ID'] . '"><ion-icon name="chatbox-outline"></ion-icon> Gabarito</span>';
         echo '            <span class="toggle" data-target="' . "comments_" . $row['ID'] . '"><ion-icon  name="chatbubbles-outline" ></ion-icon>Comentários</span>';
         echo '            <span class="toggle" data-target="' . "est_" . $row['ID'] . '"><ion-icon name="analytics-outline"></ion-icon>Estátisticas</span>';
-        echo '            <span><ion-icon name="document-outline"></ion-icon>Criar Anotações</span>';
-        echo '            <span><ion-icon name="flag-outline"></ion-icon>Erro</span>';
+        echo '            <span class="toggle" data-target="' . "note_" . $row['ID'] . '"><ion-icon name="document-outline"></ion-icon>Criar Anotações</span>';
+        echo '            <span id="feedback_btn"><ion-icon name="flag-outline"></ion-icon>Feedback</span>';
         echo '        </div>';
         echo '    </div>';
         echo '<div id="' . "gabarito_" . $row['ID'] . '" class="gabarito animate__animated animate__zoomIn">
@@ -146,6 +146,9 @@ if ($result && $result->num_rows > 0) {
         </div>';
     echo '<div id="' . "comments_" . $row['ID'] . '" class="comments animate__animated animate__zoomIn">
         <span>* AQUI FICARÁ OS COMENTÁRIOS *</span>
+        </div>'; 
+        echo '<div id="' . "note_" . $row['ID'] . '" class="comments animate__animated animate__zoomIn">
+        <span>* faça um comentário aqui *</span>
         </div>'; 
         echo '</form>';
     }
