@@ -31,11 +31,11 @@ if (isset($_POST['question_id'], $_POST['alternative'])) {
     if ($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
         if ($row['answer'] == $alternative) {
-            saveAnswer($mysqli, $_SESSION['id'], $question_id, $alternative, 1, date('Y-m-d'));
-            echo 'Correto!';
+         saveAnswer($mysqli, $_SESSION['id'], $question_id, $alternative, 1, date('Y-m-d'));
+            echo 'correct';
         } else {
-            saveAnswer($mysqli, $_SESSION['id'], $question_id, $alternative, 0, date('Y-m-d'));
-            echo 'Errado!';
+          saveAnswer($mysqli, $_SESSION['id'], $question_id, $alternative, 0, date('Y-m-d'));
+            echo 'wrong';
         }
     } else {
         echo 'Alternativa não encontrada.';

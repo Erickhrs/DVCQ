@@ -116,7 +116,8 @@ if ($result && $result->num_rows > 0) {
                 echo '    </div>';
             }
         }
-
+        echo '<div class="correctmsg animate__pulse" id="'. "cmsg_" .$row['ID'].'">PARABNES VOCE ACERTOU!!</div>';
+        echo '<div class="wrongmsg animate__pulse" id="'. "wmsg_" .$row['ID'].'">PARABNES VOCE ACERTOU!!</div>';
         echo '    </div>';
         echo '    <div id="question_tools">';
         echo '        <button type="submit" id="answerValidate">Responder</button>';

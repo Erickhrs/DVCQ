@@ -17,7 +17,16 @@ $(document).ready(function() {
                     alternative: alternative
                 },
                 success: function(response) {
-                    alert(response); // Exibe a mensagem de correto ou errado
+                    // Verifica a resposta do servidor ('correct' ou 'wrong')
+                    if (response.trim() === 'correct') {
+                        // Se correto, exibe o cmsg e esconde o wmsg
+                        $('#cmsg_' + questionID).show();
+                        $('#wmsg_' + questionID).hide();
+                    } else if (response.trim() === 'wrong') {
+                        // Se errado, exibe o wmsg e esconde o cmsg
+                        $('#wmsg_' + questionID).show();
+                        $('#cmsg_' + questionID).hide();
+                    }
                 },
                 error: function(xhr, status, error) {
                     alert('Ocorreu um erro ao enviar a resposta.');

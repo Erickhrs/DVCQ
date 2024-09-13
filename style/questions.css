@@ -379,3 +379,24 @@ input[type="radio"]:checked+label:before {
     background-color: #e8f9c7;
     display:none;
 }
+.correctmsg{
+background-color: #78d578;
+  color: white;
+  font-weight: normal;
+  padding: 10px;
+  width: fit-content;
+  margin-top: 18px;
+  border-radius: 5px;
+  display: none;
+}
+.wrongmsg{
+  background-color: #df7272;
+  color: white;
+  font-weight: normal;
+  padding: 10px;
+  width: fit-content;
+  margin-top: 18px;
+  border-radius: 5px;
+  font-size: 8px;
+  display: none;
+}
