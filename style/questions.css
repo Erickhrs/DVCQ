@@ -387,6 +387,7 @@ background-color: #78d578;
   width: fit-content;
   margin-top: 18px;
   border-radius: 5px;
+  font-size: 10px;
   display: none;
 }
 .wrongmsg{

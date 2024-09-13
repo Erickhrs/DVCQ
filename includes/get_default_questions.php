@@ -14,6 +14,20 @@ $offset = ($page - 1) * $records_per_page;
 $conditions = [];
 $params = [];
 $types = '';
+$text = [
+    "Você acertou! Continue assim!",
+    "Certo! Muito bem!",
+    "Isso aí! Ótimo!",
+    "Acertou! Parabéns!",
+    "Bom trabalho! Certo!",
+    "Exato! Continue!",
+    "Correto! Excelente!",
+    "Perfeito! Segue assim!",
+    "Ótimo palpite!",
+    "Certo! Bela resposta!"
+];
+
+// Seleciona uma mensagem aleatória
 
 // Verifica e adiciona filtros baseados nos parâmetros do formulário
 if (!empty($_GET['keys'])) {
@@ -79,6 +93,7 @@ function getAlternative($mysqli, $question_id, $alternative) {
 // Verifica se há resultados
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+        $random_message = $text[array_rand($text)];
         // Exibe as informações da questão
         echo '<form class="question">';
         echo '    <div id="question_infos">';
@@ -116,11 +131,11 @@ if ($result && $result->num_rows > 0) {
                 echo '    </div>';
             }
         }
-        echo '<div class="correctmsg animate__pulse" id="'. "cmsg_" .$row['ID'].'">PARABNES VOCE ACERTOU!!</div>';
-        echo '<div class="wrongmsg animate__pulse" id="'. "wmsg_" .$row['ID'].'">PARABNES VOCE ACERTOU!!</div>';
+        echo '<div class="correctmsg animate__animated animate__zoomIn" id="cmsg_' . $row['ID'] . '">' . $random_message . '</div>';
+        echo '<div class="wrongmsg animate__animated animate__zoomIn" id="'. "wmsg_" .$row['ID'].'">PARABNES VOCE ACERTOU!!</div>';
         echo '    </div>';
         echo '    <div id="question_tools">';
-        echo '        <button type="submit" id="answerValidate">Responder</button>';
+        echo '        <button type="submit" id="answerValidate vbtn_' . $row['ID'] . '" onclick="disableBtn('. $row['ID'] .')">Responder</button>';
         echo '        <div id="tools">';
         echo '            <span class ="likeBtn"><ion-icon name="heart-outline"></ion-icon> Gostei</span>';
         echo '            <span class ="toggle" data-target="' . "gabarito_" . $row['ID'] . '"><ion-icon name="chatbox-outline"></ion-icon> Gabarito</span>';

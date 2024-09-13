@@ -123,5 +123,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    function disableBtn(id) {
+        // Adiciona o atributo 'disabled' ao botão
+        var element = "vbtn_" + id;
+        console.log(id);
+        element.disabled = true;
+    }
+});
