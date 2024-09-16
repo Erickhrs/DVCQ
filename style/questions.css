@@ -186,6 +186,9 @@ input[type="radio"]:checked+label:before {
 
 #question_infos {
     padding: 0px 0px 15px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; 
 }
 
 .span_about {

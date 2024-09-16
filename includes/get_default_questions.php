@@ -1,6 +1,6 @@
 <?php
 include_once './includes/connection.php'; // Inclui o arquivo de conexão
-
+include_once './includes/functions.php';
 // Define o número de registros por página
 $records_per_page = 2; // Ajuste conforme necessário
 
@@ -99,11 +99,16 @@ if ($result && $result->num_rows > 0) {
         echo '    <div id="question_infos">';
         echo '        <span class="span_number_list">#' . $row['ID'] . '</span>';
         echo '        <span class="span_about">' . $row['year'] . '</span>';
-        echo '        <span class="span_about">' . $row['banca'] . '</span>';
+        echo '        <span class="span_about">' . getBancaName($mysqli, $row['banca']) . '</span>';
         echo '        <span class="span_about">' . $row['level'] . '</span>';
-        echo '        <span class="span_about">' . $row['question_type'] . '</span>';
-        echo '        <span class="span_about">' . $row['subject'] . '</span>';
-        echo '        <span class="span_about">' . $row['course'] . '</span>';
+        echo '        <span class="span_about">' . $row['grade_level'] . '</span>';
+        echo '        <span class="span_about">' . getQuestionTypeDescription($row['question_type']) . '</span>';
+        echo '        <span class="span_about">' . getSubjectName($mysqli, $row['subject']) . '</span>';
+        echo '        <span class="span_about">' . getDisciplinesFromIds($mysqli, $row['discipline']) . '</span>';
+        echo '<span class="span_about">' . getCoursesFromIds($mysqli, $row['course']) . '</span>';
+        echo '        <span class="span_about">' . getJobRole($mysqli, $row['job_role']) . '</span>';
+        echo '        <span class="span_about">' . getJobFunction($mysqli, $row['job_function']) . '</span>';
+
         echo '    </div>';
         echo '    <span id="question">' . $row['question'] . '</span>'; 
         echo '    <div id="options">';
