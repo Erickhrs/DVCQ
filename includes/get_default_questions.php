@@ -136,8 +136,8 @@ if ($result && $result->num_rows > 0) {
                 echo '    </div>';
             }
         }
-        echo '<div class="correctmsg animate__animated animate__zoomIn" id="cmsg_' . $row['ID'] . '">' . $random_message . '</div>';
-        echo '<div class="wrongmsg animate__animated animate__zoomIn" id="'. "wmsg_" .$row['ID'].'">PARABNES VOCE ACERTOU!!</div>';
+        echo '<div class="correctmsg animate__animated animate__zoomIn" id="cmsg_' . $row['ID'] . '">'. "✔️ "  . $random_message . '</div>';
+        echo '<div class="wrongmsg animate__animated animate__shakeX" id="'. "wmsg_" .$row['ID'].'">'. "❌ " . $row['prof_comment'] .'</div>';
         echo '    </div>';
         echo '    <div id="question_tools">';
         echo '        <button type="submit" id="answerValidate vbtn_' . $row['ID'] . '" onclick="disableBtn('. $row['ID'] .')">Responder</button>';

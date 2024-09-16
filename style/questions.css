@@ -390,7 +390,7 @@ background-color: #78d578;
   width: fit-content;
   margin-top: 18px;
   border-radius: 5px;
-  font-size: 10px;
+  font-size: 12px;
   display: none;
 }
 .wrongmsg{
@@ -401,6 +401,6 @@ background-color: #78d578;
   width: fit-content;
   margin-top: 18px;
   border-radius: 5px;
-  font-size: 8px;
+  font-size: 12px;
   display: none;
 }
