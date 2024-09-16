@@ -94,6 +94,7 @@ function getAlternative($mysqli, $question_id, $alternative) {
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $random_message = $text[array_rand($text)];
+        $liked_class = isQuestionLiked($mysqli, $_SESSION['id'], $row['ID']) ? 'liked' : '';
         // Exibe as informações da questão
         echo '<form class="question">';
         echo '    <div id="question_infos">';
@@ -142,7 +143,7 @@ if ($result && $result->num_rows > 0) {
         echo '    <div id="question_tools">';
         echo '<button type="submit" id="vbtn_' . $row['ID'] . '" onclick="disableBtn(\'' . $row['ID'] . '\')">Responder</button>';
         echo '        <div id="tools">';
-        echo '    <span class="likeBtn" data-id="' . $row['ID'] . '"><ion-icon name="heart-outline"></ion-icon> Gostei</span>';
+        echo '    <span class="likeBtn ' . $liked_class . '" data-id="' . $row['ID'] . '"><ion-icon name="heart-outline"></ion-icon> Gostei</span>';
 
         echo '<span class ="toggle" data-target="' . "gabarito_" . $row['ID'] . '"><ion-icon name="chatbox-outline"></ion-icon> Gabarito</span>';
         echo '            <span class="toggle" data-target="' . "comments_" . $row['ID'] . '"><ion-icon  name="chatbubbles-outline" ></ion-icon>Comentários</span>';

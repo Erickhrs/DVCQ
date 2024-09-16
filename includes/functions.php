@@ -151,5 +151,11 @@ function getJobFunction($mysqli, $ids) {
     return 'Erro na consulta';
 }
 
-
+function isQuestionLiked($mysqli, $user_id, $question_id) {
+    $user_id = $mysqli->real_escape_string($user_id);
+    $question_id = $mysqli->real_escape_string($question_id);
+    $query = "SELECT 1 FROM users_likes WHERE user_ID = '$user_id' AND question_ID = '$question_id' LIMIT 1";
+    $result = $mysqli->query($query);
+    return $result->num_rows > 0;
+}
 ?>

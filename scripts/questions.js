@@ -41,9 +41,9 @@ document.querySelectorAll('.likeBtn').forEach(button => {
         const icon = this.querySelector('ion-icon');
         const questionId = this.getAttribute('data-id');
         
-        // Alterna a classe 'liked'
-        const alreadyLiked = icon.classList.contains('liked');
-        icon.classList.toggle('liked');
+        // Alterna a classe 'liked' no botão
+        const alreadyLiked = this.classList.contains('liked');
+        this.classList.toggle('liked');
 
         // Envia a requisição AJAX para adicionar/remover a curtida
         fetch('./actions/handle_like.php', {
@@ -52,14 +52,30 @@ document.querySelectorAll('.likeBtn').forEach(button => {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: new URLSearchParams({
-                'question_id': questionId
+                'question_id': questionId,
+                'action': alreadyLiked ? 'unlike' : 'like' // Adiciona uma ação para o servidor saber se é para curtir ou desfazer a curtida
             })
         })
         .then(response => response.text()) // Receba a resposta como texto
         .then(data => {
             try {
                 const jsonData = JSON.parse(data); // Tente analisar o JSON
-                // Aqui você pode adicionar lógica para tratar a resposta JSON
+
+                // Exibe o toast com a mensagem apropriada
+                Swal.fire({
+                    title: alreadyLiked ? 'Curtida removida!' : 'Curtida salva!',
+                    icon: alreadyLiked ? 'error' : 'success',
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    toast: true,
+                    background: '#1d3969',
+                    color: 'white',
+                    timerProgressBar: true,
+                    customClass: {
+                        container: 'toast-container'
+                    }
+                });
             } catch (e) {
                 console.error('Erro ao analisar JSON:', e);
             }
@@ -67,6 +83,8 @@ document.querySelectorAll('.likeBtn').forEach(button => {
         .catch(error => console.error('Erro na requisição:', error));
     });
 });
+
+
 
 
 
