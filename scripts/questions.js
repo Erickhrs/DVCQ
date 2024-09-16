@@ -89,21 +89,57 @@ document.querySelectorAll('.likeBtn').forEach(button => {
 
 
 
-document.getElementById('feedback_btn').addEventListener('click', async function() {
-    const { value: text } = await Swal.fire({
-        input: "textarea",
-        inputLabel: "Message",
-        inputPlaceholder: "Type your message here...",
-        inputAttributes: {
-          "aria-label": "Type your message here"
-        },
-        showCancelButton: true
+document.addEventListener('DOMContentLoaded', function() {
+    // Obtém todos os botões de feedback com a classe 'feedback_btn'
+    const feedbackButtons = document.querySelectorAll('.feedback_btn');
+
+    feedbackButtons.forEach(button => {
+        button.addEventListener('click', async function() {
+            // Obtém o session_id e question_id dos atributos data-*
+            const sessionId = this.dataset.sessionId;
+            const questionId = this.dataset.questionId;
+
+            // Usa o SweetAlert2 para solicitar o feedback do usuário
+            const { value: text } = await Swal.fire({
+                input: 'textarea',
+                inputLabel: 'Message',
+                inputPlaceholder: 'Type your message here...',
+                inputAttributes: {
+                    'aria-label': 'Type your message here'
+                },
+                showCancelButton: true
+            });
+
+            if (text) {
+                // Envia o feedback para o servidor
+                try {
+                    const response = await fetch('./actions/process_feedback.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            user_ID: sessionId, // Usa o session_id obtido
+                            question_ID: questionId, // Usa o question_id obtido
+                            feedback: text
+                        })
+                    });
+
+                    if (response.ok) {
+                        Swal.fire('Feedback enviado com sucesso!');
+                    } else {
+                        Swal.fire('Erro ao enviar feedback.');
+                    }
+                } catch (error) {
+                    Swal.fire('Erro ao enviar feedback.');
+                    console.error('Erro:', error);
+                }
+            }
+        });
     });
-    
-    if (text) {
-      Swal.fire("será enviado pro banco de dados");
-    }
 });
+
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
