@@ -154,19 +154,16 @@ if ($result && $result->num_rows > 0) {
         echo '    </div>';
         echo '<div id="' . "gabarito_" . $row['ID'] . '" class="gabarito animate__animated animate__zoomIn">
         <span><ion-icon name="chatbox-outline"></ion-icon> Gabarito:</span>
-        <p>
-        Wikipedia relies entirely on volunteers to create and maintain its content. That often works well, but there are tasks that volunteers don’t enjoy doing, and topics where volunteers are missing.
-        </p>
+        <p> ' . $row['prof_comment'] . ' </p>
         <span><i class="bx bx-paperclip"></i> Anexados:</span>
-        <p>
-        Wikipedia relies entirely on volunteers to create and maintain its content. That often works well, but there are tasks that volunteers don’t enjoy doing, and topics where volunteers are missing.
-        </p>
+         <p> ' . $row['related_contents'] . ' </p>
         </div>';
     echo '<div id="' . "est_" . $row['ID'] . '" class="charts animate__animated animate__zoomIn">
         <span>DESEMPENHO GERAL (ACERTOS ERROS) - ALTernativas marcadas em colunas</span>
         <canvas id="chart' . $row['ID'] . '"></canvas>
         <canvas id="chart' . $row['ID'] . '"></canvas>
         </div>';
+        
     echo '<div id="' . "comments_" . $row['ID'] . '" class="comments animate__animated animate__zoomIn">
         <span>* AQUI FICARÁ OS COMENTÁRIOS *</span>
         </div>'; 
