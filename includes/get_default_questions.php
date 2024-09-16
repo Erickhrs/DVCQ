@@ -140,10 +140,11 @@ if ($result && $result->num_rows > 0) {
         echo '<div class="wrongmsg animate__animated animate__shakeX" id="'. "wmsg_" .$row['ID'].'">'. "❌ " . $row['prof_comment'] .'</div>';
         echo '    </div>';
         echo '    <div id="question_tools">';
-        echo '        <button type="submit" id="answerValidate vbtn_' . $row['ID'] . '" onclick="disableBtn('. $row['ID'] .')">Responder</button>';
+        echo '<button type="submit" id="vbtn_' . $row['ID'] . '" onclick="disableBtn(\'' . $row['ID'] . '\')">Responder</button>';
         echo '        <div id="tools">';
-        echo '            <span class ="likeBtn"><ion-icon name="heart-outline"></ion-icon> Gostei</span>';
-        echo '            <span class ="toggle" data-target="' . "gabarito_" . $row['ID'] . '"><ion-icon name="chatbox-outline"></ion-icon> Gabarito</span>';
+        echo '    <span class="likeBtn" data-id="' . $row['ID'] . '"><ion-icon name="heart-outline"></ion-icon> Gostei</span>';
+
+        echo '<span class ="toggle" data-target="' . "gabarito_" . $row['ID'] . '"><ion-icon name="chatbox-outline"></ion-icon> Gabarito</span>';
         echo '            <span class="toggle" data-target="' . "comments_" . $row['ID'] . '"><ion-icon  name="chatbubbles-outline" ></ion-icon>Comentários</span>';
         echo '            <span class="toggle" data-target="' . "est_" . $row['ID'] . '"><ion-icon name="analytics-outline"></ion-icon>Estátisticas</span>';
         echo '            <span class="toggle" data-target="' . "note_" . $row['ID'] . '"><ion-icon name="document-outline"></ion-icon>Criar Anotações</span>';

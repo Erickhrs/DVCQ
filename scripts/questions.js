@@ -38,32 +38,38 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 document.querySelectorAll('.likeBtn').forEach(button => {
     button.addEventListener('click', function() {
-        // Seleciona o ícone dentro do botão
         const icon = this.querySelector('ion-icon');
-
-        // Verifica se o ícone já tem a classe 'liked'
+        const questionId = this.getAttribute('data-id');
+        
+        // Alterna a classe 'liked'
         const alreadyLiked = icon.classList.contains('liked');
-
-        // Alterna a classe 'liked' no ícone
         icon.classList.toggle('liked');
 
-        // Exibe o toast com a mensagem apropriada
-        Swal.fire({
-            title: alreadyLiked ? 'Curtida removida!' : 'Curtida salva!',
-            icon: 'success',
-            position: 'bottom-end',
-            showConfirmButton: false,
-            timer: 3000,
-            toast: true,
-            background: '#1d3969',
-            color: 'white',
-            timerProgressBar: true,
-            customClass: {
-                container: 'toast-container'
+        // Envia a requisição AJAX para adicionar/remover a curtida
+        fetch('./actions/handle_like.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'question_id': questionId
+            })
+        })
+        .then(response => response.text()) // Receba a resposta como texto
+        .then(data => {
+            try {
+                const jsonData = JSON.parse(data); // Tente analisar o JSON
+                // Aqui você pode adicionar lógica para tratar a resposta JSON
+            } catch (e) {
+                console.error('Erro ao analisar JSON:', e);
             }
-        });
+        })
+        .catch(error => console.error('Erro na requisição:', error));
     });
 });
+
+
+
 
 document.getElementById('feedback_btn').addEventListener('click', async function() {
     const { value: text } = await Swal.fire({
@@ -126,11 +132,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    function disableBtn(id) {
-        // Adiciona o atributo 'disabled' ao botão
-        var element = "vbtn_" + id;
-        console.log(id);
+function disableBtn(id) {
+    var element = document.getElementById("vbtn_" + id);
+    element.innerHTML = "Respondido";
+    element.style.backgroundColor = "#8080804f";
+    element.style.cursor = "not-allowed";
+    setTimeout(function() {
         element.disabled = true;
-    }
-});
+    }, 1000); // Atraso de 1 segundo (1000 milissegundos)
+}
+
