@@ -159,8 +159,19 @@ if ($result && $result->num_rows > 0) {
         <span><i class="bx bx-paperclip"></i> Anexados:</span>
          <p> ' . $row['related_contents'] . ' </p>
         </div>';
-        echo '<div id="est_' . $row['ID'] . '" class="charts animate__animated animate__zoomIn"><canvas id="chart' . $row['ID'] . '"></canvas><canvas id="chart2' . $row['ID'] . '"></canvas></div>';
 
+        
+        echo '<div id="est_' . $row['ID'] . '" class="charts animate__animated animate__zoomIn">';
+        echo '    <div class="container_to_flex">';
+        echo '        <div class="chart-wrapper">';
+        echo '            <canvas id="chart' . $row['ID'] . '"></canvas>';
+        echo '        </div>';
+        echo '        <div class="chart-wrapper">';
+        echo '            <canvas id="chart2' . $row['ID'] . '"></canvas>';
+        echo '        </div>';
+        echo '    </div>';
+        echo '</div>';
+       
         
     echo '<div id="' . "comments_" . $row['ID'] . '" class="comments animate__animated animate__fadeIn">';
     include './includes/get_comments.php';
