@@ -164,12 +164,14 @@ if ($result && $result->num_rows > 0) {
         <canvas id="chart' . $row['ID'] . '"></canvas>
         </div>';
         
-    echo '<div id="' . "comments_" . $row['ID'] . '" class="comments animate__animated animate__zoomIn">
-        <span>* AQUI FICARÁ OS COMENTÁRIOS *</span>
-        </div>'; 
-        echo '<div id="' . "note_" . $row['ID'] . '" class="comments animate__animated animate__zoomIn">
-        <span>* faça um comentário aqui *</span>
-        </div>'; 
+    echo '<div id="' . "comments_" . $row['ID'] . '" class="comments animate__animated animate__zoomIn">';
+       
+    echo '</div>'; 
+    echo '<div id="' . "note_" . $row['ID'] . '" class="notes animate__animated animate__fadeIn">';
+
+        $idQuestion = $row['ID'];
+      include './includes/get_notes.php';
+        echo '</div>'; 
         echo '</form>';
     }
 } else {

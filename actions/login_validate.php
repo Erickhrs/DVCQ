@@ -17,7 +17,8 @@ if(isset($_POST['email'], $_POST['password'])) {
         if(password_verify($password, $hashedPassword)) {
             // Define as variáveis de sessão
             $_SESSION['id'] = $usuario['ID'];
-            $_SESSION['name'] = $usuario['name'];          
+            $_SESSION['name'] = $usuario['name'];   
+            $_SESSION['picture'] = $usuario['picture'];       
             session_regenerate_id();
             header("Location: ../index.php");
             exit;

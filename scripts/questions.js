@@ -196,3 +196,33 @@ function disableBtn(id) {
     }, 1000); // Atraso de 1 segundo (1000 milissegundos)
 }
 
+
+function editNote(id) {
+    let newNote = prompt("Editar nota:");
+
+    if (newNote) {
+        $.ajax({
+            url: './actions/edit_note.php',
+            type: 'POST',
+            data: { id: id, note: newNote },
+            success: function(response) {
+                alert(response);
+                location.reload(); // Recarrega a página para atualizar as notas
+            }
+        });
+    }
+}
+
+function deleteNote(id) {
+    if (confirm("Tem certeza de que deseja excluir esta nota?")) {
+        $.ajax({
+            url: './actions/delete_note.php',
+            type: 'POST',
+            data: { id: id },
+            success: function(response) {
+                alert(response);
+                $('div[data-id="'+id+'"]').remove(); // Remove o item da página sem recarregar
+            }
+        });
+    }
+}
