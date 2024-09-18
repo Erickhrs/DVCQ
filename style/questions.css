@@ -368,7 +368,6 @@ input[type="radio"]:checked+label:before {
     max-width: 95%;
     padding: 15px;
     width: 95%;
-    background-color: #e8f9c7;
     display:none;
 }
 .notes{

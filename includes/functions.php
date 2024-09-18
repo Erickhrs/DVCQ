@@ -158,4 +158,10 @@ function isQuestionLiked($mysqli, $user_id, $question_id) {
     $result = $mysqli->query($query);
     return $result->num_rows > 0;
 }
+function getUserName($mysqli, $userID) {
+    $query = "SELECT name FROM users WHERE id = '" . $mysqli->real_escape_string($userID) . "' LIMIT 1";
+    $result = $mysqli->query($query);
+    $row = $result->fetch_assoc();
+    return $row ? strip_tags($row['name']) : 'Desconhecido';
+}
 ?>

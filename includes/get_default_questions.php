@@ -93,6 +93,7 @@ function getAlternative($mysqli, $question_id, $alternative) {
 // Verifica se há resultados
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+        $idQuestion = $row['ID'];
         $random_message = $text[array_rand($text)];
         $liked_class = isQuestionLiked($mysqli, $_SESSION['id'], $row['ID']) ? 'liked' : '';
         // Exibe as informações da questão
@@ -164,12 +165,11 @@ if ($result && $result->num_rows > 0) {
         <canvas id="chart' . $row['ID'] . '"></canvas>
         </div>';
         
-    echo '<div id="' . "comments_" . $row['ID'] . '" class="comments animate__animated animate__zoomIn">';
-       
+    echo '<div id="' . "comments_" . $row['ID'] . '" class="comments animate__animated animate__fadeIn">';
+    include './includes/get_comments.php';
     echo '</div>'; 
     echo '<div id="' . "note_" . $row['ID'] . '" class="notes animate__animated animate__fadeIn">';
 
-        $idQuestion = $row['ID'];
       include './includes/get_notes.php';
         echo '</div>'; 
         echo '</form>';
