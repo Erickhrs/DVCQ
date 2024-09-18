@@ -1,5 +1,6 @@
 <?php
 include('./includes/connection.php');
+
 // Prepara a consulta
 $stmt = $mysqli->prepare("SELECT question_ID, user_ID, picture, comment, created_at FROM comments WHERE question_ID = ?");
 $stmt->bind_param("s", $idQuestion); // 's' para string
@@ -9,17 +10,28 @@ $stmt->execute();
 
 // Obtém o resultado
 $result_cmts = $stmt->get_result();
+$total_comments = $result_cmts->num_rows;
 ?>
 
 <div class="comments-container">
+    <div class="comments-header">
+        <h2>Comentários (<?php echo $total_comments; ?>)</h2>
+        <div class="new-comment-form">
+            <input type="hidden" id="question_ID" value="<?php echo $idQuestion; ?>">
+            <input type="hidden" id="user_ID" value="<?php echo $_SESSION['id']; ?>">
+            <input type="text" id="comment" placeholder="Adicione um comentário" required>
+            <span id="submit-comment">Enviar</span>
+        </div>
+    </div>
+
     <?php
-    if ($result_cmts->num_rows > 0) {
+    if ($total_comments > 0) {
         while ($inf_cmts = $result_cmts->fetch_assoc()) {
             echo '<div class="comment-item">';
             echo '    <img src="' . $inf_cmts['picture'] . '" alt="User Picture" class="user-picture">'; // Adiciona a imagem
             echo '    <div class="comment-content">';
             echo '        <div class="comment-header">';
-            echo '            <span class="user-id">' . getUserName($mysqli,$inf_cmts['user_ID']) . '</span>';
+            echo '            <span class="user-id">' . getUserName($mysqli, $inf_cmts['user_ID']) . '</span>';
             echo '        </div>';
             echo '        <p class="comment-text">' . htmlspecialchars($inf_cmts['comment']) . '</p>';
             echo '        <div class="comment-footer">';
@@ -51,6 +63,46 @@ $stmt->close();
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #f4f4f4;
+}
+
+.comments-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.comments-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.new-comment-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.new-comment-form input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.new-comment-form #submit-comment {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.new-comment-form #submit-comment:hover {
+    background-color: #0056b3;
 }
 
 .comment-item {
@@ -105,3 +157,79 @@ $stmt->close();
     padding: 20px;
 }
 </style>
+
+<!-- Adicione o JavaScript abaixo ao final do seu arquivo -->
+<script>
+document.getElementById('submit-comment').addEventListener('click', function() {
+    const questionID = document.getElementById('question_ID').value;
+    const userID = document.getElementById('user_ID').value;
+    const comment = document.getElementById('comment').value;
+
+    if (comment.trim() === '') {
+        Swal.fire({
+            title: 'Por favor, adicione um comentário.',
+            icon: 'error',
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 6000,
+            toast: true,
+            background: 'red',
+            color: 'white',
+            timerProgressBar: true,
+            customClass: {
+                container: 'toast-container'
+            }
+        });
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('question_ID', questionID);
+    formData.append('user_ID', userID);
+    formData.append('comment', comment);
+
+    fetch('./actions/add_comment.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    title: 'Comentário em análise, aguardando aprovação!',
+                    icon: 'success',
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 6000,
+                    toast: true,
+                    background: '#1d3969',
+                    color: 'white',
+                    timerProgressBar: true,
+                    customClass: {
+                        container: 'toast-container'
+                    }
+                });
+                // Opcional: Atualize a lista de comentários aqui ou recarregue a página
+                document.getElementById('comment').value = ''; // Limpa o campo de comentário
+            } else {
+                Swal.fire({
+                    title: 'Erro ao adicionar comentário. Tente novamente!',
+                    icon: 'error',
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 6000,
+                    toast: true,
+                    background: 'red',
+                    color: 'white',
+                    timerProgressBar: true,
+                    customClass: {
+                        container: 'toast-container'
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+        });
+});
+</script>

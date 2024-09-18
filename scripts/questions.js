@@ -69,7 +69,7 @@ document.querySelectorAll('.likeBtn').forEach(button => {
                     showConfirmButton: false,
                     timer: 3000,
                     toast: true,
-                    background: '#1d3969',
+                    background: '#ff9aac',
                     color: 'white',
                     timerProgressBar: true,
                     customClass: {
