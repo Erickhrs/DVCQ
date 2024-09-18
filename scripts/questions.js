@@ -158,32 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
-    // Configura gráficos para todos os elementos <canvas> com IDs únicos
-    document.querySelectorAll('canvas').forEach((canvas) => {
-        const ctx = canvas.getContext('2d');
-        new Chart(ctx, {
-            type: 'bar', // Tipo do gráfico
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: 'Dataset',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    });
-
 });
 
 function disableBtn(id) {
@@ -226,3 +200,130 @@ function deleteNote(id) {
         });
     }
 }
+
+$(document).ready(function() {
+    // Função para buscar os dados da questão e renderizar o gráfico
+    function loadChart1(questionID) {
+        $.ajax({
+            url: './actions/unique_question_chart_doughnut.php', // Substitua pelo caminho correto do script PHP
+            method: 'GET',
+            data: { question_ID: questionID },
+            dataType: 'json',
+            success: function(data) {
+                var ctx = document.getElementById('chart' + questionID).getContext('2d');
+
+                var correctCount = data.correct_count;
+                var incorrectCount = data.incorrect_count;
+
+                var total = correctCount + incorrectCount;
+                var correctPercentage = (correctCount / total) * 100;
+                var incorrectPercentage = (incorrectCount / total) * 100;
+
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Acertos', 'Erros'],
+                        datasets: [{
+                            data: [correctCount, incorrectCount],
+                            backgroundColor: ['#4CAF50', '#F44336'], // Verde para acertos, vermelho para erros
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(tooltipItem) {
+                                        var label = tooltipItem.label;
+                                        var value = tooltipItem.raw;
+                                        var percentage = (value / total) * 100;
+                                        return label + ': ' + value + ' (' + percentage.toFixed(2) + '%)';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+
+
+    // Função para gerar o gráfico de coluna
+    function loadChart2(questionId) {
+        $.ajax({
+            url: './actions/unique_question_chart_columns.php',
+            type: 'GET',
+            data: { question_id: questionId },
+            dataType: 'json',
+            success: function(data) {
+                var ctx = $('#chart2' + questionId)[0].getContext('2d');
+                
+                // Configura o gráfico
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['A', 'B', 'C', 'D', 'E', 'Falso', 'Verdadeiro'],
+                        datasets: [{
+                            label: 'Porcentagem de Respostas',
+                            data: [
+                                data['A'] || 0,
+                                data['B'] || 0,
+                                data['C'] || 0,
+                                data['D'] || 0,
+                                data['E'] || 0,
+                                data['0'] || 0,
+                                data['1'] || 0
+                            ],
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)',
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+   
+
+    
+
+    // Exemplo: Carrega o gráfico quando o ícone de estatísticas é clicado
+    $('.stbtn').on('click', function() {
+        var target = $(this).data('target'); // O ID da questão
+        var questionID = target.split('_')[1]; // Extrai o question_ID do target
+
+        loadChart1(questionID); // Carrega o gráfico para a questão
+        loadChart2(questionID); 
+    });
+});

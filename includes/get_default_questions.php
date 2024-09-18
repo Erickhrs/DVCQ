@@ -148,7 +148,7 @@ if ($result && $result->num_rows > 0) {
 
         echo '<span class ="toggle" data-target="' . "gabarito_" . $row['ID'] . '"><ion-icon name="chatbox-outline"></ion-icon> Gabarito</span>';
         echo '            <span class="toggle" data-target="' . "comments_" . $row['ID'] . '"><ion-icon  name="chatbubbles-outline" ></ion-icon>Comentários</span>';
-        echo '            <span class="toggle" data-target="' . "est_" . $row['ID'] . '"><ion-icon name="analytics-outline"></ion-icon>Estátisticas</span>';
+        echo '            <span class="toggle stbtn" data-target="' . "est_" . $row['ID'] . '"><ion-icon name="analytics-outline"></ion-icon>Estátisticas</span>';
         echo '            <span class="toggle" data-target="' . "note_" . $row['ID'] . '"><ion-icon name="document-outline"></ion-icon>Criar Anotações</span>';
         echo '<span class="feedback_btn" data-session-id="' . $_SESSION['id']. '" data-question-id="' . $row['ID'] . '"><ion-icon name="flag-outline"></ion-icon>Feedback</span>';
         echo '        </div>';
@@ -159,11 +159,8 @@ if ($result && $result->num_rows > 0) {
         <span><i class="bx bx-paperclip"></i> Anexados:</span>
          <p> ' . $row['related_contents'] . ' </p>
         </div>';
-    echo '<div id="' . "est_" . $row['ID'] . '" class="charts animate__animated animate__zoomIn">
-        <span>DESEMPENHO GERAL (ACERTOS ERROS) - ALTernativas marcadas em colunas</span>
-        <canvas id="chart' . $row['ID'] . '"></canvas>
-        <canvas id="chart' . $row['ID'] . '"></canvas>
-        </div>';
+        echo '<div id="est_' . $row['ID'] . '" class="charts animate__animated animate__zoomIn"><canvas id="chart' . $row['ID'] . '"></canvas><canvas id="chart2' . $row['ID'] . '"></canvas></div>';
+
         
     echo '<div id="' . "comments_" . $row['ID'] . '" class="comments animate__animated animate__fadeIn">';
     include './includes/get_comments.php';
