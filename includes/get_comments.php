@@ -17,10 +17,11 @@ $total_comments = $result_cmts->num_rows;
     <div class="comments-header">
         <h2>Comentários (<?php echo $total_comments; ?>)</h2>
         <div class="new-comment-form">
-            <input type="hidden" id="question_ID" value="<?php echo $idQuestion; ?>">
-            <input type="hidden" id="user_ID" value="<?php echo $_SESSION['id']; ?>">
-            <input type="text" id="comment" placeholder="Adicione um comentário" required>
-            <span id="submit-comment">Enviar</span>
+            <input type="hidden" class="question_ID" data-question-id="<?php echo $idQuestion; ?>"
+                value="<?php echo $idQuestion; ?>">
+            <input type="hidden" class="user_ID" value="<?php echo $_SESSION['id']; ?>">
+            <input type="text" class="comment" placeholder="Adicione um comentário" required>
+            <span class="submit-comment" data-question-id="<?php echo $idQuestion; ?>">Enviar</span>
         </div>
     </div>
 
@@ -50,6 +51,7 @@ $total_comments = $result_cmts->num_rows;
 // Fecha a declaração
 $stmt->close();
 ?>
+
 
 <!-- Adicione o CSS abaixo ao seu arquivo de estilos -->
 <style>
@@ -91,7 +93,7 @@ $stmt->close();
     border-radius: 4px;
 }
 
-.new-comment-form #submit-comment {
+.new-comment-form .submit-comment {
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
@@ -101,7 +103,7 @@ $stmt->close();
     transition: background-color 0.3s ease;
 }
 
-.new-comment-form #submit-comment:hover {
+.new-comment-form .submit-comment:hover {
     background-color: #0056b3;
 }
 
@@ -160,76 +162,70 @@ $stmt->close();
 
 <!-- Adicione o JavaScript abaixo ao final do seu arquivo -->
 <script>
-document.getElementById('submit-comment').addEventListener('click', function() {
-    const questionID = document.getElementById('question_ID').value;
-    const userID = document.getElementById('user_ID').value;
-    const comment = document.getElementById('comment').value;
+document.querySelectorAll('.submit-comment').forEach(function(button) {
+    button.addEventListener('click', function() {
+        const questionID = this.getAttribute(
+            'data-question-id'); // Obtém o question_ID a partir do botão clicado
+        const userID = document.querySelector('.user_ID').value;
+        const comment = document.querySelector(`.question_ID[data-question-id="${questionID}"]`)
+            .parentElement.querySelector('.comment').value.trim();
 
-    if (comment.trim() === '') {
-        Swal.fire({
-            title: 'Por favor, adicione um comentário.',
-            icon: 'error',
-            position: 'bottom-end',
-            showConfirmButton: false,
-            timer: 6000,
-            toast: true,
-            background: 'red',
-            color: 'white',
-            timerProgressBar: true,
-            customClass: {
-                container: 'toast-container'
-            }
-        });
-        return;
-    }
+        if (comment === '') {
+            Swal.fire({
+                title: 'Por favor, adicione um comentário.',
+                icon: 'error',
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 6000,
+                toast: true,
+                background: 'red',
+                color: 'white',
+                timerProgressBar: true
+            });
+            return;
+        }
 
-    const formData = new FormData();
-    formData.append('question_ID', questionID);
-    formData.append('user_ID', userID);
-    formData.append('comment', comment);
+        const formData = new FormData();
+        formData.append('question_ID', questionID);
+        formData.append('user_ID', userID);
+        formData.append('comment', comment);
 
-    fetch('./actions/add_comment.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                Swal.fire({
-                    title: 'Comentário em análise, aguardando aprovação!',
-                    icon: 'success',
-                    position: 'bottom-end',
-                    showConfirmButton: false,
-                    timer: 6000,
-                    toast: true,
-                    background: '#1d3969',
-                    color: 'white',
-                    timerProgressBar: true,
-                    customClass: {
-                        container: 'toast-container'
-                    }
-                });
-                // Opcional: Atualize a lista de comentários aqui ou recarregue a página
-                document.getElementById('comment').value = ''; // Limpa o campo de comentário
-            } else {
-                Swal.fire({
-                    title: 'Erro ao adicionar comentário. Tente novamente!',
-                    icon: 'error',
-                    position: 'bottom-end',
-                    showConfirmButton: false,
-                    timer: 6000,
-                    toast: true,
-                    background: 'red',
-                    color: 'white',
-                    timerProgressBar: true,
-                    customClass: {
-                        container: 'toast-container'
-                    }
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-        });
+        fetch('./actions/add_comment.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: 'Comentário em análise para liberação!',
+                        icon: 'success',
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 6000,
+                        toast: true,
+                        background: '#1d3969',
+                        color: 'white',
+                        timerProgressBar: true
+                    });
+                    document.querySelector(`.question_ID[data-question-id="${questionID}"]`)
+                        .parentElement.querySelector('.comment').value =
+                        ''; // Limpa o campo de comentário
+                } else {
+                    Swal.fire({
+                        title: 'Erro ao adicionar comentário. Tente novamente!',
+                        icon: 'error',
+                        position: 'bottom-end',
+                        showConfirmButton: false,
+                        timer: 6000,
+                        toast: true,
+                        background: 'red',
+                        color: 'white',
+                        timerProgressBar: true
+                    });
+                }
+            })
+            .catch(error => console.error('Erro:', error));
+    });
 });
 </script>
