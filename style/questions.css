@@ -433,6 +433,7 @@ background-color: #78d578;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
+    gap: 70px;
 }
 
 /* Remove a borda inferior do último item */
