@@ -36,7 +36,7 @@ session_start();
                 <h1 class="user-name"><?php echo $_SESSION['name'];?></h1>
                 <div id="infos">
                     <p class="user-status">Status: Ativo</p>
-                    <p class="user-plan">Plano: Pago</p>
+                    <p class="user-plan">Plano: <?php echo $_SESSION['plan'];?></p>
                 </div>
             </div>
         </section>

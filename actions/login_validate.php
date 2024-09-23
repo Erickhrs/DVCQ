@@ -16,6 +16,7 @@ if(isset($_POST['email'], $_POST['password'])) {
         // Verifica se a senha está correta
         if(password_verify($password, $hashedPassword)) {
             // Define as variáveis de sessão
+            $_SESSION['plan'] = $usuario['plan']; 
             $_SESSION['id'] = $usuario['ID'];
             $_SESSION['name'] = $usuario['name'];   
             $_SESSION['picture'] = $usuario['picture'];       
