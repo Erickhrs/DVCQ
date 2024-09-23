@@ -1,6 +1,26 @@
 <?php
 session_start();
+require_once('./includes/connection.php'); // Supondo que você tenha um arquivo de conexão
+require_once('./includes/protect.php');
+// Recuperar o ID do usuário da sessão
+$user_id = $_SESSION['id'];
+
+// Consultar os dados do usuário no banco de dados
+$query = "SELECT name, email, phone, address, district, city, UF, CEP, birth, since FROM users WHERE id = ?";
+$stmt = $mysqli->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user_data = $result->fetch_assoc();
+
+// Verifique se o usuário foi encontrado
+if (!$user_data) {
+    // Redirecionar ou mostrar mensagem de erro
+    echo "Usuário não encontrado.";
+    exit();
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -14,8 +34,6 @@ session_start();
     <link rel="stylesheet" href="./style/global.css">
     <link rel="stylesheet" href="./style/index.css">
     <link rel="stylesheet" href="./style/profile.css">
-
-
 
     <title>DVC - QUESTÕES</title>
 </head>
@@ -51,8 +69,7 @@ session_start();
                 <ion-icon name="star-outline"></ion-icon> Meu plano
             </a>
             <a href="./edit-psw.php">
-                <ion-icon name="key-outline">
-                </ion-icon> Alterar senha
+                <ion-icon name="key-outline"></ion-icon> Alterar senha
             </a>
             <a>
                 <ion-icon name="calendar-outline"></ion-icon>
@@ -69,37 +86,27 @@ session_start();
             <!-- Informações Pessoais -->
             <section class="user-info-section">
                 <h2>
-                    <ion-icon name="person-outline"></ion-icon>Informações Pessoais
+                    <ion-icon name="person-outline"></ion-icon> Informações Pessoais
                 </h2>
                 <div class="user-info">
                     <div class="user-info-group">
                         <label>Email:</label>
-                        <p>email@domain.com</p>
+                        <p><?php echo htmlspecialchars($user_data['email']); ?></p>
                     </div>
 
                     <div class="user-info-group">
                         <label>Telefone:</label>
-                        <p>(11) 99999-9999</p>
-                    </div>
-
-                    <div class="user-info-group">
-                        <label>CPF:</label>
-                        <p>123.456.789-10</p>
-                    </div>
-
-                    <div class="user-info-group">
-                        <label>CNPJ:</label>
-                        <p>12.345.678/0001-99</p>
+                        <p><?php echo htmlspecialchars($user_data['phone']); ?></p>
                     </div>
 
                     <div class="user-info-group">
                         <label>Data de Nascimento:</label>
-                        <p>01/01/1980</p>
+                        <p><?php echo htmlspecialchars(date('d/m/Y', strtotime($user_data['birth']))); ?></p>
                     </div>
 
                     <div class="user-info-group">
                         <label>Cliente Desde:</label>
-                        <p>05/10/2010</p>
+                        <p><?php echo htmlspecialchars(date('d/m/Y', strtotime($user_data['since']))); ?></p>
                     </div>
                 </div>
             </section>
@@ -107,39 +114,37 @@ session_start();
             <!-- Informações de Endereço -->
             <section class="user-info-section">
                 <h2>
-                    <ion-icon name="home-outline"></ion-icon></i> Endereço
+                    <ion-icon name="home-outline"></ion-icon> Endereço
                 </h2>
                 <div class="user-info">
                     <div class="user-info-group">
                         <label>Endereço:</label>
-                        <p>Rua Exemplo, 123</p>
+                        <p><?php echo htmlspecialchars($user_data['address']); ?></p>
                     </div>
 
                     <div class="user-info-group">
                         <label>Bairro:</label>
-                        <p>Bairro Exemplo</p>
+                        <p><?php echo htmlspecialchars($user_data['district']); ?></p>
                     </div>
 
                     <div class="user-info-group">
                         <label>Cidade:</label>
-                        <p>São Paulo</p>
+                        <p><?php echo htmlspecialchars($user_data['city']); ?></p>
                     </div>
 
                     <div class="user-info-group">
                         <label>UF:</label>
-                        <p>SP</p>
+                        <p><?php echo htmlspecialchars($user_data['UF']); ?></p>
                     </div>
 
                     <div class="user-info-group">
                         <label>CEP:</label>
-                        <p>12345-678</p>
+                        <p><?php echo htmlspecialchars($user_data['CEP']); ?></p>
                     </div>
                 </div>
             </section>
         </section>
     </main>
-
-
 
     <!-- Footer -->
     <?php include_once('./includes/footer.php')?>
