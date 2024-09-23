@@ -8,7 +8,7 @@ echo '
         <ion-icon name="reorder-three-outline" id="burguer"></ion-icon>
     </div>
     <div id="nav-second-container">';
-    
+
 if (!isset($_SESSION["id"])) {
     echo '
         <a href="./login.php">Entrar</a>
@@ -18,8 +18,8 @@ if (!isset($_SESSION["id"])) {
     echo '
         <div>
             <a href="./profile.php" style="background-color: transparent">
-                <img src="./assets/picc.jpg" alt="profile" class="profile_pic">
-                <span style="color:black;">Erick Rosa</span>
+                <img src="' . $_SESSION['picture'] . '" alt="profile" class="profile_pic">
+                <span style="color:black;">' . $_SESSION['name'] . '</span>
             </a>
         </div>';
 }

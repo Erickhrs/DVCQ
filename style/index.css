@@ -148,12 +148,14 @@ header {
     }
 }
 .profile_pic{
-    max-width: 25px;
-    border-radius: 50px;
+    max-width: 30px;
     cursor: pointer;
     position: relative;
-    top: 5px;
+    top: 11px;
     right: 5px;
+    border-radius: 50%;
+    height: 30px;
+  
 }
 
 #home-menu ul{

@@ -32,8 +32,8 @@ session_start();
         <!-- User Header (Picture, Name, Status, Plan) -->
         <section class="user-header-section">
             <div class="user-header">
-                <img src="./assets/perfilpic.jpg" alt="User Picture" class="user-picture">
-                <h1 class="user-name">Nome do Usuário</h1>
+                <img src="<?php echo $_SESSION['picture'];?>" alt="User Picture" class="user-picture">
+                <h1 class="user-name"><?php echo $_SESSION['name'];?></h1>
                 <div id="infos">
                     <p class="user-status">Status: Ativo</p>
                     <p class="user-plan">Plano: Pago</p>
@@ -43,20 +43,21 @@ session_start();
 
         <!-- User Settings (Edit, Change Password, Activity History) -->
         <section id="settings" class="user-settings-section">
-            <button>
+            <a href="./edit-profile.php">
                 <ion-icon name="create-outline"></ion-icon>
                 Editar informações
-            </button>
-            <button>
+            </a>
+            <a>
                 <ion-icon name="star-outline"></ion-icon> Meu plano
-            </button>
-            <button>
-                <ion-icon name="key-outline"></ion-icon> Alterar senha
-            </button>
-            <button>
+            </a>
+            <a href="./edit-psw.php">
+                <ion-icon name="key-outline">
+                </ion-icon> Alterar senha
+            </a>
+            <a>
                 <ion-icon name="calendar-outline"></ion-icon>
                 Ver histórico de atividade
-            </button>
+            </a>
             <a href="logout.php" class="exit">
                 <ion-icon name="exit-outline"></ion-icon>
                 Desconectar
