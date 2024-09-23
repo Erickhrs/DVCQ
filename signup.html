@@ -1,183 +1,182 @@
 <!DOCTYPE html>
-<!--=== Coding by CodingLab | www.codinglabweb.com === -->
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    
     <!----======== CSS ======== -->
-    <link rel="shortcut icon" href="./assets/logo.ico" type="image/x-icon">
-    <link rel="stylesheet" href="./style/signup.css">
     <link rel="stylesheet" href="./style/global.css">
-
+    <link rel="stylesheet" href="./style/signup.css">
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-    <title>Responsive Regisration Form </title>
+    <title>Responsive Registration Form</title>
 </head>
-
 <body>
     <div class="container">
-        <header>registre-se ! :)</header>
+        <header>Cadastro</header>
 
-        <form action="#">
+        <form action="./actions/add_user.php" method="POST">
             <div class="form first">
                 <div class="details personal">
-                    <span class="title">Informações Pessoais</span>
+                    <span class="title">Detalhes Pessoais</span>
 
                     <div class="fields">
                         <div class="input-field">
-                            <label>Nome e Sobrenome</label>
-                            <input type="text" placeholder="Erick Rosa" required>
-                        </div>
-
-                        <div class="input-field">
-                            <label>Data de Nascimento</label>
-                            <input type="date" placeholder="Enter birth date" required>
+                            <label>Nome</label>
+                            <input type="text" id="name" name="name" placeholder="Digite seu nome" required minlength="3" maxlength="100">
                         </div>
 
                         <div class="input-field">
                             <label>Email</label>
-                            <input type="text" placeholder="tierickrosa@gmail.com" required>
+                            <input type="email" id="email" name="email" placeholder="Digite seu email" required>
                         </div>
 
                         <div class="input-field">
-                            <label>Número de telefone</label>
-                            <input type="number" placeholder="(xx) xxxxx-xxxx" required>
+                            <label>Telefone (DDI + DDD)</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+5500xxxxxxxxx" minlength="14" maxlength="14">
                         </div>
 
                         <div class="input-field">
-                            <label>Genêro</label>
-                            <select required>
-                                <option disabled selected>Select gender</option>
-                                <option>Masculino</option>
-                                <option>Feminino</option>
-                                <option>Outro</option>
-                            </select>
+                            <label>CPF</label>
+                            <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" minlength="11" maxlength="14" oninput="validateCPF()">
+                            <span id="cpfValidationMessage" style="color: red; font-size: 10px; padding-left: 15px;"></span>
                         </div>
-                        <div class="input-field">
-                            <label>!!NÃO SEI AINDA</label>
-                            <input type="text" placeholder="Enter your ccupation" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="details ID">
-                    <span class="title">Identity Details</span>
-
-                    <div class="fields">
-                        <div class="input-field">
-                            <label>Tipo ID</label>
-                            <select required>
-                                <option disabled selected>Selecione o tipo de ID</option>
-                                <option>CNPJ</option>
-                                <option>CPF</option>
-                            </select>
-                        </div>
-
-                        <div class="input-field">
-                            <label>CPF/CNPJ</label>
-                            <input type="number" placeholder="Enter ID number" required>
-                        </div>
-                    </div>
-
-                    <button class="nextBtn">
-                        <span class="btnText">Next</span>
-                        <i class="uil uil-navigator"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="form second">
-                <div class="details address">
-                    <span class="title">Address Details</span>
-
-                    <div class="fields">
+                        
                         <div class="input-field">
                             <label>CEP</label>
-                            <input type="number" placeholder="Digite seu CEP" required>
+                            <input type="text" id="cep" name="cep" placeholder="Digite seu CEP" minlength="8" maxlength="8" oninput="searchCEP()">
                         </div>
-                        <div class="input-field">
-                            <label>Estado</label>
-                            <select>
-                                <option value="AC">Acre</option>
-                                <option value="AL">Alagoas</option>
-                                <option value="AP">Amapá</option>
-                                <option value="AM">Amazonas</option>
-                                <option value="BA">Bahia</option>
-                                <option value="CE">Ceará</option>
-                                <option value="DF">Distrito Federal</option>
-                                <option value="ES">Espírito Santo</option>
-                                <option value="GO">Goiás</option>
-                                <option value="MA">Maranhão</option>
-                                <option value="MT">Mato Grosso</option>
-                                <option value="MS">Mato Grosso do Sul</option>
-                                <option value="MG">Minas Gerais</option>
-                                <option value="PA">Pará</option>
-                                <option value="PB">Paraíba</option>
-                                <option value="PR">Paraná</option>
-                                <option value="PE">Pernambuco</option>
-                                <option value="PI">Piauí</option>
-                                <option value="RJ">Rio de Janeiro</option>
-                                <option value="RN">Rio Grande do Norte</option>
-                                <option value="RS">Rio Grande do Sul</option>
-                                <option value="RO">Rondônia</option>
-                                <option value="RR">Roraima</option>
-                                <option value="SC">Santa Catarina</option>
-                                <option value="SP">São Paulo</option>
-                                <option value="SE">Sergipe</option>
-                                <option value="TO">Tocantins</option>
-                            </select>
-                        </div>
-                        <div class="input-field">
-                            <label>Cidade</label>
-                            <input type="text" placeholder="Qual é sua cidade?" required>
-                        </div>
+
                         <div class="input-field">
                             <label>Endereço</label>
-                            <input type="text" placeholder="Ex: Rua hum - 2004">
+                            <input type="text" id="address" name="address" placeholder="Digite seu endereço" minlength="5" maxlength="255">
                         </div>
+
                         <div class="input-field">
                             <label>Bairro</label>
-                            <input type="text" placeholder="Ex: Jardim Floresta" required>
+                            <input type="text" id="district" name="district" placeholder="Digite seu bairro" minlength="3" maxlength="100">
                         </div>
-                    </div>
-                </div>
 
-                <div class="details family">
-                    <span class="title">Outro detalhes</span>
+                        <div class="input-field">
+                            <label>Cidade</label>
+                            <input type="text" id="city" name="city" placeholder="Digite sua cidade" minlength="3" maxlength="100">
+                        </div>
 
-                    <div class="fields">
+                        <div class="input-field">
+                            <label>UF</label>
+                            <input type="text" id="uf" name="uf" placeholder="Digite sua UF" minlength="2" maxlength="2">
+                        </div>
+
+                        <div class="input-field">
+                            <label>Data de Nascimento</label>
+                            <input type="date" id="birth" name="birth" placeholder="Digite sua data de nascimento" required>
+                        </div>
+
                         <div class="input-field">
                             <label>Senha</label>
-                            <input type="password" placeholder="Senha" required>
+                            <input type="password" id="psw" name="psw" placeholder="Digite sua senha" required minlength="6" maxlength="30">
                         </div>
+
                         <div class="input-field">
-                            <label>Confirme sua senha</label>
-                            <input type="password" placeholder="Senha" required>
+                            <label>Confirmar Senha</label>
+                            <input type="password" id="confirm_psw" name="confirm_psw" placeholder="Confirme sua senha" required minlength="6" maxlength="30">
                         </div>
-                    </div>
-
-                    <div class="buttons">
-                        <div class="backBtn">
-                            <i class="uil uil-navigator"></i>
-                            <span class="btnText">Back</span>
-                        </div>
-
-                        <button class="sumbit">
-                            <span class="btnText">Submit</span>
-                            <i class="uil uil-navigator"></i>
-                        </button>
                     </div>
                 </div>
+
+                <button type="submit">
+                    <span class="btnText">Cadastrar</span>
+                </button>
             </div>
         </form>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const errorMessage = localStorage.getItem('signupError');
+        if (errorMessage) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: errorMessage,
+                position: 'bottom-right',
+                timer: 5000,
+                toast: true,
+                showConfirmButton: false
+            });
+            localStorage.removeItem('signupError'); // Remove a mensagem após exibir
+        }
+    });
+</script>
 
-    <script src="./scripts/signup.js"></script>
+
+    <script>
+        function searchCEP() {
+            const cep = document.getElementById('cep').value.replace('-', '');
+            if (cep.length === 8) {
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            document.getElementById('address').value = data.logradouro;
+                            document.getElementById('district').value = data.bairro;
+                            document.getElementById('city').value = data.localidade;
+                            document.getElementById('uf').value = data.uf;
+                        } else {
+                            alert('CEP não encontrado.');
+                        }
+                    })
+                    .catch(error => console.error('Erro ao buscar CEP:', error));
+            }
+        }
+
+        function validateCPF() {
+            const cpf = document.getElementById('cpf').value.replace(/\D/g, '');
+            const messageElement = document.getElementById('cpfValidationMessage');
+
+            if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+                messageElement.textContent = "CPF inválido!";
+                document.getElementById('cpf').style.border = '1px solid red';
+                return;
+            }
+
+            let sum = 0;
+            let remainder;
+
+            // Validando primeiro dígito
+            for (let i = 1; i <= 9; i++) {
+                sum += parseInt(cpf[i - 1]) * (11 - i);
+            }
+            remainder = (sum * 10) % 11;
+            if (remainder === 10 || remainder === 11) {
+                remainder = 0;
+            }
+            if (remainder !== parseInt(cpf[9])) {
+                messageElement.textContent = "CPF inválido!";
+                document.getElementById('cpf').style.border = '1px solid red';
+                return;
+            }
+
+            // Validando segundo dígito
+            sum = 0;
+            for (let i = 1; i <= 10; i++) {
+                sum += parseInt(cpf[i - 1]) * (12 - i);
+            }
+            remainder = (sum * 10) % 11;
+            if (remainder === 10 || remainder === 11) {
+                remainder = 0;
+            }
+            if (remainder !== parseInt(cpf[10])) {
+                messageElement.textContent = "CPF inválido!";
+                document.getElementById('cpf').style.border = '1px solid red';
+                return;
+            }
+
+            messageElement.textContent = "";
+            ocument.getElementById('cpf').style.border = '1px solid green'; // Borda verde para CPF válido
+        }
+    </script>
 </body>
-<?php include_once('./includes/footer.php')?>
-
 </html>

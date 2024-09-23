@@ -20,7 +20,7 @@ $total_comments = $result_cmts->num_rows;
             <input type="hidden" class="question_ID" data-question-id="<?php echo $idQuestion; ?>"
                 value="<?php echo $idQuestion; ?>">
             <input type="hidden" class="user_ID" value="<?php echo $_SESSION['id']; ?>">
-            <input type="text" class="comment" placeholder="Adicione um comentário" required>
+            <input type="text" class="comment" placeholder="Adicione um comentário">
             <span class="submit-comment" data-question-id="<?php echo $idQuestion; ?>">Enviar</span>
         </div>
     </div>
