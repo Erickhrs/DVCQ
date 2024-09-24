@@ -37,12 +37,12 @@ session_start();
                     </div>
 
                     <div class="field input-field">
-                        <input type="password" placeholder="Password" class="password" name="password">
+                        <input type="password" placeholder="Senha" class="password" name="password">
                         <i class='bx bx-hide eye-icon'></i>
                     </div>
 
                     <div class="form-link">
-                        <a href="#" class="forgot-pass">Forgot password?</a>
+                        <a href="#" class="forgot-pass">Esqueceu a senha?</a>
                     </div>
 
                     <div class="field button-field">
@@ -51,7 +51,7 @@ session_start();
                 </form>
 
                 <div class="form-link">
-                    <span>Don't have an account? <a href="./signup.html" class="link signup-link">Signup</a></span>
+                    <span>Não tem uma conta? <a href="./signup.html" class="link signup-link">Cadastra-se</a></span>
                 </div>
             </div>
 
@@ -78,4 +78,4 @@ session_start();
     <script src="./scripts/login.js"></script>
 </body><?php include_once('./includes/footer.php')?>
 
- </html>
+</html>
