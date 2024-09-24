@@ -65,7 +65,7 @@ if (!$user_data) {
                 <ion-icon name="create-outline"></ion-icon>
                 Editar informações
             </a>
-            <a>
+            <a href="./my-plan.php">
                 <ion-icon name="star-outline"></ion-icon> Meu plano
             </a>
             <a href="./edit-psw.php">

@@ -14,7 +14,7 @@ $current_plan = $_SESSION['plan'];
 
 <div class="pricing">
     <div class="plan <?php echo $current_plan == '0' ? 'current' : ''; ?>">
-        <h2>Grátis</h2>
+        <h2>Padrão</h2>
         <div class="price">Grátis</div>
         <ul class="features">
             <li><i class='bx bx-check-circle'></i> 10 questões por dia:<br> Pratique diariamente com um limite saudável.
@@ -25,13 +25,10 @@ $current_plan = $_SESSION['plan'];
         <?php if ($current_plan === '0'): ?>
         <span>Plano Atual</span>
         <?php endif; ?>
-        <?php if ($current_plan !== '0'): ?>
-        <button>Assinar Grátis</button>
-        <?php endif; ?>
     </div>
 
     <div class="plan <?php echo $current_plan == '1' ? 'current' : ''; ?>">
-        <h2>Padrão</h2>
+        <h2>Pro</h2>
         <div class="price">R$ 24,90/mês</div>
         <ul class="features">
             <li><i class='bx bx-check-circle'></i> Questões de Bancas 100% Comentadas:<br> Entenda cada resposta com
