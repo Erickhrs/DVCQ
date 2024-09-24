@@ -1,5 +1,20 @@
 <?php
 session_start();
+include_once('./includes/functions.php');
+$correct = total_user_cw($mysqli, $_SESSION['id'], '1'); // Total de acertos
+$wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros
+
+$performance_data = get_performance_by_subject($mysqli, $_SESSION['id']);
+$labels = [];
+$correct_data = [];
+$wrong_data = [];
+
+foreach ($performance_data as $performance) {
+    $labels[] = 'Matéria ' . $performance['question_ID']; // Aqui você pode mapear o question_ID para o nome da matéria, se necessário
+    $correct_data[] = $performance['correct_count'];
+    $wrong_data[] = $performance['wrong_count'];
+}
+list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SESSION['id']);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -12,6 +27,7 @@ session_start();
     <link rel="stylesheet" href="./style/index.css">
     <link rel="stylesheet" href="./style/statistics.css">
     <title>DVC - QUESTÕES</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -33,7 +49,7 @@ session_start();
                     </a></li>
             </ul>
         </nav>
-        <nav id="stat_filter">
+        <nav id="stat_filter" style="display: none;">
             <form class="horizontal-form">
                 <div>
                     <label for="periodo">Período:</label>
@@ -95,21 +111,22 @@ session_start();
                     <h3>Desempenho Geral</h3>
                     <div class="grid3">
                         <div>
-                            <h6>Questões Resolvidas: 12</h6>
-                            <h6>Total de matériass: 12</h6>
-                            <h6>Acertos: 12</h6>
-                            <h6>Erros: 12</h6>
+                            <h6>Questões Resolvidas: <?php echo total_questions_answered($mysqli, $_SESSION['id'])?>
+                            </h6>
+                            <h6>Total de matérias: <?php echo total_subjects($mysqli, $_SESSION['id'])?></h6>
+                            <h6 id="correct">Acertos: <?php echo total_user_cw($mysqli, $_SESSION['id'], '1')?></h6>
+                            <h6 id="wrong">Erros: <?php echo total_user_cw($mysqli, $_SESSION['id'], '0')?></h6>
                         </div>
-                        <div>grafico circular acertos/erros</div>
-                        <div>grafico para mostrar desempenho em cada materia feita sla</div>
+                        <div>
+                            <canvas id="total_cw_chart"></canvas>
+                        </div>
+                        <div><canvas id="subject_performance_chart"></canvas></div>
                     </div>
                 </div>
                 <div class="card_container">
                     <h3>Evolução do Desempenho</h3>
                     <div class="grid1">
-                        <div>
-                            grafico evolutivo mostrando evolução de erros e acertos ao decorrer do tempo
-                        </div>
+                        <canvas id="evolution_chart"></canvas>
                     </div>
                 </div>
                 <div class="card_container">
@@ -134,5 +151,134 @@ session_start();
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="./scripts/protect.js"></script>
+<script>
+const total_cw_ctx = document.getElementById('total_cw_chart').getContext('2d');
+const myPieChart = new Chart(total_cw_ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Acertos', 'Erros'],
+        datasets: [{
+            label: 'Desempenho',
+            data: [<?php echo $correct; ?>, <?php echo $wrong; ?>],
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 99, 132, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Sua Relação de Acertos e Erros'
+            }
+        }
+    }
+});
+
+const subjectCtx = document.getElementById('subject_performance_chart').getContext('2d');
+const subjectChart = new Chart(subjectCtx, {
+    type: 'bar',
+    data: {
+        labels: <?php echo json_encode($labels); ?>,
+        datasets: [{
+                label: 'Acertos',
+                data: <?php echo json_encode($correct_data); ?>,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Erros',
+                data: <?php echo json_encode($wrong_data); ?>,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Desempenho por Matéria'
+            }
+        }
+    }
+});
+
+const evolution_ctx = document.getElementById('evolution_chart').getContext('2d');
+const evolutionChart = new Chart(evolution_ctx, {
+    type: 'line', // Gráfico de linha
+    data: {
+        labels: <?php echo json_encode($dates); ?>,
+        datasets: [{
+                label: 'Acertos',
+                data: <?php echo json_encode($correct_counts); ?>,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.4)', // Área preenchida
+                fill: true, // Preencher a área sob a linha
+                tension: 0.4, // Suaviza a linha
+                borderWidth: 2, // Espessura da linha
+            },
+            {
+                label: 'Erros',
+                data: <?php echo json_encode($wrong_counts); ?>,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.4)', // Área preenchida
+                fill: true, // Preencher a área sob a linha
+                tension: 0.4, // Suaviza a linha
+                borderWidth: 2, // Espessura da linha
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Evolução de Acertos e Erros ao Longo do Tempo'
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Datas'
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Contagem'
+                },
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+</body>
 
 </html>

@@ -164,4 +164,105 @@ function getUserName($mysqli, $userID) {
     $row = $result->fetch_assoc();
     return $row ? strip_tags($row['name']) : 'Desconhecido';
 }
+
+function total_questions_answered($mysqli, $userID) {
+    $total = 0;
+    // Prepara a consulta SQL
+    $query = "SELECT COUNT(*) as total FROM users_answers WHERE user_ID = ?";
+    
+    // Prepara a declaração
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $userID);
+    $stmt->execute();
+    $stmt->bind_result($total);
+    $stmt->fetch();
+    $stmt->close();
+    
+    return $total;
+}
+function total_subjects($mysqli, $userID) {
+    $total = 0;
+
+    // Prepara a consulta SQL para contar perguntas distintas
+    $query = "SELECT COUNT(DISTINCT question_ID) as total FROM users_answers WHERE user_ID = ?";
+    
+    // Prepara a declaração
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $userID);
+    $stmt->execute();
+    $stmt->bind_result($total);
+    $stmt->fetch();
+    $stmt->close();
+    
+    return $total;
+}
+function total_user_cw($mysqli, $userID, $cw) {
+    $total = 0;
+    // Prepara a consulta SQL
+    $query = "SELECT COUNT(*) as total FROM users_answers WHERE user_ID = ? AND is_correct = $cw";
+    
+    // Prepara a declaração
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $userID);
+    $stmt->execute();
+    $stmt->bind_result($total);
+    $stmt->fetch();
+    $stmt->close();
+    
+    return $total;
+}
+
+
+function get_performance_by_subject($mysqli, $user_id) {
+    $query = "
+        SELECT question_ID, 
+            SUM(is_correct) AS correct_count, 
+            COUNT(*) - SUM(is_correct) AS wrong_count
+        FROM users_answers 
+        WHERE user_ID = ? 
+        GROUP BY question_ID
+    ";
+
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $performance = [];
+    while ($row = $result->fetch_assoc()) {
+        $performance[] = [
+            'question_ID' => $row['question_ID'],
+            'correct_count' => (int)$row['correct_count'],
+            'wrong_count' => (int)$row['wrong_count']
+        ];
+    }
+    
+    return $performance;
+}
+function get_evolution_data($mysqli, $user_id) {
+    $query = "SELECT DATE(answer_date) AS date, SUM(is_correct) AS correct_count, COUNT(*) - SUM(is_correct) AS wrong_count
+              FROM users_answers
+              WHERE user_ID = ?
+              GROUP BY DATE(answer_date)
+              ORDER BY DATE(answer_date)";
+
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $dates = [];
+    $correct_counts = [];
+    $wrong_counts = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $dates[] = $row['date'];
+        $correct_counts[] = $row['correct_count'];
+        $wrong_counts[] = $row['wrong_count'];
+    }
+
+    return [$dates, $correct_counts, $wrong_counts];
+}
+
+
 ?>
