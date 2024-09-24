@@ -124,22 +124,20 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
                     </div>
                 </div>
                 <div class="card_container">
-                    <h3>Evolução do Desempenho</h3>
-                    <div class="grid1">
-                        <canvas id="evolution_chart"></canvas>
-                    </div>
-                </div>
-                <div class="card_container">
                     <h3>Contabilizando disciplinas</h3>
-                    <div class="grid3">
-                        <div>
-                            <h6>Questões Resolvidas: 12</h6>
-                            <h6>Total de matériass: 12</h6>
-                        </div>
+                    <div class="grid2">
                         <div>grafico circular de materias feitas</div>
                         <div>lista de todas as disciplinas e o total feito por voce em cada</div>
                     </div>
                 </div>
+                <div class="card_container">
+                    <h3>Evolução do Desempenho</h3>
+                    <div class="grid1">
+                        <canvas id="evolution_chart" width="400" height="200"
+                            style="max-width: 100%; height: auto;"></canvas>
+                    </div>
+                </div>
+
             </div>
 
         </main>

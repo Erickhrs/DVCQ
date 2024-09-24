@@ -9,6 +9,12 @@
     gap: 15px;
 
 }
+.grid2 div{
+  background-color: #80808012;
+  border-radius: 4px;
+  height: 200px;
+  padding: 20px;
+}
 .grid3{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
