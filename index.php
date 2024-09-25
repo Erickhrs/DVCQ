@@ -1,5 +1,9 @@
 <?php
 session_start();
+include_once('./includes/functions.php');
+
+$correct = total_user_cw($mysqli, $_SESSION['id'], '1'); // Total de acertos
+$wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -32,8 +36,14 @@ session_start();
                     </a></li>
             </ul>
             <main id="home-menu-root">
-                <div class="card_container">
-                    <h1>oi</h1>
+                <h1>Bem vindo de volta, <?php echo $_SESSION['name']?></h1>
+                <div>
+                    <h6>Questões Resolvidas: <?php echo total_questions_answered($mysqli, $_SESSION['id']); ?>
+                    </h6>
+                    <h6 id="correct">Questões Acertadas: <?php echo $correct; ?></h6>
+                    <h6 id="wrong">Questões Erros: <?php echo $wrong; ?></h6>
+                </div>
+
                 </div>
             </main>
         </nav>
