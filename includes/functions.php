@@ -451,9 +451,456 @@ function getUserDisciplinesCountByLevel($mysqli, $userID) {
     return $levelsCount;
 }
 
+function getUserDisciplinesCountByBanca($mysqli, $userID) {
+    // Primeiro, pegar todos os question_ID da tabela users_answers para o usuário
+    $query = "SELECT question_ID FROM users_answers WHERE user_ID = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $userID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Array para contar a ocorrência de cada question_ID
+    $questionCounts = [];
+
+    // Guardar todos os question_ID e contar quantas vezes aparecem
+    while ($row = $result->fetch_assoc()) {
+        $questionID = $row['question_ID'];
+        if (!isset($questionCounts[$questionID])) {
+            $questionCounts[$questionID] = 0;
+        }
+        $questionCounts[$questionID]++;
+    }
+
+    $stmt->close();
+
+    // Array final com as bancas e seus contadores
+    $bancasCount = [];
+
+    // Para cada question_ID, pegar a banca na tabela questions
+    foreach ($questionCounts as $questionID => $count) {
+        $query = "SELECT banca FROM questions WHERE ID = ?";
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("s", $questionID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Se encontrar a banca, adicionar ao contador
+        if ($row = $result->fetch_assoc()) {
+            $banca = $row['banca'];
+
+            // Remover espaços em branco
+            $banca = trim($banca);
+
+            // Adicionar contagem ao array de bancas
+            if (!isset($bancasCount[$banca])) {
+                $bancasCount[$banca] = 0;
+            }
+            $bancasCount[$banca] += $count; // Acumula a contagem
+        }
+
+        $stmt->close();
+    }
+
+    // Transformar o array de bancas em um array de arrays associativos
+    $resultArray = [];
+    foreach ($bancasCount as $banca => $count) {
+        $resultArray[] = [
+            'name' => $banca,
+            'count' => $count
+        ];
+    }
+
+    return $resultArray; // Retorna um array de arrays associativos
+}
+
+function getUserJobFunctionsCount($mysqli, $userID) {
+    // Primeiro, pegar todos os question_ID da tabela users_answers para o usuário
+    $query = "SELECT question_ID FROM users_answers WHERE user_ID = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $userID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Array para contar a ocorrência de cada question_ID
+    $questionCounts = [];
+
+    // Guardar todos os question_ID e contar quantas vezes aparecem
+    while ($row = $result->fetch_assoc()) {
+        $questionID = $row['question_ID'];
+        if (!isset($questionCounts[$questionID])) {
+            $questionCounts[$questionID] = 0;
+        }
+        $questionCounts[$questionID]++;
+    }
+
+    $stmt->close();
+
+    // Array final com os job functions e seus contadores
+    $jobFunctionsCount = [];
+
+    // Para cada question_ID, pegar os job_functions na tabela questions
+    foreach ($questionCounts as $questionID => $count) {
+        $query = "SELECT job_function FROM questions WHERE ID = ?";
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("s", $questionID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Se encontrar os job_functions, separar e contar
+        if ($row = $result->fetch_assoc()) {
+            $jobFunctions = $row['job_function'];
+
+            // Separar os IDs dos job_functions
+            $jobFunctionIDs = explode('-', $jobFunctions);
+
+            // Para cada job_function, adicionar ao array com o job_function como chave
+            foreach ($jobFunctionIDs as $jobFunctionID) {
+                // Remover espaços em branco
+                $jobFunctionID = trim($jobFunctionID);
+
+                // Adicionar contagem ao array de job functions
+                if (!isset($jobFunctionsCount[$jobFunctionID])) {
+                    $jobFunctionsCount[$jobFunctionID] = 0;
+                }
+                $jobFunctionsCount[$jobFunctionID] += $count; // Acumula a contagem
+            }
+        }
+
+        $stmt->close();
+    }
+
+    return $jobFunctionsCount;
+}
+function getUserJobRolesCount($mysqli, $userID) {
+    // Primeiro, pegar todos os question_ID da tabela users_answers para o usuário
+    $query = "SELECT question_ID FROM users_answers WHERE user_ID = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $userID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Array para contar a ocorrência de cada question_ID
+    $questionCounts = [];
+
+    // Guardar todos os question_ID e contar quantas vezes aparecem
+    while ($row = $result->fetch_assoc()) {
+        $questionID = $row['question_ID'];
+        if (!isset($questionCounts[$questionID])) {
+            $questionCounts[$questionID] = 0;
+        }
+        $questionCounts[$questionID]++;
+    }
+
+    $stmt->close();
+
+    // Array final com os job_roles e seus contadores
+    $jobRolesCount = [];
+
+    // Para cada question_ID, pegar os job_roles na tabela questions
+    foreach ($questionCounts as $questionID => $count) {
+        $query = "SELECT job_role FROM questions WHERE ID = ?";
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("s", $questionID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Se encontrar os job_roles, separar e contar
+        if ($row = $result->fetch_assoc()) {
+            $jobRoles = $row['job_role'];
+
+            // Separar os IDs dos job_roles
+            $jobRoleIDs = explode('-', $jobRoles);
+
+            // Para cada job_role, adicionar ao array com o job_role como chave
+            foreach ($jobRoleIDs as $jobRoleID) {
+                // Remover espaços em branco
+                $jobRoleID = trim($jobRoleID);
+
+                // Adicionar contagem ao array de jobRoles
+                if (!isset($jobRolesCount[$jobRoleID])) {
+                    $jobRolesCount[$jobRoleID] = 0;
+                }
+                $jobRolesCount[$jobRoleID] += $count; // Acumula a contagem
+            }
+        }
+
+        $stmt->close();
+    }
+
+    return $jobRolesCount;
+}
+function getUserCoursesCount($mysqli, $userID) {
+    // Primeiro, pegar todos os question_ID da tabela users_answers para o usuário
+    $query = "SELECT question_ID FROM users_answers WHERE user_ID = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $userID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Array para contar a ocorrência de cada question_ID
+    $questionCounts = [];
+
+    // Guardar todos os question_ID e contar quantas vezes aparecem
+    while ($row = $result->fetch_assoc()) {
+        $questionID = $row['question_ID'];
+        if (!isset($questionCounts[$questionID])) {
+            $questionCounts[$questionID] = 0;
+        }
+        $questionCounts[$questionID]++;
+    }
+
+    $stmt->close();
+
+    // Array final com os courses e seus contadores
+    $coursesCount = [];
+
+    // Para cada question_ID, pegar os courses na tabela questions
+    foreach ($questionCounts as $questionID => $count) {
+        $query = "SELECT course FROM questions WHERE ID = ?";
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("s", $questionID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Se encontrar os courses, separar e contar
+        if ($row = $result->fetch_assoc()) {
+            $courses = $row['course'];
+
+            // Separar os IDs dos cursos
+            $courseIDs = explode('-', $courses);
+
+            // Para cada curso, adicionar ao array com o curso como chave
+            foreach ($courseIDs as $courseID) {
+                // Remover espaços em branco
+                $courseID = trim($courseID);
+
+                // Adicionar contagem ao array de courses
+                if (!isset($coursesCount[$courseID])) {
+                    $coursesCount[$courseID] = 0;
+                }
+                $coursesCount[$courseID] += $count; // Acumula a contagem
+            }
+        }
+
+        $stmt->close();
+    }
+
+    return $coursesCount;
+}
 
 
+function evaluateUserPerformance($mysqli, $userID) {
+    // Consulta para contar acertos e erros
+    $query = "SELECT COUNT(*) AS total, SUM(is_correct) AS correct_count FROM users_answers WHERE user_id = ?";
+    
+    // Prepare a statement
+    if ($stmt = $mysqli->prepare($query)) {
+        $stmt->bind_param("i", $userID);
+        $stmt->execute();
+        
+        // Obtendo resultados
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+        
+        $total = $data['total'];
+        $correct_count = $data['correct_count'];
+        
+        // Calcular a média de acertos
+        if ($total > 0) {
+            $average = ($correct_count / $total) * 100; // Média em porcentagem
+        } else {
+            $average = 0; // Caso não haja respostas
+        }
+        
+        // Mensagens motivacionais
+        $excellentMessages = [
+            "Ótimo trabalho! 🌟 Você é uma estrela! Continue assim! 💪",
+            "Parabéns! 🎉 Você está arrasando! Siga firme! 🚀",
+            "Incrível! 👏 Seus esforços estão valendo a pena! Mantenha o foco! 🔥",
+            "Fantástico! 🎊 Você superou as expectativas! Rumo ao sucesso! ✨",
+            "Maravilhoso! 🌈 Seu desempenho é inspirador! Continue brilhando! 💖",
+            "Impressionante! 🏆 Você está no caminho certo! A vitória é sua! 🥇",
+            "Show de bola! 🤩 Seu empenho é admirável! Continue assim! ✌️",
+            "Excelente! 🥳 Você está se destacando! Persista e conquiste mais! 🌟",
+            "Sensacional! 🚀 Seu esforço está fazendo a diferença! Mantenha o ritmo! 💪",
+            "Magnífico! 🌌 Você está fazendo história! Não pare agora! 🌟"
+        ];
 
+        $goodMessages = [
+            "Bom trabalho! 😊 Você está indo muito bem! Continue nessa trajetória!",
+            "Ótimo! 👍 Você já chegou longe! Mantenha o foco e siga em frente!",
+            "Bacana! 😃 Seus esforços estão dando resultados! Continue assim!",
+            "Legal! 🌼 Você está progredindo! Mais um empurrão e você chega lá!",
+            "Bom! 🚀 Você está no caminho certo! Não pare de praticar!",
+            "Agradável! 🌟 Você está evoluindo! Cada dia é uma nova chance!",
+            "Legal! 👍 Você está quase lá! Continue acreditando em você!",
+            "Encantador! ✨ Seu esforço é visível! Persistência é a chave!",
+            "Bom! 💪 Você está mostrando garra! Mantenha o ritmo!",
+            "Animador! 🎈 Você está indo bem! Continue buscando melhorar!"
+        ];
 
+        $poorMessages = [
+            "Não desista! 😞 Cada erro é uma oportunidade de aprender!",
+            "Força! 💪 Você pode melhorar! Pratique e a vitória virá!",
+            "Coragem! 🌈 Todo mundo começa em algum lugar! Continue tentando!",
+            "Persistência! 💖 Aprender leva tempo! Mantenha-se firme!",
+            "Não se preocupe! 🚀 Você está no caminho de aprender! Siga em frente!",
+            "Foquem! ✨ Cada passo conta! Mantenha-se motivado!",
+            "Acredite! 🌼 O sucesso é a soma de pequenos esforços! Não pare!",
+            "Desafios são oportunidades! 🏆 Continue tentando e você vai conseguir!",
+            "Não desista! 🔥 Cada erro é um passo mais perto do sucesso!",
+            "Tenha fé! 🌟 Você é capaz de superações! Continue sua jornada!"
+        ];
+
+        // Avaliação do desempenho
+        if ($average >= 80) {
+            $evaluation = $excellentMessages[array_rand($excellentMessages)];
+        } elseif ($average >= 50) {
+            $evaluation = $goodMessages[array_rand($goodMessages)];
+        } else {
+            $evaluation = $poorMessages[array_rand($poorMessages)];
+        }
+        
+        // Echo a avaliação
+        echo "Média de Acertos: " . number_format($average, 2) . "% - " . $evaluation;
+        
+        // Fechar a declaração
+        $stmt->close();
+    } else {
+        echo "Erro ao preparar a consulta: " . $mysqli->error;
+    }
+}
+
+function evaluateQuestionsPerDay($mysqli, $userID) {
+    // Definindo as datas para as comparações
+    $today = date('Y-m-d');
+    $lastWeek = date('Y-m-d', strtotime('-7 days'));
+    $lastFifteenDays = date('Y-m-d', strtotime('-15 days'));
+    $lastMonth = date('Y-m-d', strtotime('-30 days'));
+
+    // Consultas para contar questões respondidas
+    $query = "
+        SELECT 
+            COUNT(*) AS total,
+            SUM(CASE WHEN answer_date >= ? THEN 1 ELSE 0 END) AS last_week,
+            SUM(CASE WHEN answer_date >= ? THEN 1 ELSE 0 END) AS last_15_days,
+            SUM(CASE WHEN answer_date >= ? THEN 1 ELSE 0 END) AS last_month,
+            MIN(answer_date) AS first_answer_date
+        FROM users_answers 
+        WHERE user_id = ?
+    ";
+
+    // Preparar a declaração
+    if ($stmt = $mysqli->prepare($query)) {
+        $stmt->bind_param("sssi", $lastWeek, $lastFifteenDays, $lastMonth, $userID);
+        $stmt->execute();
+        
+        // Obtendo resultados
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+        
+        // Extraindo informações
+        $total = $data['total'];
+        $lastWeekCount = $data['last_week'];
+        $lastFifteenDaysCount = $data['last_15_days'];
+        $lastMonthCount = $data['last_month'];
+        $firstAnswerDate = $data['first_answer_date'];
+
+        // Verifica se houve respostas
+        if ($total > 0 && $firstAnswerDate) {
+            // Média de questões respondidas por dia
+            $daysSinceFirstAnswer = max(1, ceil((strtotime($today) - strtotime($firstAnswerDate)) / (60 * 60 * 24)));
+            $averagePerDay = $total / $daysSinceFirstAnswer;
+
+            // Exibindo os resultados
+            echo "Total de questões respondidas: $total\n";
+            echo "Questões nos últimos 7 dias: $lastWeekCount\n";
+            echo "Questões nos últimos 15 dias: $lastFifteenDaysCount\n";
+            echo "Questões no último mês: $lastMonthCount\n";
+            echo "Média de questões respondidas por dia: " . number_format($averagePerDay, 2) . "\n";
+        } else {
+            // Exibe mensagem se não houver respostas
+            echo "Nenhuma questão respondida ainda.\n";
+        }
+        
+        // Fechar a declaração
+        $stmt->close();
+    } else {
+        echo "Erro ao preparar a consulta: " . $mysqli->error;
+    }
+}
+
+function getUserRanking($mysqli, $userID) {
+    // Consulta para contar questões respondidas por cada usuário
+    $query = "
+        SELECT user_id, COUNT(*) AS total_answers 
+        FROM users_answers 
+        GROUP BY user_id 
+        ORDER BY total_answers DESC
+    ";
+
+    // Preparar a declaração
+    if ($result = $mysqli->query($query)) {
+        $userRank = 1; // Inicializa a posição do usuário
+        $foundUser = false; // Flag para verificar se o usuário foi encontrado
+
+        // Percorre os resultados para determinar a posição
+        while ($row = $result->fetch_assoc()) {
+            if ($row['user_id'] == $userID) {
+                $foundUser = true; // Marca que o usuário foi encontrado
+                break; // Para de buscar após encontrar o usuário
+            }
+            $userRank++; // Incrementa a posição para cada usuário encontrado
+        }
+
+        // Verifica se o usuário foi encontrado e exibe a posição
+        if ($foundUser) {
+            echo "O usuário com ID $userID está na posição: $userRank.\n";
+        } else {
+            echo "O usuário com ID $userID não respondeu a nenhuma questão.\n";
+        }
+
+        // Liberar resultados
+        $result->free();
+    } else {
+        echo "Erro ao preparar a consulta: " . $mysqli->error;
+    }
+}
+function getUserRankingByCorrectAnswers($mysqli, $userID) {
+    // Consulta para contar acertos por cada usuário
+    $query = "
+        SELECT user_id, SUM(is_correct) AS total_correct_answers 
+        FROM users_answers 
+        GROUP BY user_id 
+        ORDER BY total_correct_answers DESC
+    ";
+
+    // Preparar a declaração
+    if ($result = $mysqli->query($query)) {
+        $userRank = 1; // Inicializa a posição do usuário
+        $foundUser = false; // Flag para verificar se o usuário foi encontrado
+
+        // Percorre os resultados para determinar a posição
+        while ($row = $result->fetch_assoc()) {
+            if ($row['user_id'] == $userID) {
+                $foundUser = true; // Marca que o usuário foi encontrado
+                break; // Para de buscar após encontrar o usuário
+            }
+            $userRank++; // Incrementa a posição para cada usuário encontrado
+        }
+
+        // Verifica se o usuário foi encontrado e exibe a posição
+        if ($foundUser) {
+            echo "O usuário com ID $userID está na posição de acertos: $userRank.\n";
+        } else {
+            echo "O usuário com ID $userID não teve acertos registrados.\n";
+        }
+
+        // Liberar resultados
+        $result->free();
+    } else {
+        echo "Erro ao preparar a consulta: " . $mysqli->error;
+    }
+}
 
 ?>

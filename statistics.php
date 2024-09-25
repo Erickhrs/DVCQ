@@ -32,7 +32,27 @@ $levels_count = getUserDisciplinesCountByLevel($mysqli, $_SESSION['id']);
 $level_labels = array_keys($levels_count); // Níveis
 $level_counts = array_values($levels_count); // Contagens
 
+$bancasData = getUserDisciplinesCountByBanca($mysqli, $_SESSION['id']);
+$banca_labels = [];
+$banca_counts = [];
 
+$jobFunctionsCount = getUserJobFunctionsCount($mysqli, $_SESSION['id']);
+$jobFunction_labels = array_keys($jobFunctionsCount); // Funções de trabalho
+$jobFunction_counts = array_values($jobFunctionsCount); // Contagens
+
+$jobRolesCount = getUserJobRolesCount($mysqli, $_SESSION['id']);
+$jobRole_labels = array_keys($jobRolesCount); // Funções de trabalho
+$jobRole_counts = array_values($jobRolesCount); // Contagens
+
+// Obter contagem de cursos
+$coursesCount = getUserCoursesCount($mysqli, $_SESSION['id']);
+$course_labels = array_keys($coursesCount);
+$course_counts = array_values($coursesCount);
+
+foreach ($bancasData as $banca) {
+    $banca_labels[] = $banca['name']; // Altere 'name' para o nome correto da coluna que contém o nome da banca
+    $banca_counts[] = $banca['count']; // Altere 'count' para o nome correto da coluna que contém a contagem
+}
 // Obter dados de evolução
 list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SESSION['id']);
 ?>
@@ -57,6 +77,10 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
         <?php require_once('./includes/nav_menu.php'); ?>
     </div>
     <main id="root">
+        <?php evaluateUserPerformance($mysqli, $_SESSION['id']); ?>
+        <?php evaluateQuestionsPerDay($mysqli, $_SESSION['id']); ?>
+        <?php getUserRanking($mysqli, $_SESSION['id']); ?>
+        <?php getUserRankingByCorrectAnswers($mysqli, $_SESSION['id']); ?>
         <nav id="home-menu">
             <ul>
                 <li><a href="./index.php">
@@ -99,6 +123,18 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
                         </div>
                         <div class="card_container">
                             <canvas id="level_chart" width="400" height="400"></canvas>
+                        </div>
+                        <div class="card_container">
+                            <canvas id="banca_chart" width="400" height="400"></canvas>
+                        </div>
+                        <div class="card_container">
+                            <canvas id="jobfunction_chart" width="400" height="400"></canvas>
+                        </div>
+                        <div class="card_container">
+                            <canvas id="jobrole_chart" width="400" height="400"></canvas>
+                        </div>
+                        <div class="card_container">
+                            <canvas id="course_chart" width="400" height="400"></canvas>
                         </div>
                     </div>
                 </div>
@@ -366,6 +402,144 @@ const levelChart = new Chart(levelCtx, {
             title: {
                 display: true,
                 text: 'Distribuição de Disciplinas por Nível'
+            }
+        }
+    }
+});
+const banca_labels = <?php echo json_encode($banca_labels); ?>; // Rótulos das bancas
+const banca_counts = <?php echo json_encode($banca_counts); ?>; // Contagens
+
+const bancaCtx = document.getElementById('banca_chart').getContext('2d');
+const bancaChart = new Chart(bancaCtx, {
+    type: 'doughnut', // ou 'bar', dependendo do que você precisa
+    data: {
+        labels: banca_labels,
+        datasets: [{
+            label: 'Contagem por Banca',
+            data: banca_counts,
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Distribuição por Banca'
+            }
+        }
+    }
+});
+// Gráfico de funções de trabalho
+const jobfunction_ctx = document.getElementById('jobfunction_chart').getContext('2d');
+const jobFunctionChart = new Chart(jobfunction_ctx, {
+    type: 'bar', // ou 'pie', 'doughnut', etc.
+    data: {
+        labels: <?php echo json_encode($jobFunction_labels); ?>,
+        datasets: [{
+            label: 'Contagem de Funções de Trabalho',
+            data: <?php echo json_encode($jobFunction_counts); ?>,
+            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Contagem de Funções de Trabalho'
+            }
+        }
+    }
+});
+// Gráfico de Funções de Trabalho
+const jobRoleCtx = document.getElementById('jobrole_chart').getContext('2d');
+const jobRoleChart = new Chart(jobRoleCtx, {
+    type: 'bar',
+    data: {
+        labels: <?php echo json_encode($jobRole_labels); ?>,
+        datasets: [{
+            label: 'Contagem de Funções',
+            data: <?php echo json_encode($jobRole_counts); ?>,
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Contagem de Funções de Trabalho'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// Gráfico de contagem de cursos
+const courseCtx = document.getElementById('course_chart').getContext('2d');
+const courseChart = new Chart(courseCtx, {
+    type: 'bar',
+    data: {
+        labels: <?php echo json_encode($course_labels); ?>,
+        datasets: [{
+            label: 'Contagem de Cursos',
+            data: <?php echo json_encode($course_counts); ?>,
+            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Contagem de Cursos por Usuário'
             }
         }
     }
