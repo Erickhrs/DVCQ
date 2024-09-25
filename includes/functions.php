@@ -214,10 +214,11 @@ function total_user_cw($mysqli, $userID, $cw) {
 
 
 function get_performance_by_subject($mysqli, $user_id) {
+    // Primeiro, pegar todos os question_ID da tabela users_answers para o usuário
     $query = "
         SELECT question_ID, 
-            SUM(is_correct) AS correct_count, 
-            COUNT(*) - SUM(is_correct) AS wrong_count
+               SUM(is_correct) AS correct_count, 
+               COUNT(*) - SUM(is_correct) AS wrong_count
         FROM users_answers 
         WHERE user_ID = ? 
         GROUP BY question_ID
@@ -228,17 +229,44 @@ function get_performance_by_subject($mysqli, $user_id) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    $performance = [];
+    // Array para armazenar o desempenho por matéria
+    $performanceBySubject = [];
+
+    // Percorrer cada resposta e contar acertos e erros por matéria
     while ($row = $result->fetch_assoc()) {
-        $performance[] = [
-            'question_ID' => $row['question_ID'],
-            'correct_count' => (int)$row['correct_count'],
-            'wrong_count' => (int)$row['wrong_count']
-        ];
+        $questionID = $row['question_ID'];
+        $correctCount = (int)$row['correct_count'];
+        $wrongCount = (int)$row['wrong_count'];
+
+        // Obter o subject correspondente ao question_ID
+        $subjectQuery = "SELECT subject FROM questions WHERE ID = ?";
+        $subjectStmt = $mysqli->prepare($subjectQuery);
+        $subjectStmt->bind_param("s", $questionID);
+        $subjectStmt->execute();
+        $subjectResult = $subjectStmt->get_result();
+
+        if ($subjectRow = $subjectResult->fetch_assoc()) {
+            $subject = $subjectRow['subject'];
+
+            // Adicionar ou atualizar os contadores no array de desempenho
+            if (!isset($performanceBySubject[$subject])) {
+                $performanceBySubject[$subject] = [
+                    'correct_count' => 0,
+                    'wrong_count' => 0,
+                ];
+            }
+
+            $performanceBySubject[$subject]['correct_count'] += $correctCount;
+            $performanceBySubject[$subject]['wrong_count'] += $wrongCount;
+        }
+
+        $subjectStmt->close();
     }
-    
-    return $performance;
+
+    return $performanceBySubject;
 }
+
+
 function get_evolution_data($mysqli, $user_id) {
     $query = "SELECT DATE(answer_date) AS date, SUM(is_correct) AS correct_count, COUNT(*) - SUM(is_correct) AS wrong_count
               FROM users_answers
@@ -263,6 +291,169 @@ function get_evolution_data($mysqli, $user_id) {
 
     return [$dates, $correct_counts, $wrong_counts];
 }
+
+
+function getUserDisciplinesCount($mysqli, $userID) {
+    // Primeiro, pegar todos os question_ID da tabela users_answers para o usuário
+    $query = "SELECT question_ID FROM users_answers WHERE user_ID = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $userID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Array para contar a ocorrência de cada question_ID
+    $questionCounts = [];
+
+    // Guardar todos os question_ID e contar quantas vezes aparecem
+    while ($row = $result->fetch_assoc()) {
+        $questionID = $row['question_ID'];
+        if (!isset($questionCounts[$questionID])) {
+            $questionCounts[$questionID] = 0;
+        }
+        $questionCounts[$questionID]++;
+    }
+
+    $stmt->close();
+
+    // Array final com os subjects e seus contadores
+    $subjectsCount = [];
+
+    // Para cada question_ID, pegar os disciplines na tabela questions
+    foreach ($questionCounts as $questionID => $count) {
+        $query = "SELECT discipline FROM questions WHERE ID = ?";
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("s", $questionID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Se encontrar os disciplines, separar e contar
+        if ($row = $result->fetch_assoc()) {
+            $disciplines = $row['discipline'];
+
+            // Separar os IDs das disciplinas
+            $disciplineIDs = explode('-', $disciplines);
+
+            // Para cada disciplina, adicionar ao array com a disciplina como chave
+            foreach ($disciplineIDs as $disciplineID) {
+                // Remover espaços em branco
+                $disciplineID = trim($disciplineID);
+
+                // Adicionar contagem ao array de subjects
+                if (!isset($subjectsCount[$disciplineID])) {
+                    $subjectsCount[$disciplineID] = 0;
+                }
+                $subjectsCount[$disciplineID] += $count; // Acumula a contagem
+            }
+        }
+
+        $stmt->close();
+    }
+
+    return $subjectsCount;
+}
+
+function getUserQuestionTypeCount($mysqli, $userID) {
+    // Primeiro, pegar todos os question_ID da tabela users_answers para o usuário
+    $query = "SELECT question_ID FROM users_answers WHERE user_ID = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $userID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Array para contar a ocorrência de cada question_ID
+    $questionCounts = [];
+
+    // Guardar todos os question_ID e contar quantas vezes aparecem
+    while ($row = $result->fetch_assoc()) {
+        $questionID = $row['question_ID'];
+        if (!isset($questionCounts[$questionID])) {
+            $questionCounts[$questionID] = 0;
+        }
+        $questionCounts[$questionID]++;
+    }
+
+    $stmt->close();
+
+    // Array final com os question types e seus contadores
+    $typesCount = [];
+
+    // Para cada question_ID, pegar o question_type na tabela questions
+    foreach ($questionCounts as $questionID => $count) {
+        $query = "SELECT question_type FROM questions WHERE ID = ?";
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("s", $questionID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Se encontrar o question_type, contar
+        if ($row = $result->fetch_assoc()) {
+            $questionType = $row['question_type'];
+
+            // Adicionar contagem ao array de types
+            if (!isset($typesCount[$questionType])) {
+                $typesCount[$questionType] = 0;
+            }
+            $typesCount[$questionType] += $count; // Acumula a contagem
+        }
+
+        $stmt->close();
+    }
+
+    return $typesCount;
+}
+function getUserDisciplinesCountByLevel($mysqli, $userID) {
+    // Primeiro, pegar todos os question_ID e levels da tabela users_answers para o usuário
+    $query = "SELECT question_ID FROM users_answers WHERE user_ID = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("i", $userID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Array para contar a ocorrência de cada question_ID
+    $questionCounts = [];
+
+    // Guardar todos os question_ID e contar quantas vezes aparecem
+    while ($row = $result->fetch_assoc()) {
+        $questionID = $row['question_ID'];
+        if (!isset($questionCounts[$questionID])) {
+            $questionCounts[$questionID] = 0;
+        }
+        $questionCounts[$questionID]++;
+    }
+
+    $stmt->close();
+
+    // Array final com os levels e seus contadores
+    $levelsCount = [];
+
+    // Para cada question_ID, pegar o level na tabela questions
+    foreach ($questionCounts as $questionID => $count) {
+        $query = "SELECT level FROM questions WHERE ID = ?";
+        $stmt = $mysqli->prepare($query);
+        $stmt->bind_param("s", $questionID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Se encontrar o level, contar
+        if ($row = $result->fetch_assoc()) {
+            $level = $row['level'];
+
+            // Adicionar contagem ao array de levels
+            if (!isset($levelsCount[$level])) {
+                $levelsCount[$level] = 0;
+            }
+            $levelsCount[$level] += $count; // Acumula a contagem
+        }
+
+        $stmt->close();
+    }
+
+    return $levelsCount;
+}
+
+
+
+
 
 
 ?>

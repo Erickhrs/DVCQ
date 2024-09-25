@@ -1,21 +1,42 @@
 <?php
 session_start();
 include_once('./includes/functions.php');
+
 $correct = total_user_cw($mysqli, $_SESSION['id'], '1'); // Total de acertos
 $wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros
 
+// Obter contagem de matérias
+$subjects = getUserDisciplinesCount($mysqli, $_SESSION['id']);
+
+// Obter desempenho por matéria
 $performance_data = get_performance_by_subject($mysqli, $_SESSION['id']);
 $labels = [];
 $correct_data = [];
 $wrong_data = [];
 
-foreach ($performance_data as $performance) {
-    $labels[] = 'Matéria ' . $performance['question_ID']; // Aqui você pode mapear o question_ID para o nome da matéria, se necessário
-    $correct_data[] = $performance['correct_count'];
-    $wrong_data[] = $performance['wrong_count'];
+// Mapeia o question_ID para o nome da matéria e acumula acertos e erros
+foreach ($performance_data as $question_id => $performance) {
+    // Utilize o índice como question_ID, pois está no array
+    $subject_name = getSubjectName($mysqli, $question_id); // Altera para usar $question_id
+    $labels[] = $subject_name; // Nome da matéria
+    $correct_data[] = $performance['correct_count']; // Acertos por matéria
+    $wrong_data[] = $performance['wrong_count']; // Erros por matéria
 }
+
+$question_type_counts = getUserQuestionTypeCount($mysqli, $_SESSION['id']);
+$question_type_labels = ['tf', 'mult'];
+$question_type_data = [$question_type_counts['tf'], $question_type_counts['mult']];
+
+// Obter contagem de disciplinas por nível
+$levels_count = getUserDisciplinesCountByLevel($mysqli, $_SESSION['id']);
+$level_labels = array_keys($levels_count); // Níveis
+$level_counts = array_values($levels_count); // Contagens
+
+
+// Obter dados de evolução
 list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SESSION['id']);
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -32,8 +53,8 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
 
 <body>
     <div style="background-color: white;">
-        <?php require_once('./includes/navbar.php');?>
-        <?php require_once('./includes/nav_menu.php');?>
+        <?php require_once('./includes/navbar.php'); ?>
+        <?php require_once('./includes/nav_menu.php'); ?>
     </div>
     <main id="root">
         <nav id="home-menu">
@@ -49,73 +70,17 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
                     </a></li>
             </ul>
         </nav>
-        <nav id="stat_filter" style="display: none;">
-            <form class="horizontal-form">
-                <div>
-                    <label for="periodo">Período:</label>
-                    <select id="periodo" name="periodo">
-                        <option value="2024">2024</option>
-                        <option value="2023">2023</option>
-                        <option value="2022">2022</option>
-                        <!-- Adicione mais opções conforme necessário -->
-                    </select>
-                </div>
-
-                <div>
-                    <label for="disciplina">Disciplina:</label>
-                    <select id="disciplina" name="disciplina">
-                        <option value="matematica">Matemática</option>
-                        <option value="portugues">Português</option>
-                        <option value="historia">História</option>
-                        <!-- Adicione mais opções conforme necessário -->
-                    </select>
-                </div>
-
-                <div>
-                    <label for="banca">Banca:</label>
-                    <select id="banca" name="banca">
-                        <option value="cespe">CESPE</option>
-                        <option value="fcc">FCC</option>
-                        <option value="vunesp">VUNESP</option>
-                        <!-- Adicione mais opções conforme necessário -->
-                    </select>
-                </div>
-
-                <div>
-                    <label for="pasta">Pasta:</label>
-                    <select id="pasta" name="pasta">
-                        <option value="pasta1">Pasta 1</option>
-                        <option value="pasta2">Pasta 2</option>
-                        <option value="pasta3">Pasta 3</option>
-                        <!-- Adicione mais opções conforme necessário -->
-                    </select>
-                </div>
-
-                <div>
-                    <label for="dificuldade">Dificuldade:</label>
-                    <select id="dificuldade" name="dificuldade">
-                        <option value="facil">Fácil</option>
-                        <option value="media">Média</option>
-                        <option value="dificil">Difícil</option>
-                        <!-- Adicione mais opções conforme necessário -->
-                    </select>
-                </div>
-
-                <button type="submit">Filtrar</button>
-            </form>
-
-        </nav>
         <main id="home-menu-root">
             <div id="stat_container">
                 <div class="card_container">
                     <h3>Desempenho Geral</h3>
                     <div class="grid3">
                         <div>
-                            <h6>Questões Resolvidas: <?php echo total_questions_answered($mysqli, $_SESSION['id'])?>
+                            <h6>Questões Resolvidas: <?php echo total_questions_answered($mysqli, $_SESSION['id']); ?>
                             </h6>
-                            <h6>Total de matérias: <?php echo total_subjects($mysqli, $_SESSION['id'])?></h6>
-                            <h6 id="correct">Acertos: <?php echo total_user_cw($mysqli, $_SESSION['id'], '1')?></h6>
-                            <h6 id="wrong">Erros: <?php echo total_user_cw($mysqli, $_SESSION['id'], '0')?></h6>
+                            <h6>Total de matérias:</h6>
+                            <h6 id="correct">Acertos: <?php echo $correct; ?></h6>
+                            <h6 id="wrong">Erros: <?php echo $wrong; ?></h6>
                         </div>
                         <div>
                             <canvas id="total_cw_chart"></canvas>
@@ -126,8 +91,15 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
                 <div class="card_container">
                     <h3>Contabilizando disciplinas</h3>
                     <div class="grid2">
-                        <div>grafico circular de materias feitas</div>
-                        <div>lista de todas as disciplinas e o total feito por voce em cada</div>
+                        <div>
+                            <canvas id="disciplines_donut_chart" width="400" height="400"></canvas>
+                        </div>
+                        <div class="card_container">
+                            <canvas id="question_type_chart" width="400" height="400"></canvas>
+                        </div>
+                        <div class="card_container">
+                            <canvas id="level_chart" width="400" height="400"></canvas>
+                        </div>
                     </div>
                 </div>
                 <div class="card_container">
@@ -137,18 +109,18 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
                             style="max-width: 100%; height: auto;"></canvas>
                     </div>
                 </div>
-
             </div>
-
         </main>
     </main>
-</body><?php include_once('./includes/footer.php')?>
+    <?php include_once('./includes/footer.php'); ?>
+</body>
+
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 <script src="./scripts/spa.js" type="module"></script>
 <script src="./scripts/global.js"></script>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="./scripts/protect.js"></script>
+
 <script>
 const total_cw_ctx = document.getElementById('total_cw_chart').getContext('2d');
 const myPieChart = new Chart(total_cw_ctx, {
@@ -217,7 +189,7 @@ const subjectChart = new Chart(subjectCtx, {
             },
             title: {
                 display: true,
-                text: 'Desempenho por Matéria'
+                text: 'Desempenho por Assunto'
             }
         }
     }
@@ -225,26 +197,26 @@ const subjectChart = new Chart(subjectCtx, {
 
 const evolution_ctx = document.getElementById('evolution_chart').getContext('2d');
 const evolutionChart = new Chart(evolution_ctx, {
-    type: 'line', // Gráfico de linha
+    type: 'line',
     data: {
         labels: <?php echo json_encode($dates); ?>,
         datasets: [{
                 label: 'Acertos',
                 data: <?php echo json_encode($correct_counts); ?>,
                 borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.4)', // Área preenchida
-                fill: true, // Preencher a área sob a linha
-                tension: 0.4, // Suaviza a linha
-                borderWidth: 2, // Espessura da linha
+                backgroundColor: 'rgba(75, 192, 192, 0.4)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2,
             },
             {
                 label: 'Erros',
                 data: <?php echo json_encode($wrong_counts); ?>,
                 borderColor: 'rgba(255, 99, 132, 1)',
-                backgroundColor: 'rgba(255, 99, 132, 0.4)', // Área preenchida
-                fill: true, // Preencher a área sob a linha
-                tension: 0.4, // Suaviza a linha
-                borderWidth: 2, // Espessura da linha
+                backgroundColor: 'rgba(255, 99, 132, 0.4)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2,
             }
         ]
     },
@@ -276,7 +248,128 @@ const evolutionChart = new Chart(evolution_ctx, {
         }
     }
 });
+
+// Dados do gráfico de disciplinas
+const subjects = <?php echo json_encode(array_keys($subjects)); ?>; // Nomes das matérias
+const counts = <?php echo json_encode(array_values($subjects)); ?>; // Contagens
+
+// Configuração do gráfico de donut
+const ctx = document.getElementById('disciplines_donut_chart').getContext('2d');
+const donutChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: subjects,
+        datasets: [{
+            label: 'Matérias',
+            data: counts,
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Distribuição de Disciplinas'
+            }
+        }
+    }
+});
+// Dados do gráfico de question type
+const questionTypeLabels = <?php echo json_encode($question_type_labels); ?>; // Tipos de questão
+const questionTypeCounts = <?php echo json_encode($question_type_data); ?>; // Contagens
+
+// Configuração do gráfico de question type
+const questionTypeCtx = document.getElementById('question_type_chart').getContext('2d');
+const questionTypeChart = new Chart(questionTypeCtx, {
+    type: 'bar',
+    data: {
+        labels: questionTypeLabels,
+        datasets: [{
+            label: 'Contagem de Tipos de Questão',
+            data: questionTypeCounts,
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Distribuição de Tipos de Questão'
+            }
+        }
+    }
+});
+// Dados do gráfico de níveis
+const levelLabels = <?php echo json_encode($level_labels); ?>; // Níveis
+const levelCounts = <?php echo json_encode($level_counts); ?>; // Contagens
+
+// Configuração do gráfico de níveis
+const levelCtx = document.getElementById('level_chart').getContext('2d');
+const levelChart = new Chart(levelCtx, {
+    type: 'bar', // Pode ser 'bar', 'line', etc. conforme sua preferência
+    data: {
+        labels: levelLabels,
+        datasets: [{
+            label: 'Contagem de Disciplinas por Nível',
+            data: levelCounts,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Distribuição de Disciplinas por Nível'
+            }
+        }
+    }
+});
 </script>
-</body>
 
 </html>
