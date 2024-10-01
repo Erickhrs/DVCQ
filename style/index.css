@@ -180,6 +180,86 @@ header {
     #home-menu li a:hover{
       color: var(--green-todbg);
     }
+    .container_ind {
+        width: 90%;
+        max-width: 1200px;
+        margin: 20px auto;
+    }
+    
+    #welcome_user_title {
+        font-size: 2em;
+        margin-bottom: 20px;
+        padding-left: 20px;
+    }
+    
+    .search-box {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+    }
+    
+    .search-box input {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 10px 0 0 10px;
+        outline: none;
+        width: 250px;
+    }
+    
+    .search-box button {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-left: none;
+        background-color: white;
+        border-radius: 0 10px 10px 0;
+        cursor: pointer;
+    }
+    
+    .simulado-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 300px;
+    }
+    
+    .simulado-card h2 {
+        font-size: 1.2em;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+    
+    .simulado-card p {
+        color: #888;
+        margin: 5px 0;
+    }
+    
+    .footer-card {
+        display: flex;
+        align-items: center;
+        color: #888;
+        margin-top: 10px;
+    }
+    
+    .footer-card i {
+        margin-right: 5px;
+    }
+    
+    .fa-calendar {
+        font-family: 'FontAwesome';
+        content: '\f073'; /* código do ícone de calendário */
+    }
 
 
-
+#general_st{
+    display: flex;
+  gap: 25px;
+  padding: 20px;
+}
+#general_st h6{
+    background-color: #b3e295;
+  color: white;
+  padding: 10px;
+  color: #070;
+  cursor: pointer;
+}
