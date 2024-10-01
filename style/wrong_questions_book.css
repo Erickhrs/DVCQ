@@ -1,0 +1,11 @@
+#book_header h1{
+    color: var(--main-color);
+  font-weight: initial;
+  text-align: center;
+  background-color: white;
+  width: fit-content;
+  border-radius: 10px;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}

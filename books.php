@@ -26,28 +26,54 @@ session_start();
                         <ion-icon name="rocket-outline"></ion-icon> Ambiente de estudos
                     </a></li>
                 <li><a href="./books.php" class="active">
-                        <ion-icon name="document-text-outline"></ion-icon> Cadernos e Simulados
+                        <ion-icon name="document-text-outline"></ion-icon> Cadernos
                     </a></li>
                 <li><a href="./statistics.php">
                         <ion-icon name="stats-chart-outline"></ion-icon> Meu Desempenho
                     </a></li>
             </ul>
-            <main id="home-menu-root">
-                <nav id="nav-tools">
-                    <select name="page" id="page">
-                        <option value="book">Caderno</option>
-                        <option value="exam">Simulados</option>
-                    </select>
-                    <button>Criar<i class='bx bx-plus'></i></button>
-                </nav>
-            </main>
+            <div class="container">
+                <div class="header">
+                    <h1>📌Cadernos de <?php echo $_SESSION['name']; ?></h1>
+                    <div class="search-bar">
+                        <input type="text" id="searchInput" placeholder="Busque pelo nome">
+                        <button class="create-button">Criar <i>+</i></button>
+                    </div>
+                </div>
+
+                <ul class="notebook-list" id="notebookList">
+                    <li class="notebook-item">
+                        <div class="notebook-details">
+                            <i>📓</i>
+                            <div>
+                                <p>teste</p>
+                                <span class="date">Criado em 01/2024 | 0 questões</span>
+                            </div>
+                        </div>
+                        <div class="options">⋮</div>
+                    </li>
+
+                    <li class="notebook-item">
+                        <div class="notebook-details">
+                            <i>📓</i>
+                            <div>
+                                <p>Bateria</p>
+                                <span class="date">Criado em 01/2024 | 0 questões</span>
+                            </div>
+                        </div>
+                        <div class="options">⋮</div>
+                    </li>
+
+
+                </ul>
+            </div>
         </nav>
     </main>
 </body><?php include_once('./includes/footer.php')?>
+<script src="./scripts/books.js"></script>
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 <script src="./scripts/spa.js" type="module"></script>
 <script src="./scripts/global.js"></script>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="./scripts/protect.js"></script>
 
