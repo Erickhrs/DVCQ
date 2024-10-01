@@ -34,7 +34,7 @@ session_start();
             </ul>
             <div class="container">
                 <div class="header">
-                    <h1>📌Cadernos de <?php echo $_SESSION['name']; ?></h1>
+                    <h1>Cadernos de <?php echo $_SESSION['name']; ?></h1>
                     <div class="search-bar">
                         <input type="text" id="searchInput" placeholder="Busque pelo nome">
                         <button class="create-button">Criar <i>+</i></button>

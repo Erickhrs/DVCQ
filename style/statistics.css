@@ -94,6 +94,12 @@
   }
   h3{
     padding-left: 15px;
+    background: white;
+  padding: 5px;
+  margin: 20px;
+  border-radius: 8px;
+  color: var(--logo-blue);
+  cursor: pointer;
   }
   #correct{
     color: #4CAF50;
@@ -109,3 +115,21 @@
     margin-left: auto;
   margin-right: auto;
   }
+
+  #chart_infos{
+    display: flex;
+  flex-direction: row;
+    gap: 10px;
+    margin: 20px;
+  }
+  #chart_infos span{
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3px;
+  border-radius: 5px;
+  
+  }
+  .toggle-content {
+    display: none;
+}

@@ -77,28 +77,43 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
         <?php require_once('./includes/nav_menu.php'); ?>
     </div>
     <main id="root">
-        <?php evaluateUserPerformance($mysqli, $_SESSION['id']); ?>
-        <?php evaluateQuestionsPerDay($mysqli, $_SESSION['id']); ?>
-        <?php getUserRanking($mysqli, $_SESSION['id']); ?>
-        <?php getUserRankingByCorrectAnswers($mysqli, $_SESSION['id']); ?>
         <nav id="home-menu">
             <ul>
                 <li><a href="./index.php">
                         <ion-icon name="rocket-outline"></ion-icon> Ambiente de estudos
                     </a></li>
                 <li><a href="./books.php">
-                        <ion-icon name="document-text-outline"></ion-icon> Cadernos
+                        <ion-icon name="document-text-outline"></ion-icon> Cadernos e Simulados
                     </a></li>
                 <li><a href="./statistics.php" class="active">
                         <ion-icon name="stats-chart-outline"></ion-icon> Meu Desempenho
                     </a></li>
             </ul>
         </nav>
+        <div id="chart_infos">
+            <span id="questions-per-day">
+                <?php evaluateQuestionsPerDay($mysqli, $_SESSION['id']); ?>
+            </span>
+            <div>
+                <span id="user-performance">
+                    <?php evaluateUserPerformance($mysqli, $_SESSION['id']); ?>
+                </span>
+                <div style="display: flex;">
+                    <span id="user-ranking">
+                        <?php getUserRanking($mysqli, $_SESSION['id']); ?>
+                    </span>
+
+                    <span id="user-ranking-correct-answers">
+                        <?php getUserRankingByCorrectAnswers($mysqli, $_SESSION['id']); ?>
+                    </span>
+                </div>
+            </div>
+        </div>
         <main id="home-menu-root">
             <div id="stat_container">
                 <div class="card_container">
-                    <h3>Desempenho Geral</h3>
-                    <div class="grid3">
+                    <h3 data-toggle="performance">Desempenho Geral</h3>
+                    <div class="grid3" class="toggle-content">
                         <div>
                             <h6>Questões Resolvidas: <?php echo total_questions_answered($mysqli, $_SESSION['id']); ?>
                             </h6>
@@ -113,8 +128,8 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
                     </div>
                 </div>
                 <div class="card_container">
-                    <h3>Contabilizando disciplinas</h3>
-                    <div class="grid2">
+                    <h3 data-toggle="disciplines">Contabilizando disciplinas</h3>
+                    <div class="grid2 toggle-content">
                         <div>
                             <canvas id="disciplines_donut_chart" width="400" height="400"></canvas>
                         </div>
@@ -139,14 +154,15 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
                     </div>
                 </div>
                 <div class="card_container">
-                    <h3>Evolução do Desempenho</h3>
-                    <div class="grid1">
+                    <h3 data-toggle="evolution">Evolução do Desempenho</h3>
+                    <div class="grid1 toggle-content">
                         <canvas id="evolution_chart" width="400" height="200"
                             style="max-width: 100%; height: auto;"></canvas>
                     </div>
                 </div>
             </div>
         </main>
+
     </main>
     <?php include_once('./includes/footer.php'); ?>
 </body>
@@ -543,6 +559,24 @@ const courseChart = new Chart(courseCtx, {
             }
         }
     }
+});
+document.addEventListener('DOMContentLoaded', function() {
+    // Seleciona todos os cabeçalhos h3
+    const headers = document.querySelectorAll('h3[data-toggle]');
+
+    headers.forEach(header => {
+        header.addEventListener('click', function() {
+            // Encontra o próximo elemento irmão que é o conteúdo a ser exibido
+            const content = header.nextElementSibling;
+
+            // Alterna a visibilidade do conteúdo
+            if (content.style.display === "none" || content.style.display === "") {
+                content.style.display = "block"; // Exibe o conteúdo
+            } else {
+                content.style.display = "none"; // Oculta o conteúdo
+            }
+        });
+    });
 });
 </script>
 

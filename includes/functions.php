@@ -755,14 +755,23 @@ function evaluateUserPerformance($mysqli, $userID) {
         // Avaliação do desempenho
         if ($average >= 80) {
             $evaluation = $excellentMessages[array_rand($excellentMessages)];
+            $icon = "star";
+            $color = "#4CAF50"; // Verde
         } elseif ($average >= 50) {
             $evaluation = $goodMessages[array_rand($goodMessages)];
+            $icon = "thumbs-up";
+            $color = "#2196F3"; // Azul
         } else {
             $evaluation = $poorMessages[array_rand($poorMessages)];
+            $icon = "thumbs-down";
+            $color = "#FF5722"; // Laranja
         }
         
-        // Echo a avaliação
-        echo "Média de Acertos: " . number_format($average, 2) . "% - " . $evaluation;
+        // Echo a avaliação com estilos
+        echo "<div style='font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; border-radius: 8px; border: 1px solid #ddd; text-align: center;'>";
+        echo "<h2 style='color: $color;'>Média de Acertos: <strong style='color: #333;'>" . number_format($average, 2) . "%</strong></h2>";
+        echo "<p style='font-size: 18px; color: $color;'><ion-icon name='$icon' style='font-size: 40px; vertical-align: middle;'></ion-icon> $evaluation</p>";
+        echo "</div>";
         
         // Fechar a declaração
         $stmt->close();
@@ -812,12 +821,25 @@ function evaluateQuestionsPerDay($mysqli, $userID) {
             $daysSinceFirstAnswer = max(1, ceil((strtotime($today) - strtotime($firstAnswerDate)) / (60 * 60 * 24)));
             $averagePerDay = $total / $daysSinceFirstAnswer;
 
-            // Exibindo os resultados
-            echo "Total de questões respondidas: $total\n";
-            echo "Questões nos últimos 7 dias: $lastWeekCount\n";
-            echo "Questões nos últimos 15 dias: $lastFifteenDaysCount\n";
-            echo "Questões no último mês: $lastMonthCount\n";
-            echo "Média de questões respondidas por dia: " . number_format($averagePerDay, 2) . "\n";
+            echo "<div style='font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; border-radius: 8px; border: 1px solid #ddd;min-height: 365px;'>";
+            echo "<h2 style='color: #333; text-align: center;'>Relatório de Questões Respondidas</h2>";
+            
+            // Total de questões respondidas
+            echo "<p style='font-size: 18px; color: #4CAF50;'><ion-icon name='checkmark-circle' style='vertical-align: middle;'></ion-icon> Total de questões respondidas: <strong style='color: #333;'>$total</strong></p>";
+            
+            // Questões nos últimos 7 dias
+            echo "<p style='font-size: 18px; color: #2196F3;'><ion-icon name='calendar' style='vertical-align: middle;'></ion-icon> Questões nos últimos 7 dias: <strong style='color: #333;'>$lastWeekCount</strong></p>";
+            
+            // Questões nos últimos 15 dias
+            echo "<p style='font-size: 18px; color: #FF9800;'><ion-icon name='time' style='vertical-align: middle;'></ion-icon> Questões nos últimos 15 dias: <strong style='color: #333;'>$lastFifteenDaysCount</strong></p>";
+            
+            // Questões no último mês
+            echo "<p style='font-size: 18px; color: #9C27B0;'><ion-icon name='calendar-number' style='vertical-align: middle;'></ion-icon> Questões no último mês: <strong style='color: #333;'>$lastMonthCount</strong></p>";
+            
+            // Média de questões respondidas por dia
+            echo "<p style='font-size: 18px; color: #E91E63;'><ion-icon name='stats-chart' style='vertical-align: middle;'></ion-icon> Média de questões respondidas por dia: <strong style='color: #333;'>" . number_format($averagePerDay, 2) . "</strong></p>";
+            
+            echo "</div>";
         } else {
             // Exibe mensagem se não houver respostas
             echo "Nenhuma questão respondida ainda.\n";
@@ -854,11 +876,15 @@ function getUserRanking($mysqli, $userID) {
         }
 
         // Verifica se o usuário foi encontrado e exibe a posição
+        echo "<div style='font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; border-radius: 8px; border: 1px solid #ddd; text-align: center;'>";
         if ($foundUser) {
-            echo "O usuário com ID $userID está na posição: $userRank.\n";
+            echo "<h2 style='color: #4CAF50;'>Ranking de Questões Respondidas</h2>";
+            echo "<p style='font-size: 18px; color: #333;'><ion-icon name='checkmark-circle' style='font-size: 40px; vertical-align: middle;'></ion-icon> O usuário com ID <strong>$userID</strong> está na posição: <strong style='color: #FF9800;'>$userRank</strong>.</p>";
         } else {
-            echo "O usuário com ID $userID não respondeu a nenhuma questão.\n";
+            echo "<h2 style='color: #FF5722;'>Ranking de Questões Respondidas</h2>";
+            echo "<p style='font-size: 18px; color: #333;'><ion-icon name='alert-circle' style='font-size: 40px; vertical-align: middle;'></ion-icon> O usuário com ID <strong>$userID</strong> não respondeu a nenhuma questão.</p>";
         }
+        echo "</div>";
 
         // Liberar resultados
         $result->free();
@@ -890,11 +916,15 @@ function getUserRankingByCorrectAnswers($mysqli, $userID) {
         }
 
         // Verifica se o usuário foi encontrado e exibe a posição
+        echo "<div style='font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; border-radius: 8px; border: 1px solid #ddd; text-align: center;'>";
         if ($foundUser) {
-            echo "O usuário com ID $userID está na posição de acertos: $userRank.\n";
+            echo "<h2 style='color: #2196F3;'>Ranking de Acertos</h2>";
+            echo "<p style='font-size: 18px; color: #333;'><ion-icon name='trophy' style='font-size: 40px; vertical-align: middle;'></ion-icon> O usuário com ID <strong>$userID</strong> está na posição de acertos: <strong style='color: #FF9800;'>$userRank</strong>.</p>";
         } else {
-            echo "O usuário com ID $userID não teve acertos registrados.\n";
+            echo "<h2 style='color: #FF5722;'>Ranking de Acertos</h2>";
+            echo "<p style='font-size: 18px; color: #333;'><ion-icon name='sad' style='font-size: 40px; vertical-align: middle;'></ion-icon> O usuário com ID <strong>$userID</strong> não teve acertos registrados.</p>";
         }
+        echo "</div>";
 
         // Liberar resultados
         $result->free();

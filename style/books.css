@@ -16,6 +16,9 @@
 .header h1 {
     font-size: 24px;
     color: var(--logo-blue);
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .search-bar {
