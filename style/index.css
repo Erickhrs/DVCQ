@@ -182,14 +182,20 @@ header {
     }
     .container_ind {
         width: 90%;
-        max-width: 1200px;
-        margin: 20px auto;
+  max-width: 1200px;
+  margin: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+  margin-left: auto;
+  margin-right: auto;
     }
     
     #welcome_user_title {
         font-size: 2em;
         margin-bottom: 20px;
         padding-left: 20px;
+        font-weight: initial;
+        text-align: center;
     }
     
     .search-box {
@@ -220,7 +226,10 @@ header {
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         padding: 20px;
-        width: 300px;
+        margin: 10px;
+        min-width: 250px;
+        max-width: 250px;
+        text-align: left;
     }
     
     .simulado-card h2 {
@@ -253,8 +262,9 @@ header {
 
 #general_st{
     display: flex;
-  gap: 25px;
-  padding: 20px;
+    gap: 25px;
+    padding: 20px;
+    justify-content: center;
 }
 #general_st h6{
     background-color: #b3e295;
@@ -262,4 +272,120 @@ header {
   padding: 10px;
   color: #070;
   cursor: pointer;
+}
+#header_root_index{
+    background-color: white;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 20px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+.sim_btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.sim_btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.carousel {
+    display: flex;
+    overflow-x: scroll; /* mantém a rolagem horizontal */
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;  /* Para o Internet Explorer e Edge */
+    scrollbar-width: none;     /* Para o Firefox */
+}
+
+.carousel::-webkit-scrollbar {
+    display: none;  /* Para o Chrome, Safari e Opera */
+}
+
+#motivacional{
+    font-family: 'Georgia', serif;
+  font-size: 12px;
+  color: #fff;
+  line-height: 1.6;
+  margin: 0;
+    margin-right: 0px;
+    margin-left: 0px;
+  text-align: center;
+  font-style: italic;
+  background-color: #d9b447;
+  width: fit-content;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+
+.video-container{
+    margin-left: 20px;
+  margin-right: 20px;
+}
+.carousel {
+    display: flex;
+    scroll-behavior: smooth; /* Suaviza a rolagem */
+}
+
+.video-card {
+    margin: 0 10px; /* Espaçamento entre os vídeos */
+}
+
+ iframe {
+    width: 560px; /* Largura do iframe */
+    height: 315px; /* Altura do iframe */
+    border: none;
+    border-radius: 20px;
+}
+
+.sim_btn {
+    background-color: #b3e295;
+  color: #56a44b;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sim_btn:hover {
+    background-color: #0056b3; /* Cor do botão ao passar o mouse */
+}
+
+@media (max-width: 768px) {
+    .video-card iframe {
+        width: 100%; /* Responsividade */
+    }
+}
+h1{
+    text-align: center;
 }
