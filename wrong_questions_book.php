@@ -40,7 +40,7 @@ require_once('./includes/protect.php');
             <div id="questions_container">
                 <?php 
                 if (isset($_SESSION['id'])){
-                    include_once('./includes/get_default_questions.php'); 
+                    include_once('./includes/wrong_book.php'); 
                 }
                 ?>
             </div>
