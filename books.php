@@ -20,6 +20,7 @@ session_start();
         <?php require_once('./includes/nav_menu.php');?>
     </div>
     <main id="root">
+        <?php include('./includes/wpp_btn.php');?>
         <nav id="home-menu">
             <ul>
                 <li><a href="./index.php">

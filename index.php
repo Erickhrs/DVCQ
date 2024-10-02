@@ -20,6 +20,7 @@ $wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros
 </head>
 
 <body>
+    <?php include('./includes/wpp_btn.php');?>
     <div style="background-color: white;">
         <?php require_once('./includes/navbar.php');?>
         <?php require_once('./includes/nav_menu.php');?>

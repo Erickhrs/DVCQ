@@ -72,6 +72,7 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
 </head>
 
 <body>
+    <?php include('./includes/wpp_btn.php');?>
     <div style="background-color: white;">
         <?php require_once('./includes/navbar.php'); ?>
         <?php require_once('./includes/nav_menu.php'); ?>
