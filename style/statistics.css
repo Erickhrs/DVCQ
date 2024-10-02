@@ -151,9 +151,13 @@ h3 {
 }
 
 .toggle-content {
-  display: none;
+display: none;
 }
 .card_container canva{
   margin-left: auto!important;
   margin-right: auto!important;
+}
+
+#charts_view{
+  display: flex;
 }

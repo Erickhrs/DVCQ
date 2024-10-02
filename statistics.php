@@ -111,10 +111,21 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
             </div>
         </div>
         <main id="home-menu-root">
+            <div id="charts_view">
+                <h3 data-toggle="cstr1">
+                    <ion-icon name="pie-chart-outline"></ion-icon> Desempenho Geral
+                </h3>
+                <h3 data-toggle="cstr2">
+                    <ion-icon name="stats-chart-outline"></ion-icon> Contabilizando disciplinas
+                </h3>
+                <h3 data-toggle="cstr3">
+                    <ion-icon name="bar-chart-outline"></ion-icon> Evolução do Desempenho
+                </h3>
+            </div>
             <div id="stat_container">
                 <div class="card_container">
-                    <h3 data-toggle="performance">Desempenho Geral</h3>
-                    <div class="grid3" class="toggle-content">
+
+                    <div class="grid3" class="toggle-content" id="cstr1">
                         <div style="display: block;">
                             <h6>Questões Resolvidas: <?php echo total_questions_answered($mysqli, $_SESSION['id']); ?>
                             </h6>
@@ -129,8 +140,8 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
                     </div>
                 </div>
                 <div class="card_container">
-                    <h3 data-toggle="disciplines">Contabilizando disciplinas</h3>
-                    <div class="grid3 toggle-content">
+
+                    <div class="grid3" id="cstr2">
                         <div>
                             <canvas id="disciplines_donut_chart" width="400" height="400"></canvas>
                         </div>
@@ -155,8 +166,8 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
                     </div>
                 </div>
                 <div class="card_container">
-                    <h3 data-toggle="evolution">Evolução do Desempenho</h3>
-                    <div class="grid1 toggle-content">
+
+                    <div class="grid1 toggle-content" id="cstr3">
                         <canvas id="evolution_chart" width="400" height="200"
                             style="max-width: 100%; height: auto;"></canvas>
                     </div>
@@ -355,10 +366,12 @@ const donutChart = new Chart(ctx, {
         plugins: {
             legend: {
                 position: 'top',
+                color: 'white',
             },
             title: {
                 display: true,
-                text: 'Distribuição de Disciplinas'
+                text: 'Distribuição de Disciplinas',
+                color: 'white',
             }
         }
     }
@@ -650,8 +663,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     headers.forEach(header => {
         header.addEventListener('click', function() {
-            // Encontra o próximo elemento irmão que é o conteúdo a ser exibido
-            const content = header.nextElementSibling;
+            // Obtém o valor do data-toggle
+            const toggleData = header.getAttribute('data-toggle');
+
+            // Encontra o elemento com o id correspondente
+            const content = document.getElementById(toggleData);
 
             // Alterna a visibilidade do conteúdo
             if (content.style.display === "none" || content.style.display === "") {
