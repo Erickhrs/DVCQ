@@ -32,6 +32,8 @@
   padding: 20px;
   background-color: var(--logo-blue)!important;
   color: white;
+  display: flex;
+  justify-content: center;
 }
 
 .grid3 div:nth-child(1) {
@@ -150,4 +152,8 @@ h3 {
 
 .toggle-content {
   display: none;
+}
+.card_container canva{
+  margin-left: auto!important;
+  margin-right: auto!important;
 }

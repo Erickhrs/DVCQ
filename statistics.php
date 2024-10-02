@@ -115,7 +115,7 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
                 <div class="card_container">
                     <h3 data-toggle="performance">Desempenho Geral</h3>
                     <div class="grid3" class="toggle-content">
-                        <div>
+                        <div style="display: block;">
                             <h6>Questões Resolvidas: <?php echo total_questions_answered($mysqli, $_SESSION['id']); ?>
                             </h6>
                             <h6>Total de matérias:</h6>
@@ -478,18 +478,18 @@ const bancaChart = new Chart(bancaCtx, {
             label: 'Contagem por Banca',
             data: banca_counts,
             backgroundColor: [
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(153, 102, 255, 0.2)'
+                'rgba(144, 238, 144, 0.7)', // Verde claro
+                'rgba(255, 182, 193, 0.7)', // Rosa claro
+                'rgba(173, 216, 230, 0.7)', // Azul claro
+                'rgba(255, 239, 213, 0.7)', // Branco baunilha claro
+                'rgba(255, 228, 181, 0.7)' // Bege claro
             ],
             borderColor: [
-                'rgba(75, 192, 192, 1)',
-                'rgba(255, 99, 132, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(153, 102, 255, 1)'
+                'rgba(144, 238, 144, 1)',
+                'rgba(255, 182, 193, 1)',
+                'rgba(173, 216, 230, 1)',
+                'rgba(255, 239, 213, 1)',
+                'rgba(255, 228, 181, 1)'
             ],
             borderWidth: 1
         }]
@@ -499,10 +499,14 @@ const bancaChart = new Chart(bancaCtx, {
         plugins: {
             legend: {
                 position: 'top',
+                labels: {
+                    color: 'white' // Texto claro
+                }
             },
             title: {
                 display: true,
-                text: 'Distribuição por Banca'
+                text: 'Distribuição por Banca',
+                color: 'white' // Texto claro
             }
         }
     }
@@ -516,8 +520,8 @@ const jobFunctionChart = new Chart(jobfunction_ctx, {
         datasets: [{
             label: 'Contagem de Funções de Trabalho',
             data: <?php echo json_encode($jobFunction_counts); ?>,
-            backgroundColor: 'rgba(153, 102, 255, 0.2)',
-            borderColor: 'rgba(153, 102, 255, 1)',
+            backgroundColor: 'rgba(173, 216, 230, 0.7)', // Azul claro
+            borderColor: 'rgba(173, 216, 230, 1)',
             borderWidth: 1
         }]
     },
@@ -525,16 +529,28 @@ const jobFunctionChart = new Chart(jobfunction_ctx, {
         responsive: true,
         scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+                ticks: {
+                    color: 'white' // Texto claro
+                }
+            },
+            x: {
+                ticks: {
+                    color: 'white' // Texto claro
+                }
             }
         },
         plugins: {
             legend: {
                 position: 'top',
+                labels: {
+                    color: 'white' // Texto claro
+                }
             },
             title: {
                 display: true,
-                text: 'Contagem de Funções de Trabalho'
+                text: 'Contagem de Funções de Trabalho',
+                color: 'white' // Texto claro
             }
         }
     }
@@ -555,18 +571,30 @@ const jobRoleChart = new Chart(jobRoleCtx, {
     },
     options: {
         responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    color: 'white' // Texto claro
+                }
+            },
+            x: {
+                ticks: {
+                    color: 'white' // Texto claro
+                }
+            }
+        },
         plugins: {
             legend: {
                 position: 'top',
+                labels: {
+                    color: 'white' // Texto claro
+                }
             },
             title: {
                 display: true,
-                text: 'Contagem de Funções de Trabalho'
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true
+                text: 'Contagem de Funções de Trabalho',
+                color: 'white' // Texto claro
             }
         }
     }
@@ -581,8 +609,8 @@ const courseChart = new Chart(courseCtx, {
         datasets: [{
             label: 'Contagem de Cursos',
             data: <?php echo json_encode($course_counts); ?>,
-            backgroundColor: 'rgba(153, 102, 255, 0.2)',
-            borderColor: 'rgba(153, 102, 255, 1)',
+            backgroundColor: 'rgba(173, 216, 230, 0.7)', // Azul claro
+            borderColor: 'rgba(173, 216, 230, 1)',
             borderWidth: 1
         }]
     },
@@ -590,16 +618,28 @@ const courseChart = new Chart(courseCtx, {
         responsive: true,
         scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+                ticks: {
+                    color: 'white' // Texto claro
+                }
+            },
+            x: {
+                ticks: {
+                    color: 'white' // Texto claro
+                }
             }
         },
         plugins: {
             legend: {
                 position: 'top',
+                labels: {
+                    color: 'white' // Texto claro
+                }
             },
             title: {
                 display: true,
-                text: 'Contagem de Cursos por Usuário'
+                text: 'Contagem de Cursos',
+                color: 'white' // Texto claro
             }
         }
     }
