@@ -1,135 +1,153 @@
-.grid1{
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 15px;
+.grid1 {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 15px;
 }
-.grid2{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
 
 }
-.grid2 div{
+
+.grid2 div {
   background-color: #80808012;
   border-radius: 4px;
   height: 200px;
   padding: 20px;
 }
-.grid3{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
 
-}
-.grid3 div{
-    background-color: #80808012;
-    border-radius: 4px;
-    height: 200px;
-    padding: 20px;
-}
-.grid3 div:nth-child(1){
-    text-align: center;
-}
-.grid1 div{
-    background-color: #80808012;
-    border-radius: 4px;
-    height: 200px;
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-left: 20px!important;
+  margin-right: 20px!important;
 }
 
-#stat_container{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.grid3 div {
+  border-radius: 4px;
+  height: 200px;
+  padding: 20px;
+  background-color: var(--logo-blue)!important;
+  color: white;
 }
 
-#stat_filter{
-    margin: 30px;
+.grid3 div:nth-child(1) {
+  text-align: center;
 }
-#stat_filter form{
-    padding: 10px;
-    border-radius: 15px;
+
+.grid1 div {
+  background-color: #80808012;
+  border-radius: 4px;
+  height: 200px;
+}
+
+#stat_container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#stat_filter {
+  margin: 30px;
+}
+
+#stat_filter form {
+  padding: 10px;
+  border-radius: 15px;
 }
 
 .horizontal-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Espaçamento entre os elementos */
-    align-items: center; /* Alinha verticalmente no centro */
-    justify-content: center;
-    background-color: #1d3969;
-    color: white;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .horizontal-form div {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    justify-content: center;
-  }
-  
-  .horizontal-form label {
-    margin-right: 5px;
-  }
-  
-  .horizontal-form select {
-    padding: 5px;
-    border: none;
-    border-radius: 10px;
-  }
-  
-  .horizontal-form button {
-    padding: 5px 15px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .horizontal-form button:hover {
-    background-color: #45a049;
-  }
-  h3{
-    padding-left: 15px;
-    background: white;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  /* Espaçamento entre os elementos */
+  align-items: center;
+  /* Alinha verticalmente no centro */
+  justify-content: center;
+  background-color: #1d3969;
+  color: white;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.horizontal-form div {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+}
+
+.horizontal-form label {
+  margin-right: 5px;
+}
+
+.horizontal-form select {
+  padding: 5px;
+  border: none;
+  border-radius: 10px;
+}
+
+.horizontal-form button {
+  padding: 5px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.horizontal-form button:hover {
+  background-color: #45a049;
+}
+
+h3 {
+  padding-left: 15px;
+  background: white;
   padding: 5px;
   margin: 20px;
   border-radius: 8px;
   color: var(--logo-blue);
   cursor: pointer;
-  }
-  #correct{
-    color: #4CAF50;
-  }
-  #wrong{
-    color: red;
-  }
-#total_cw_chart{
+}
+
+#correct {
+  color: #4CAF50;
+}
+
+#wrong {
+  color: red;
+}
+
+#total_cw_chart {
   margin-left: auto;
   margin-right: auto;
-  }
-  #disciplines_donut_chart{
-    margin-left: auto;
-  margin-right: auto;
-  }
+}
 
-  #chart_infos{
-    display: flex;
+#disciplines_donut_chart {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#chart_infos {
+  display: flex;
   flex-direction: row;
-    gap: 10px;
-    margin: 20px;
-  }
-  #chart_infos span{
+  gap: 10px;
+  margin: 20px;
+}
+
+#chart_infos span {
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
   padding: 3px;
   border-radius: 5px;
-  
-  }
-  .toggle-content {
-    display: none;
+
+}
+
+.toggle-content {
+  display: none;
 }

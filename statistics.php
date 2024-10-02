@@ -130,7 +130,7 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
                 </div>
                 <div class="card_container">
                     <h3 data-toggle="disciplines">Contabilizando disciplinas</h3>
-                    <div class="grid2 toggle-content">
+                    <div class="grid3 toggle-content">
                         <div>
                             <canvas id="disciplines_donut_chart" width="400" height="400"></canvas>
                         </div>
@@ -184,12 +184,12 @@ const myPieChart = new Chart(total_cw_ctx, {
             label: 'Desempenho',
             data: [<?php echo $correct; ?>, <?php echo $wrong; ?>],
             backgroundColor: [
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(255, 99, 132, 0.2)'
+                'rgba(173, 216, 230, 0.6)', // Azul claro para acertos
+                'rgba(255, 182, 193, 0.6)' // Rosa claro para erros
             ],
             borderColor: [
-                'rgba(75, 192, 192, 1)',
-                'rgba(255, 99, 132, 1)'
+                'rgba(173, 216, 230, 1)',
+                'rgba(255, 182, 193, 1)'
             ],
             borderWidth: 1
         }]
@@ -199,14 +199,19 @@ const myPieChart = new Chart(total_cw_ctx, {
         plugins: {
             legend: {
                 position: 'top',
+                labels: {
+                    color: 'white' // Cor branca para as legendas
+                }
             },
             title: {
                 display: true,
-                text: 'Sua Relação de Acertos e Erros'
+                text: 'Sua Relação de Acertos e Erros',
+                color: 'white' // Cor branca para o título
             }
         }
     }
 });
+
 
 const subjectCtx = document.getElementById('subject_performance_chart').getContext('2d');
 const subjectChart = new Chart(subjectCtx, {
@@ -216,15 +221,15 @@ const subjectChart = new Chart(subjectCtx, {
         datasets: [{
                 label: 'Acertos',
                 data: <?php echo json_encode($correct_data); ?>,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(173, 216, 230, 0.6)', // Azul claro
+                borderColor: 'rgba(173, 216, 230, 1)',
                 borderWidth: 1
             },
             {
                 label: 'Erros',
                 data: <?php echo json_encode($wrong_data); ?>,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 182, 193, 0.6)', // Rosa claro
+                borderColor: 'rgba(255, 182, 193, 1)',
                 borderWidth: 1
             }
         ]
@@ -233,20 +238,33 @@ const subjectChart = new Chart(subjectCtx, {
         responsive: true,
         scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+                ticks: {
+                    color: 'white' // Cor branca para os valores do eixo Y
+                }
+            },
+            x: {
+                ticks: {
+                    color: 'white' // Cor branca para os rótulos do eixo X
+                }
             }
         },
         plugins: {
             legend: {
                 position: 'top',
+                labels: {
+                    color: 'white' // Cor branca para as legendas
+                }
             },
             title: {
                 display: true,
-                text: 'Desempenho por Assunto'
+                text: 'Desempenho por Assunto',
+                color: 'white' // Cor branca para o título
             }
         }
     }
 });
+
 
 const evolution_ctx = document.getElementById('evolution_chart').getContext('2d');
 const evolutionChart = new Chart(evolution_ctx, {
@@ -316,18 +334,18 @@ const donutChart = new Chart(ctx, {
             label: 'Matérias',
             data: counts,
             backgroundColor: [
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(153, 102, 255, 0.2)'
+                'rgba(173, 216, 230, 0.7)', // Azul claro
+                'rgba(255, 182, 193, 0.7)', // Rosa claro
+                'rgba(255, 228, 181, 0.7)', // Bege claro
+                'rgba(144, 238, 144, 0.7)', // Verde claro
+                'rgba(255, 239, 213, 0.7)' // Branco baunilha claro
             ],
             borderColor: [
-                'rgba(75, 192, 192, 1)',
-                'rgba(255, 99, 132, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(153, 102, 255, 1)'
+                'rgba(173, 216, 230, 1)',
+                'rgba(255, 182, 193, 1)',
+                'rgba(255, 228, 181, 1)',
+                'rgba(144, 238, 144, 1)',
+                'rgba(255, 239, 213, 1)'
             ],
             borderWidth: 1
         }]
@@ -359,12 +377,12 @@ const questionTypeChart = new Chart(questionTypeCtx, {
             label: 'Contagem de Tipos de Questão',
             data: questionTypeCounts,
             backgroundColor: [
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)'
+                'rgba(144, 238, 144, 0.7)', // Verde claro
+                'rgba(255, 228, 181, 0.7)' // Bege claro
             ],
             borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)'
+                'rgba(144, 238, 144, 1)',
+                'rgba(255, 228, 181, 1)'
             ],
             borderWidth: 1
         }]
@@ -373,20 +391,33 @@ const questionTypeChart = new Chart(questionTypeCtx, {
         responsive: true,
         scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+                ticks: {
+                    color: 'white' // Texto claro
+                }
+            },
+            x: {
+                ticks: {
+                    color: 'white' // Texto claro
+                }
             }
         },
         plugins: {
             legend: {
                 position: 'top',
+                labels: {
+                    color: 'white' // Texto claro
+                }
             },
             title: {
                 display: true,
-                text: 'Distribuição de Tipos de Questão'
+                text: 'Distribuição de Tipos de Questão',
+                color: 'white' // Texto claro
             }
         }
     }
 });
+
 // Dados do gráfico de níveis
 const levelLabels = <?php echo json_encode($level_labels); ?>; // Níveis
 const levelCounts = <?php echo json_encode($level_counts); ?>; // Contagens
@@ -400,8 +431,8 @@ const levelChart = new Chart(levelCtx, {
         datasets: [{
             label: 'Contagem de Disciplinas por Nível',
             data: levelCounts,
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(255, 239, 213, 0.7)', // Branco baunilha claro
+            borderColor: 'rgba(255, 239, 213, 1)',
             borderWidth: 1
         }]
     },
@@ -409,16 +440,28 @@ const levelChart = new Chart(levelCtx, {
         responsive: true,
         scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+                ticks: {
+                    color: 'white' // Texto claro
+                }
+            },
+            x: {
+                ticks: {
+                    color: 'white' // Texto claro
+                }
             }
         },
         plugins: {
             legend: {
                 position: 'top',
+                labels: {
+                    color: 'white' // Texto claro
+                }
             },
             title: {
                 display: true,
-                text: 'Distribuição de Disciplinas por Nível'
+                text: 'Distribuição de Disciplinas por Nível',
+                color: 'white' // Texto claro
             }
         }
     }
@@ -572,7 +615,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Alterna a visibilidade do conteúdo
             if (content.style.display === "none" || content.style.display === "") {
-                content.style.display = "block"; // Exibe o conteúdo
+                content.style.display = "grid"; // Exibe o conteúdo
             } else {
                 content.style.display = "none"; // Oculta o conteúdo
             }
