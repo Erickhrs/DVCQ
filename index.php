@@ -1,9 +1,10 @@
 <?php
 session_start();
 include_once('./includes/functions.php');
-
-$correct = total_user_cw($mysqli, $_SESSION['id'], '1'); // Total de acertos
+if (isset($_SESSION['id'])){
+    $correct = total_user_cw($mysqli, $_SESSION['id'], '1'); // Total de acertos
 $wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
