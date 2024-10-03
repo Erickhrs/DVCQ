@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once('./includes/loading.php');
 // Supondo que os valores da sessão sejam 0, 1 ou 2
 $current_plan = $_SESSION['plan'];
 ?>

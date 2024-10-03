@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once('./includes/loading.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -11,6 +12,7 @@ session_start();
     <link rel="stylesheet" href="./style/global.css">
     <link rel="stylesheet" href="./style/index.css">
     <link rel="stylesheet" href="./style/books.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <title>DVC - QUESTÕES</title>
 </head>
 
@@ -33,7 +35,7 @@ session_start();
                         <ion-icon name="stats-chart-outline"></ion-icon> Meu Desempenho
                     </a></li>
             </ul>
-            <div class="container">
+            <div class="container animate__animated animate__fadeInUp">
                 <div class="header">
                     <h1>Cadernos de <?php echo $_SESSION['name']; ?></h1>
                     <div class="search-bar">
@@ -42,7 +44,7 @@ session_start();
                     </div>
                 </div>
 
-                <ul class="notebook-list" id="notebookList">
+                <ul class="notebook-list" id="notebookList" class="animate__animated animate__fadeInUp">
                     <li class="notebook-item">
                         <div class="notebook-details">
                             <i>📓</i>

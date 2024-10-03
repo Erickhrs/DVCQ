@@ -2,6 +2,7 @@
 session_start();
 require_once('./includes/connection.php');
 require_once('./includes/functions.php');
+include_once('./includes/loading.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

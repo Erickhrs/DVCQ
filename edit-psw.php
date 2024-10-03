@@ -1,7 +1,7 @@
 <?php
 // Iniciar sessão
 session_start();
-
+include_once('./includes/loading.php');
 // Incluir conexão com o banco de dados
 include './includes/connection.php';
 include './includes/protect.php';

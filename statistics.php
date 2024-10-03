@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once('./includes/functions.php');
+include_once('./includes/loading.php');
 
 $correct = total_user_cw($mysqli, $_SESSION['id'], '1'); // Total de acertos
 $wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros

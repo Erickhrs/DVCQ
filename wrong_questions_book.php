@@ -3,6 +3,7 @@ session_start();
 require_once('./includes/connection.php');
 require_once('./includes/functions.php');
 require_once('./includes/protect.php');
+include_once('./includes/loading.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

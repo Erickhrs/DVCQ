@@ -2,6 +2,7 @@
 session_start();
 require_once('./includes/connection.php'); // Supondo que você tenha um arquivo de conexão
 require_once('./includes/protect.php');
+include_once('./includes/loading.php');
 // Recuperar o ID do usuário da sessão
 $user_id = $_SESSION['id'];
 

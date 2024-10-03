@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once('./includes/loading.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -15,7 +16,7 @@ session_start();
 </head>
 
 <body>
-   <div style="background-color: white;">
+    <div style="background-color: white;">
         <?php require_once('./includes/navbar.php');?>
         <?php require_once('./includes/nav_menu.php');?>
     </div>
@@ -31,4 +32,4 @@ session_start();
 <script src="./scripts/spa.js" type="module"></script>
 <script src="./scripts/global.js"></script>
 
- </html>
+</html>

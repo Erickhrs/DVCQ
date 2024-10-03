@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once('./includes/loading.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -31,4 +32,4 @@ session_start();
 <script src="./scripts/spa.js" type="module"></script>
 <script src="./scripts/global.js"></script>
 
- </html>
+</html>

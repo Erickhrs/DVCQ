@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once('./includes/loading.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

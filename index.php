@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once('./includes/functions.php');
+include_once('./includes/loading.php');
 if (isset($_SESSION['id'])){
     $correct = total_user_cw($mysqli, $_SESSION['id'], '1'); // Total de acertos
 $wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros
@@ -16,6 +17,7 @@ $wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="./style/global.css">
     <link rel="stylesheet" href="./style/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <title>DVC - QUESTÕES</title>
 </head>
@@ -39,7 +41,7 @@ $wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros
                         <ion-icon name="stats-chart-outline"></ion-icon> Meu Desempenho
                     </a></li>
             </ul>
-            <main id="home-menu-root">
+            <main id="home-menu-root" class="animate__animated animate__fadeInUp">
                 <div id="header_root_index">
                     <h1 id="welcome_user_title">Bem vindo de volta, <?php echo $_SESSION['name']?>!</h1>
                     <span id="motivacional"></span>

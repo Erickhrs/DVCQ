@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once('./includes/loading.php');
 ?>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
