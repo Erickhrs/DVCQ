@@ -22,7 +22,7 @@ $wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros
     <title>DVC - QUESTÕES</title>
 </head>
 
-<body>
+<body style="background: linear-gradient(135deg, var(--light-green), var(--main-color), var(--green-todbg));">
     <?php include('./includes/wpp_btn.php');?>
     <div style="background-color: white;">
         <?php require_once('./includes/navbar.php');?>
@@ -62,7 +62,7 @@ $wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros
 
 
                 <div class="container_ind">
-                    <h1>Simulados Recentes</h1>
+                    <h1 style=" color: white;">Simulados Recentes</h1>
                     <div class="carousel-container">
                         <button class="sim_btn prev" onclick="scrollToLeft()">&#10094;</button>
                         <div class="carousel">
@@ -135,7 +135,7 @@ $wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros
                         <button class="sim_btn next" onclick="scrollRight()">&#10095;</button>
                     </div>
                 </div>
-                <div class="video-container">
+                <div class="video-container" style="color: white;">
                     <h1>Vídeos Recomendados</h1>
                     <div class="carousel-container">
                         <button class="sim_btn prev" onclick="scrollToLeftv()">&#10094;</button>

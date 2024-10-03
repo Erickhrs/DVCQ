@@ -821,7 +821,8 @@ function evaluateQuestionsPerDay($mysqli, $userID) {
             $daysSinceFirstAnswer = max(1, ceil((strtotime($today) - strtotime($firstAnswerDate)) / (60 * 60 * 24)));
             $averagePerDay = $total / $daysSinceFirstAnswer;
 
-            echo "<div style='font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; border-radius: 8px; border: 1px solid #ddd;min-height: 365px;'>";
+            echo "<div style='font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; border-radius: 8px; border: 1px solid #ddd;    min-height: 347px;
+    margin-top: 16px;'>";
             echo "<h2 style='color: #333; text-align: center;'>Relatório de Questões Respondidas</h2>";
             
             // Total de questões respondidas
