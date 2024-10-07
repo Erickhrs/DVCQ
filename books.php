@@ -67,6 +67,46 @@ include_once('./includes/loading.php');
                         <div class="options">⋮</div>
                     </li>
 
+                    <li class="notebook-item">
+                        <div class="notebook-details">
+                            <i>📓</i>
+                            <div>
+                                <p>Batata</p>
+                                <span class="date">Criado em 01/2024 | 0 questões</span>
+                            </div>
+                        </div>
+                        <div class="options">⋮</div>
+                    </li>
+                    <li class="notebook-item">
+                        <div class="notebook-details">
+                            <i>📓</i>
+                            <div>
+                                <p>Teste</p>
+                                <span class="date">Criado em 01/2024 | 0 questões</span>
+                            </div>
+                        </div>
+                        <div class="options">⋮</div>
+                    </li>
+                    <li class="notebook-item">
+                        <div class="notebook-details">
+                            <i>📓</i>
+                            <div>
+                                <p>Couve</p>
+                                <span class="date">Criado em 01/2024 | 0 questões</span>
+                            </div>
+                        </div>
+                        <div class="options">⋮</div>
+                    </li>
+                    <li class="notebook-item">
+                        <div class="notebook-details">
+                            <i>📓</i>
+                            <div>
+                                <p>Bateria</p>
+                                <span class="date">Criado em 01/2024 | 0 questões</span>
+                            </div>
+                        </div>
+                        <div class="options">⋮</div>
+                    </li>
 
                 </ul>
             </div>

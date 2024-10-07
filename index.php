@@ -22,7 +22,10 @@ $wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros
     <title>DVC - QUESTÕES</title>
 </head>
 
-<body style="background: linear-gradient(135deg, var(--light-green), var(--main-color), var(--green-todbg));">
+<body style="background: 
+    url('./assets/hero-bg.png') no-repeat center center, 
+    linear-gradient(135deg, var(--light-green), var(--main-color), var(--green-todbg)); 
+    background-size: cover, cover;">
     <?php include('./includes/wpp_btn.php');?>
     <div style="background-color: white;">
         <?php require_once('./includes/navbar.php');?>

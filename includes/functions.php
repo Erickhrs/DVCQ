@@ -835,7 +835,7 @@ function evaluateQuestionsPerDay($mysqli, $userID) {
             echo "<p style='font-size: 18px; color: #FF9800;'><ion-icon name='time' style='vertical-align: middle;'></ion-icon> Questões nos últimos 15 dias: <strong style='color: #333;'>$lastFifteenDaysCount</strong></p>";
             
             // Questões no último mês
-            echo "<p style='font-size: 18px; color: #9C27B0;'><ion-icon name='calendar-number' style='vertical-align: middle;'></ion-icon> Questões no último mês: <strong style='color: #333;'>$lastMonthCount</strong></p>";
+            echo "<p style='font-size: 18px; color: #9C27B0;'><ion-icon name='calendar' style='vertical-align: middle;'></ion-icon>  Questões no último mês: <strong style='color: #333;'>$lastMonthCount</strong></p>";
             
             // Média de questões respondidas por dia
             echo "<p style='font-size: 18px; color: #E91E63;'><ion-icon name='stats-chart' style='vertical-align: middle;'></ion-icon> Média de questões respondidas por dia: <strong style='color: #333;'>" . number_format($averagePerDay, 2) . "</strong></p>";
@@ -932,6 +932,69 @@ function getUserRankingByCorrectAnswers($mysqli, $userID) {
     } else {
         echo "Erro ao preparar a consulta: " . $mysqli->error;
     }
+}
+
+function getUserAnswers($mysqli, $userId) {
+    // Consulta para pegar a resposta mais recente de cada questão
+    $query = "
+        SELECT question_ID, is_correct, answer_date 
+        FROM users_answers 
+        WHERE user_ID = ? 
+        AND answer_date = (
+            SELECT MAX(answer_date)
+            FROM users_answers AS sub
+            WHERE sub.user_ID = users_answers.user_ID 
+            AND sub.question_ID = users_answers.question_ID
+        )
+        GROUP BY question_ID
+        ORDER BY answer_date DESC
+    ";
+    
+    // Preparar a consulta
+    if ($stmt = $mysqli->prepare($query)) {
+        // Vincular os parâmetros
+        $stmt->bind_param("i", $userId);
+        
+        // Executar a consulta
+        $stmt->execute();
+        
+        // Armazenar o resultado
+        $result = $stmt->get_result();
+        
+        // Criar um array para armazenar as respostas mais recentes do usuário
+        $answers = [];
+
+        // Iterar sobre o resultado da consulta
+        while ($row = $result->fetch_assoc()) {
+            // Adicionar as respostas ao array de forma imutável
+            $answers[] = (object)[
+                'question_ID' => $row['question_ID'],
+                'is_correct' => $row['is_correct'],
+                'answer_date' => $row['answer_date']
+            ];
+        }
+        
+        // Fechar o statement
+        $stmt->close();
+        
+        // Retornar as respostas mais recentes como um array de objetos
+        return $answers;
+    }
+    
+    // Em caso de erro na consulta, retornar null
+    return null;
+}
+
+function isQuestionAnswered($answers, $questionId) {
+    // Verifica se $answers é um array válido
+    if (is_array($answers)) {
+        foreach ($answers as $answer) {
+            if ($answer->question_ID == $questionId) {
+                return $answer->is_correct; // Retorna o valor de is_correct se a questão foi respondida
+            }
+        }
+    }
+    return null; // Retorna null se a questão não foi respondida
 }
 
 ?>

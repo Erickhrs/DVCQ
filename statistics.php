@@ -85,7 +85,7 @@ list($dates, $correct_counts, $wrong_counts) = get_evolution_data($mysqli, $_SES
                         <ion-icon name="rocket-outline"></ion-icon> Ambiente de estudos
                     </a></li>
                 <li><a href="./books.php">
-                        <ion-icon name="document-text-outline"></ion-icon> Cadernos e Simulados
+                        <ion-icon name="document-text-outline"></ion-icon> Cadernos
                     </a></li>
                 <li><a href="./statistics.php" class="active">
                         <ion-icon name="stats-chart-outline"></ion-icon> Meu Desempenho

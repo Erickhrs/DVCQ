@@ -504,3 +504,15 @@ canvas {
     height: auto !important;
     /* Ajusta o canvas para ocupar o tamanho total do seu contêiner */
 }
+.incorrect{
+    background-color: #ff000078;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+}
+.correct{
+    background-color: darkgreen;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+}

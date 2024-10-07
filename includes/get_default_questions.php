@@ -1,6 +1,10 @@
 <?php
 include_once './includes/connection.php'; // Inclui o arquivo de conexão
 include_once './includes/functions.php';
+$answers = getUserAnswers($mysqli, $_SESSION['id']);
+if (!$answers) {
+    $answers = []; // Inicializa como array vazio caso não haja respostas
+}
 // Define o número de registros por página
 $records_per_page = 2; // Ajuste conforme necessário
 
@@ -110,7 +114,13 @@ if ($result && $result->num_rows > 0) {
         echo '<span class="span_about">' . getCoursesFromIds($mysqli, $row['course']) . '</span>';
         echo '        <span class="span_about">' . getJobRole($mysqli, $row['job_role']) . '</span>';
         echo '        <span class="span_about">' . getJobFunction($mysqli, $row['job_function']) . '</span>';
-
+        
+        $is_correct = isQuestionAnswered($answers, $row['ID']);
+        if ($is_correct !== null) {
+            $class = ($is_correct == 1) ? 'correct' : 'incorrect'; // Define a classe com base em is_correct
+            echo '<span class="span_respondida ' . $class . '"> ✓ respondida</span>';
+        }
+        
         echo '    </div>';
         echo '    <span id="question">' . $row['question'] . '</span>'; 
         echo '    <div id="options">';
