@@ -935,25 +935,24 @@ function getUserRankingByCorrectAnswers($mysqli, $userID) {
 }
 
 function getUserAnswers($mysqli, $userId) {
-    // Consulta para pegar a resposta mais recente de cada questão
+    // Consulta para pegar a última resposta de cada questão, considerando a data e o ID
     $query = "
         SELECT question_ID, is_correct, answer_date 
-        FROM users_answers 
+        FROM users_answers AS ua
         WHERE user_ID = ? 
-        AND answer_date = (
-            SELECT MAX(answer_date)
-            FROM users_answers AS sub
-            WHERE sub.user_ID = users_answers.user_ID 
-            AND sub.question_ID = users_answers.question_ID
+        AND id IN (
+            SELECT MAX(id) 
+            FROM users_answers 
+            WHERE user_ID = ? 
+            GROUP BY question_ID, DATE(answer_date)
         )
-        GROUP BY question_ID
         ORDER BY answer_date DESC
     ";
     
     // Preparar a consulta
     if ($stmt = $mysqli->prepare($query)) {
         // Vincular os parâmetros
-        $stmt->bind_param("i", $userId);
+        $stmt->bind_param("ii", $userId, $userId);
         
         // Executar a consulta
         $stmt->execute();
