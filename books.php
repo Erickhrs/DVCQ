@@ -45,79 +45,31 @@ include_once('./includes/loading.php');
                 </div>
 
                 <ul class="notebook-list" id="notebookList" class="animate__animated animate__fadeInUp">
-                    <li class="notebook-item">
-                        <div class="notebook-details">
-                            <i>📓</i>
-                            <div>
-                                <p>teste</p>
-                                <span class="date">Criado em 01/2024 | 0 questões</span>
-                            </div>
-                        </div>
-                        <div class="options">⋮</div>
-                    </li>
-
-                    <li class="notebook-item">
-                        <div class="notebook-details">
-                            <i>📓</i>
-                            <div>
-                                <p>Bateria</p>
-                                <span class="date">Criado em 01/2024 | 0 questões</span>
-                            </div>
-                        </div>
-                        <div class="options">⋮</div>
-                    </li>
-
-                    <li class="notebook-item">
-                        <div class="notebook-details">
-                            <i>📓</i>
-                            <div>
-                                <p>Batata</p>
-                                <span class="date">Criado em 01/2024 | 0 questões</span>
-                            </div>
-                        </div>
-                        <div class="options">⋮</div>
-                    </li>
-                    <li class="notebook-item">
-                        <div class="notebook-details">
-                            <i>📓</i>
-                            <div>
-                                <p>Teste</p>
-                                <span class="date">Criado em 01/2024 | 0 questões</span>
-                            </div>
-                        </div>
-                        <div class="options">⋮</div>
-                    </li>
-                    <li class="notebook-item">
-                        <div class="notebook-details">
-                            <i>📓</i>
-                            <div>
-                                <p>Couve</p>
-                                <span class="date">Criado em 01/2024 | 0 questões</span>
-                            </div>
-                        </div>
-                        <div class="options">⋮</div>
-                    </li>
-                    <li class="notebook-item">
-                        <div class="notebook-details">
-                            <i>📓</i>
-                            <div>
-                                <p>Bateria</p>
-                                <span class="date">Criado em 01/2024 | 0 questões</span>
-                            </div>
-                        </div>
-                        <div class="options">⋮</div>
-                    </li>
-
+                    <?php include_once('./includes/get_books.php')?>
                 </ul>
             </div>
         </nav>
     </main>
-</body><?php include_once('./includes/footer.php')?>
+
+    <div id="createBookModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Criar Novo Caderno</h2>
+            <form id="createNotebookForm">
+                <label for="notebookName">Nome do Caderno:</label>
+                <input type="text" id="notebookName" name="notebookName" required>
+                <button type="submit">Criar</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+<?php include_once('./includes/footer.php')?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="./scripts/books.js"></script>
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 <script src="./scripts/spa.js" type="module"></script>
 <script src="./scripts/global.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="./scripts/protect.js"></script>
 
 </html>
