@@ -81,7 +81,7 @@ $total_records = $total_row['total'];
 $total_pages = ceil($total_records / $records_per_page);
 
 // Consulta SQL para buscar as questões da página atual
-$query = "SELECT * FROM questions $where_clause LIMIT $offset, $records_per_page";
+$query = "SELECT * FROM questions $where_clause ORDER BY ID DESC LIMIT $offset, $records_per_page";
 $result = $mysqli->query($query);
 
 // Função para obter alternativas por ID da questão e alternativa
