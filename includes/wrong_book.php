@@ -1,8 +1,22 @@
 <?php
 include_once './includes/connection.php'; // Inclui o arquivo de conexão
 include_once './includes/functions.php';
+$answers = getUserAnswers($mysqli, $_SESSION['id']);
+if (!$answers) {
+    $answers = []; // Inicializa como array vazio caso não haja respostas
+}
+// Define o número de registros por página
+$records_per_page = 2; // Ajuste conforme necessário
 
+// Obtém o número da página atual da URL, se não estiver definido, assume a página 1
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
+// Calcula o OFFSET para a consulta SQL
+$offset = ($page - 1) * $records_per_page;
+
+// Construa a cláusula WHERE com base nos parâmetros do formulário
+$conditions = [];
+$params = [];
 $types = '';
 $text = [
     "Você acertou! Continue assim!",
@@ -17,8 +31,57 @@ $text = [
     "Certo! Bela resposta!"
 ];
 
+// Seleciona uma mensagem aleatória
+
+// Verifica e adiciona filtros baseados nos parâmetros do formulário
+if (!empty($_GET['keys'])) {
+    $conditions[] = "question LIKE '%" . $mysqli->real_escape_string($_GET['keys']) . "%'";
+}
+if (!empty($_GET['discipline'])) {
+    $conditions[] = "discipline = '" . $mysqli->real_escape_string($_GET['discipline']) . "'";
+}
+if (!empty($_GET['subject'])) {
+    $conditions[] = "subject = '" . $mysqli->real_escape_string($_GET['subject']) . "'";
+}
+if (!empty($_GET['banca'])) {
+    $conditions[] = "banca = '" . $mysqli->real_escape_string($_GET['banca']) . "'";
+}
+if (!empty($_GET['year'])) {
+    $conditions[] = "year = '" . $mysqli->real_escape_string($_GET['year']) . "'";
+}
+if (!empty($_GET['job_roles'])) {
+    $conditions[] = "job_role = '" . $mysqli->real_escape_string($_GET['job_roles']) . "'";
+}
+if (!empty($_GET['grade_level'])) {
+    $conditions[] = "grade_level = '" . $mysqli->real_escape_string($_GET['grade_level']) . "'";
+}
+if (!empty($_GET['course'])) {
+    $conditions[] = "course = '" . $mysqli->real_escape_string($_GET['course']) . "'";
+}
+if (!empty($_GET['job_function'])) {
+    $conditions[] = "job_function = '" . $mysqli->real_escape_string($_GET['job_function']) . "'";
+}
+if (!empty($_GET['question_type'])) {
+    $conditions[] = "question_type = '" . $mysqli->real_escape_string($_GET['question_type']) . "'";
+}
+if (!empty($_GET['level'])) {
+    $conditions[] = "level = '" . $mysqli->real_escape_string($_GET['level']) . "'";
+}
+
+// Adiciona a cláusula WHERE à consulta SQL se houver filtros
+$where_clause = !empty($conditions) ? 'WHERE ' . implode(' AND ', $conditions) : '';
+
+// Consulta SQL para contar o número total de registros
+$total_query = "SELECT COUNT(*) AS total FROM questions $where_clause";
+$total_result = $mysqli->query($total_query);
+$total_row = $total_result->fetch_assoc();
+$total_records = $total_row['total'];
+
+// Calcula o número total de páginas
+$total_pages = ceil($total_records / $records_per_page);
+
 // Consulta SQL para buscar as questões da página atual
-$query = "SELECT * FROM questions";
+$query = "SELECT * FROM questions $where_clause ORDER BY ID DESC LIMIT $offset, $records_per_page";
 $result = $mysqli->query($query);
 
 // Função para obter alternativas por ID da questão e alternativa
@@ -51,7 +114,13 @@ if ($result && $result->num_rows > 0) {
         echo '<span class="span_about">' . getCoursesFromIds($mysqli, $row['course']) . '</span>';
         echo '        <span class="span_about">' . getJobRole($mysqli, $row['job_role']) . '</span>';
         echo '        <span class="span_about">' . getJobFunction($mysqli, $row['job_function']) . '</span>';
-
+        
+        $is_correct = isQuestionAnswered($answers, $row['ID']);
+        if ($is_correct !== null) {
+            $class = ($is_correct == 1) ? 'correct' : 'incorrect'; // Define a classe com base em is_correct
+            echo '<span class="span_respondida ' . $class . '"> ✓ respondida</span>';
+        }
+        
         echo '    </div>';
         echo '    <span id="question">' . $row['question'] . '</span>'; 
         echo '    <div id="options">';
@@ -87,8 +156,8 @@ if ($result && $result->num_rows > 0) {
         echo '        <div id="tools">';
         echo '    <span class="likeBtn ' . $liked_class . '" data-id="' . $row['ID'] . '"><ion-icon name="heart-outline"></ion-icon> Gostei</span>';
 
-        echo '<span class ="toggle" data-target="' . "gabarito_" . $row['ID'] . '"><ion-icon name="chatbox-outline"></ion-icon> Gabarito</span>';
-        echo '            <span class="toggle" data-target="' . "comments_" . $row['ID'] . '"><ion-icon  name="chatbubbles-outline" ></ion-icon>Comentários</span>';
+        echo '<span class ="toggle gabaritobtn" data-target="' . "gabarito_" . $row['ID'] . '"><ion-icon name="chatbox-outline"></ion-icon> Gabarito</span>';
+        echo '            <span class="toggle commentsbtn" data-target="' . "comments_" . $row['ID'] . '"><ion-icon  name="chatbubbles-outline" ></ion-icon>Comentários</span>';
         echo '            <span class="toggle stbtn" data-target="' . "est_" . $row['ID'] . '"><ion-icon name="analytics-outline"></ion-icon>Estátisticas</span>';
         echo '            <span class="toggle" data-target="' . "note_" . $row['ID'] . '"><ion-icon name="document-outline"></ion-icon>Criar Anotações</span>';
         echo '<span class="feedback_btn" data-session-id="' . $_SESSION['id']. '" data-question-id="' . $row['ID'] . '"><ion-icon name="flag-outline"></ion-icon>Feedback</span>';
@@ -119,16 +188,26 @@ if ($result && $result->num_rows > 0) {
     echo '</div>'; 
     echo '<div id="' . "note_" . $row['ID'] . '" class="notes animate__animated animate__fadeIn">';
 
-      include './includes/get_notes.php';
-        echo '</div>'; 
-        echo '</form>';
-    }
+    echo '<div style="display:flex;gap:5px;margin-bottom:20px;" class="note-container">
+    <textarea class="note" placeholder="Digite sua nota aqui..."></textarea>
+    <span class="add-note-btn" data-question-id="'. $row['ID'] . '">+</span>
+</div>';
+
+include './includes/get_notes.php';
+echo '</div>';
+echo '</form>';
+}
 } else {
-    echo '<span style="text-align: center;">Nenhuma questão encontrad</span>';
+echo '<span style="text-align: center;">Nenhuma questão encontrad</span>';
 }
 
-
-
-// Fecha a conexão
-$mysqli->close();
-?>
+// Exibe links de navegação para as páginas
+if ($total_pages > 1) {
+echo '<div class="pagination">';
+    if ($page > 1) {
+    echo '<a href="?page=' . ($page - 1) . '">&laquo; Anterior</a>';
+    }
+    for ($i = 1; $i <= $total_pages; $i++) { if ($i==$page) { echo '<span class="current">' . $i . '</span>' ; } else {
+        echo '<a href="?page=' . $i . '">' . $i . '</a>' ; } } if ($page < $total_pages) { echo '<a href="?page=' .
+        ($page + 1) . '">Próximo &raquo;</a>' ; } echo '</div>' ; } // Fecha a conexão $mysqli->close();
+        ?>

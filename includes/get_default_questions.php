@@ -189,7 +189,7 @@ if ($result && $result->num_rows > 0) {
     echo '<div id="' . "note_" . $row['ID'] . '" class="notes animate__animated animate__fadeIn">';
 
     echo '<div style="display:flex;gap:5px;margin-bottom:20px;" class="note-container">
-    <textarea class="note" placeholder="Digite sua nota aqui..." required></textarea>
+    <textarea class="note" placeholder="Digite sua nota aqui..."></textarea>
     <span class="add-note-btn" data-question-id="'. $row['ID'] . '">+</span>
 </div>';
 
