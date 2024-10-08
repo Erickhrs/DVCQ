@@ -162,6 +162,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function disableBtn(id) {
     var element = document.getElementById("vbtn_" + id);
+    var gabarito = document.querySelector('[data-target="gabarito_' + id + '"]');
+    var comments = document.querySelector('[data-target="comments_' + id + '"]');
+    var chartbtn = document.querySelector('[data-target="est_' + id + '"]');
+
+    gabarito.style.display = 'initial';
+    comments.style.display = 'initial';
+    chartbtn.style.display = 'initial';
     element.innerHTML = "Respondido";
     element.style.backgroundColor = "#8080804f";
     element.style.cursor = "not-allowed";

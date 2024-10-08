@@ -156,8 +156,8 @@ if ($result && $result->num_rows > 0) {
         echo '        <div id="tools">';
         echo '    <span class="likeBtn ' . $liked_class . '" data-id="' . $row['ID'] . '"><ion-icon name="heart-outline"></ion-icon> Gostei</span>';
 
-        echo '<span class ="toggle" data-target="' . "gabarito_" . $row['ID'] . '"><ion-icon name="chatbox-outline"></ion-icon> Gabarito</span>';
-        echo '            <span class="toggle" data-target="' . "comments_" . $row['ID'] . '"><ion-icon  name="chatbubbles-outline" ></ion-icon>Comentários</span>';
+        echo '<span class ="toggle gabaritobtn" data-target="' . "gabarito_" . $row['ID'] . '"><ion-icon name="chatbox-outline"></ion-icon> Gabarito</span>';
+        echo '            <span class="toggle commentsbtn" data-target="' . "comments_" . $row['ID'] . '"><ion-icon  name="chatbubbles-outline" ></ion-icon>Comentários</span>';
         echo '            <span class="toggle stbtn" data-target="' . "est_" . $row['ID'] . '"><ion-icon name="analytics-outline"></ion-icon>Estátisticas</span>';
         echo '            <span class="toggle" data-target="' . "note_" . $row['ID'] . '"><ion-icon name="document-outline"></ion-icon>Criar Anotações</span>';
         echo '<span class="feedback_btn" data-session-id="' . $_SESSION['id']. '" data-question-id="' . $row['ID'] . '"><ion-icon name="flag-outline"></ion-icon>Feedback</span>';
