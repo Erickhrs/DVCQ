@@ -5,15 +5,6 @@ $answers = getUserAnswers($mysqli, $_SESSION['id']);
 if (!$answers) {
     $answers = []; // Inicializa como array vazio caso não haja respostas
 }
-// Define o número de registros por página
-$records_per_page = 2; // Ajuste conforme necessário
-
-// Obtém o número da página atual da URL, se não estiver definido, assume a página 1
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-
-// Calcula o OFFSET para a consulta SQL
-$offset = ($page - 1) * $records_per_page;
-
 // Construa a cláusula WHERE com base nos parâmetros do formulário
 $conditions = [];
 $params = [];
@@ -75,13 +66,10 @@ $where_clause = !empty($conditions) ? 'WHERE ' . implode(' AND ', $conditions) :
 $total_query = "SELECT COUNT(*) AS total FROM questions $where_clause";
 $total_result = $mysqli->query($total_query);
 $total_row = $total_result->fetch_assoc();
-$total_records = $total_row['total'];
 
-// Calcula o número total de páginas
-$total_pages = ceil($total_records / $records_per_page);
 
 // Consulta SQL para buscar as questões da página atual
-$query = "SELECT * FROM questions $where_clause ORDER BY ID DESC LIMIT $offset, $records_per_page";
+$query = "SELECT * FROM questions $where_clause ORDER BY ID DESC";
 $result = $mysqli->query($query);
 
 // Função para obter alternativas por ID da questão e alternativa
@@ -202,12 +190,4 @@ echo '<span style="text-align: center;">Nenhuma questão encontrad</span>';
 }
 
 // Exibe links de navegação para as páginas
-if ($total_pages > 1) {
-echo '<div class="pagination">';
-    if ($page > 1) {
-    echo '<a href="?page=' . ($page - 1) . '">&laquo; Anterior</a>';
-    }
-    for ($i = 1; $i <= $total_pages; $i++) { if ($i==$page) { echo '<span class="current">' . $i . '</span>' ; } else {
-        echo '<a href="?page=' . $i . '">' . $i . '</a>' ; } } if ($page < $total_pages) { echo '<a href="?page=' .
-        ($page + 1) . '">Próximo &raquo;</a>' ; } echo '</div>' ; } // Fecha a conexão $mysqli->close();
         ?>

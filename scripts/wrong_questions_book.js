@@ -48,3 +48,28 @@ function toggleColor() {
   
   isGreen = !isGreen; // Alterna o estado da cor
 }
+document.getElementById('finish').addEventListener('click', function() {
+  // Obtém o ID do usuário do span
+  const userId = $('#userId').text().trim();
+
+  // Calcula o total de respostas
+  const totalAnswered = corrects + wrongs;
+
+  // Cria o objeto com os dados de respostas e o ID do usuário
+  const resultObject = {
+      totalRespondidos: totalAnswered,
+      corretos: corrects,
+      errados: wrongs,
+      userId: userId, // Inclui o ID do usuário no objeto
+      book: 'wrong'
+  };
+
+  // Exibe o objeto no console (ou pode ser utilizado para outros fins)
+  console.log(resultObject);
+
+  // Atualiza os spans com os valores finais, se necessário
+  $('#corrects').text(corrects);
+  $('#wrongs').text(wrongs);
+
+  // Aqui você pode fazer outras operações com o objeto, como enviar via AJAX, etc.
+});

@@ -1,8 +1,8 @@
-$(document).ready(function() {
-    // Inicializa as variáveis de contagem
-    var corrects = 0;
-    var wrongs = 0;
+// Declara as variáveis no escopo global
+var corrects = 0;
+var wrongs = 0;
 
+$(document).ready(function() {
     // Manipulador de envio de formulário
     $('.question').on('submit', function(event) {
         event.preventDefault(); // Evita o envio do formulário
@@ -29,6 +29,9 @@ $(document).ready(function() {
                         corrects += 1;
                         console.log('Corretas: ' + corrects);
 
+                        // Atualiza o conteúdo do span #corrects
+                        $('#corrects').text(corrects);
+
                         // Exibe a mensagem de resposta correta
                         $('#cmsg_' + questionID).show();
                         $('#wmsg_' + questionID).hide();
@@ -36,6 +39,9 @@ $(document).ready(function() {
                         // Incrementa a contagem de respostas erradas
                         wrongs += 1;
                         console.log('Erradas: ' + wrongs);
+
+                        // Atualiza o conteúdo do span #wrongs
+                        $('#wrongs').text(wrongs);
 
                         // Exibe a mensagem de resposta errada
                         $('#wmsg_' + questionID).show();
@@ -49,5 +55,11 @@ $(document).ready(function() {
         } else {
             alert('Por favor, selecione uma alternativa.');
         }
+    });
+
+    // Evento de clique no botão "finish" para exibir as contagens finais
+    document.getElementById('finish').addEventListener('click', function(){
+        $('#corrects').text(corrects); // Atualiza o span com as respostas corretas
+        $('#wrongs').text(wrongs);     // Atualiza o span com as respostas erradas
     });
 });

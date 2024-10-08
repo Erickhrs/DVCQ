@@ -34,6 +34,11 @@ include_once('./includes/loading.php');
         </div>
     </div>
     <main id="root">
+        <div style="display: none;">
+            <span id="userId"><?php echo $_SESSION['id'];?></span>
+            <span id="wrongs"></span>
+            <span id="corrects"></span>
+        </div>
         <div>
             <div id="book_header">
                 <h1>📓 Caderno de erros</h1>
@@ -44,6 +49,7 @@ include_once('./includes/loading.php');
                     include_once('./includes/wrong_book.php'); 
                 }
                 ?>
+                <button id="finish">Finalizar Simulado</button>
             </div>
             <div>
 
@@ -69,11 +75,11 @@ include_once('./includes/loading.php');
 </body><?php include_once('./includes/footer.php')?>
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 
+<script src=" ./scripts/answer_validator.js"></script>
 <script src="./scripts/questions.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="./scripts/wrong_questions_book.js"></script>
-<script src=" ./scripts/answer_validator.js"></script>
 <script src="./scripts/global.js"></script>
 
 
