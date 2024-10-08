@@ -9,3 +9,12 @@
   margin-left: auto;
   margin-right: auto;
 }
+#finish{
+  background-color: greenyellow;
+  color: var(--logo-blue);
+  width: max-content;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 10px;
+  border-radius: 10px;
+}

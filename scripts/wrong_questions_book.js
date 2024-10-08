@@ -48,20 +48,24 @@ function toggleColor() {
   
   isGreen = !isGreen; // Alterna o estado da cor
 }
+
 document.getElementById('finish').addEventListener('click', function() {
   // Obtém o ID do usuário do span
   const userId = $('#userId').text().trim();
 
+  // Obtém o valor atual do cronômetro
+  const cronometroValue = $('#cronometro').text().trim();
+
   // Calcula o total de respostas
   const totalAnswered = corrects + wrongs;
 
-  // Cria o objeto com os dados de respostas e o ID do usuário
+  // Cria o objeto com os dados de respostas, o ID do usuário e o valor do cronômetro
   const resultObject = {
       totalRespondidos: totalAnswered,
       corretos: corrects,
       errados: wrongs,
       userId: userId, // Inclui o ID do usuário no objeto
-      book: 'wrong'
+      time: cronometroValue // Inclui o valor do cronômetro no objeto
   };
 
   // Exibe o objeto no console (ou pode ser utilizado para outros fins)
@@ -73,3 +77,4 @@ document.getElementById('finish').addEventListener('click', function() {
 
   // Aqui você pode fazer outras operações com o objeto, como enviar via AJAX, etc.
 });
+
