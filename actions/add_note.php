@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('./includes/connection.php');
+include('../includes/connection.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $note = $_POST['note'];

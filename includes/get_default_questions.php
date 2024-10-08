@@ -188,33 +188,26 @@ if ($result && $result->num_rows > 0) {
     echo '</div>'; 
     echo '<div id="' . "note_" . $row['ID'] . '" class="notes animate__animated animate__fadeIn">';
 
-      include './includes/get_notes.php';
-        echo '</div>'; 
-        echo '</form>';
-    }
+    echo '<div style="display:flex;gap:5px;margin-bottom:20px;">
+    <textarea id="note" placeholder="Digite sua nota aqui..." required></textarea>
+    <span id="add-note-btn" data-question-id="'. $row['ID'] . '">+</span>
+</div>';
+
+include './includes/get_notes.php';
+echo '</div>';
+echo '</form>';
+}
 } else {
-    echo '<span style="text-align: center;">Nenhuma questão encontrad</span>';
+echo '<span style="text-align: center;">Nenhuma questão encontrad</span>';
 }
 
 // Exibe links de navegação para as páginas
 if ($total_pages > 1) {
-    echo '<div class="pagination">';
+echo '<div class="pagination">';
     if ($page > 1) {
-        echo '<a href="?page=' . ($page - 1) . '">&laquo; Anterior</a>';
+    echo '<a href="?page=' . ($page - 1) . '">&laquo; Anterior</a>';
     }
-    for ($i = 1; $i <= $total_pages; $i++) {
-        if ($i == $page) {
-            echo '<span class="current">' . $i . '</span>';
-        } else {
-            echo '<a href="?page=' . $i . '">' . $i . '</a>';
-        }
-    }
-    if ($page < $total_pages) {
-        echo '<a href="?page=' . ($page + 1) . '">Próximo &raquo;</a>';
-    }
-    echo '</div>';
-}
-
-// Fecha a conexão
-$mysqli->close();
-?>
+    for ($i = 1; $i <= $total_pages; $i++) { if ($i==$page) { echo '<span class="current">' . $i . '</span>' ; } else {
+        echo '<a href="?page=' . $i . '">' . $i . '</a>' ; } } if ($page < $total_pages) { echo '<a href="?page=' .
+        ($page + 1) . '">Próximo &raquo;</a>' ; } echo '</div>' ; } // Fecha a conexão $mysqli->close();
+        ?>

@@ -334,3 +334,55 @@ $(document).ready(function() {
         loadChart2(questionID); 
     });
 });
+
+
+$(document).ready(function() {
+    $('#add-note-btn').click(function() {
+        var note = $('#note').val();
+        var questionID = $(this).data('question-id'); // Obtém o ID da questão do data attribute
+
+        if (note.trim() === '') {
+            alert('Por favor, digite uma nota antes de adicionar.');
+            return;
+        }
+
+        // Faz a requisição AJAX para adicionar a nota
+        $.ajax({
+            url: './actions/add_note.php',
+            type: 'POST',
+            data: {
+                note: note,
+                question_ID: questionID
+            },
+            success: function(response) {
+                console.log(response); // Exibe a resposta do servidor no console
+
+                // Limpa o campo de texto
+                $('#note').val('');
+
+                // Recarrega as notas
+                loadNotes();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Erro ao adicionar nota: ' + textStatus, errorThrown);
+            }
+        });
+    });
+
+    // Função para recarregar as notas
+    function loadNotes() {
+        var questionID = $('#add-note-btn').data('question-id'); // Obtém o ID da questão novamente
+
+        $.ajax({
+            url: './includes/get_notes2.php',
+            type: 'GET',
+            data: { idQuestion: questionID },
+            success: function(data) {
+                $('.notes-container').html(data); // Atualiza o conteúdo das notas
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Erro ao carregar notas: ' + textStatus, errorThrown);
+            }
+        });
+    }
+});
