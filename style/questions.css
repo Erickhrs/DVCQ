@@ -520,13 +520,13 @@ canvas {
 .gabaritobtn, .commentsbtn, .stbtn{
     display: none;
 }
-#note{
+.note{
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     border-radius: 3px;
 }
-#add-note-btn{
+.add-note-btn{
     background-color: greenyellow;
     padding: 10px;
     border-radius: 10px;

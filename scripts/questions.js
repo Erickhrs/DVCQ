@@ -337,9 +337,11 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-    $('#add-note-btn').click(function() {
-        var note = $('#note').val();
-        var questionID = $(this).data('question-id'); // Obtém o ID da questão do data attribute
+    // Clique no botão de adicionar nota
+    $('.add-note-btn').click(function() {
+        var noteContainer = $(this).closest('.note-container'); // Encontra o contêiner mais próximo
+        var note = noteContainer.find('.note').val(); // Obtém a nota deste contêiner específico
+        var questionID = $(this).data('question-id'); // Obtém o ID da questão a partir do botão
 
         if (note.trim() === '') {
             alert('Por favor, digite uma nota antes de adicionar.');
@@ -358,10 +360,10 @@ $(document).ready(function() {
                 console.log(response); // Exibe a resposta do servidor no console
 
                 // Limpa o campo de texto
-                $('#note').val('');
+                noteContainer.find('.note').val('');
 
-                // Recarrega as notas
-                loadNotes();
+                // Recarrega as notas para a questão atual
+                loadNotes(questionID);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error('Erro ao adicionar nota: ' + textStatus, errorThrown);
@@ -370,15 +372,14 @@ $(document).ready(function() {
     });
 
     // Função para recarregar as notas
-    function loadNotes() {
-        var questionID = $('#add-note-btn').data('question-id'); // Obtém o ID da questão novamente
-
+    function loadNotes(questionID) {
         $.ajax({
             url: './includes/get_notes2.php',
             type: 'GET',
             data: { idQuestion: questionID },
             success: function(data) {
-                $('.notes-container').html(data); // Atualiza o conteúdo das notas
+                // Atualiza as notas na div correta relacionada à questão
+                $('#note_' + questionID + ' .notes-container').html(data); 
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error('Erro ao carregar notas: ' + textStatus, errorThrown);

@@ -188,9 +188,9 @@ if ($result && $result->num_rows > 0) {
     echo '</div>'; 
     echo '<div id="' . "note_" . $row['ID'] . '" class="notes animate__animated animate__fadeIn">';
 
-    echo '<div style="display:flex;gap:5px;margin-bottom:20px;">
-    <textarea id="note" placeholder="Digite sua nota aqui..." required></textarea>
-    <span id="add-note-btn" data-question-id="'. $row['ID'] . '">+</span>
+    echo '<div style="display:flex;gap:5px;margin-bottom:20px;" class="note-container">
+    <textarea class="note" placeholder="Digite sua nota aqui..." required></textarea>
+    <span class="add-note-btn" data-question-id="'. $row['ID'] . '">+</span>
 </div>';
 
 include './includes/get_notes.php';
