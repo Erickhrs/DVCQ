@@ -995,5 +995,11 @@ function isQuestionAnswered($answers, $questionId) {
     }
     return null; // Retorna null se a questão não foi respondida
 }
+function getBookName($mysqli, $bookID) {
+    $query = "SELECT name FROM users_books WHERE id = '" . $bookID . "' LIMIT 1";
+    $result = $mysqli->query($query);
+    $row = $result->fetch_assoc();
+    return $row ? strip_tags($row['name']) : 'Desconhecido';
+}
 
 ?>

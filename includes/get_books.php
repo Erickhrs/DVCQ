@@ -31,7 +31,7 @@ if ($total_comments > 0) {
         echo '<div class="options">';
           echo '
           <div class="options">
-          <form action="./edit_book.php" method="POST">
+          <form action="./question_book.php" method="POST">
          <input name="id" type="hidden" value="' . $inf_cmts['ID']  . '">
           <button type="submit"><i class="bx bx-play"></i></button>
           </form>
