@@ -69,71 +69,9 @@ $wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros
                     <div class="carousel-container">
                         <button class="sim_btn prev" onclick="scrollToLeft()">&#10094;</button>
                         <div class="carousel">
-                            <div class="simulado-card">
-                                <h2>(Amostra) Projeto Decorando a Lei Seca - 1ª Semana</h2>
-                                <p>155 questões</p>
-                                <div class="footer-card">
-                                    <i class="fa fa-calendar"></i>
-                                    <span>04/04/2023</span>
-                                </div>
-                            </div>
-                            <div class="simulado-card">
-                                <h2>(Amostra) Projeto Decorando a Lei Seca - 1ª Semana</h2>
-                                <p>155 questões</p>
-                                <div class="footer-card">
-                                    <i class="fa fa-calendar"></i>
-                                    <span>04/04/2023</span>
-                                </div>
-                            </div>
-                            <div class="simulado-card">
-                                <h2>(Amostra) Projeto Decorando a Lei Seca - 1ª Semana</h2>
-                                <p>155 questões</p>
-                                <div class="footer-card">
-                                    <i class="fa fa-calendar"></i>
-                                    <span>04/04/2023</span>
-                                </div>
-                            </div>
-                            <div class="simulado-card">
-                                <h2>(Amostra) Projeto Decorando a Lei Seca - 1ª Semana</h2>
-                                <p>155 questões</p>
-                                <div class="footer-card">
-                                    <i class="fa fa-calendar"></i>
-                                    <span>04/04/2023</span>
-                                </div>
-                            </div>
-                            <div class="simulado-card">
-                                <h2>(Amostra) Projeto Decorando a Lei Seca - 1ª Semana</h2>
-                                <p>155 questões</p>
-                                <div class="footer-card">
-                                    <i class="fa fa-calendar"></i>
-                                    <span>04/04/2023</span>
-                                </div>
-                            </div>
-                            <div class="simulado-card">
-                                <h2>(Amostra) Projeto Decorando a Lei Seca - 1ª Semana</h2>
-                                <p>155 questões</p>
-                                <div class="footer-card">
-                                    <i class="fa fa-calendar"></i>
-                                    <span>04/04/2023</span>
-                                </div>
-                            </div>
-                            <div class="simulado-card">
-                                <h2>(Amostra) Projeto Decorando a Lei Seca - 1ª Semana</h2>
-                                <p>155 questões</p>
-                                <div class="footer-card">
-                                    <i class="fa fa-calendar"></i>
-                                    <span>04/04/2023</span>
-                                </div>
-                            </div>
-                            <div class="simulado-card">
-                                <h2>(Amostra) Projeto Decorando a Lei Seca - 1ª Semana</h2>
-                                <p>155 questões</p>
-                                <div class="footer-card">
-                                    <i class="fa fa-calendar"></i>
-                                    <span>04/04/2023</span>
-                                </div>
-                            </div>
-
+                            <?php
+                        include_once('./includes/get_exams.php');
+                        ?>
                         </div>
                         <button class="sim_btn next" onclick="scrollRight()">&#10095;</button>
                     </div>
