@@ -41,7 +41,7 @@ include_once('./includes/loading.php');
         </div>
         <div>
             <div id="book_header">
-                <h1>📓 Caderno de erros</h1>
+                <h1>📓 <span id="book_title">Caderno de erros</span></h1>
             </div>
             <div id="questions_container">
                 <?php 
@@ -58,28 +58,17 @@ include_once('./includes/loading.php');
 
     </main>
 
-    <!-- Modal -->
-    <div id="notConnectedModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" id="closeModal">&times;</span>
-            <div class="icon">
-                <ion-icon name="sad-outline"></ion-icon>
-            </div>
-            <h2>Você não está conectado</h2>
-            <p>Para visualizar todas as alternativas, você precisa estar logado. Caso não tenha uma conta, faça login ou
-                assine um plano para ter acesso ilimitado.</p>
-            <a href="./login.php" class="login-link">Ir para Login</a>
-        </div>
-    </div>
+    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+
+    <script src=" ./scripts/answer_validator.js"></script>
+    <script src="./scripts/questions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./scripts/wrong_questions_book.js"></script>
+    <script src="./scripts/global.js"></script>
+    <?php
+    include_once('./includes/footer.php');
+    ?>
 </body>
-<script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
-
-<script src=" ./scripts/answer_validator.js"></script>
-<script src="./scripts/questions.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="./scripts/wrong_questions_book.js"></script>
-<script src="./scripts/global.js"></script>
-
 
 </html>

@@ -1034,5 +1034,34 @@ function getIncorrectAnswers($mysqli, $userID) {
     // Retorna os IDs das questões incorretas
     return $incorrectAnswers;
 }
+function checkUserAnswering($mysqli, $userID) {
+    // Prepara a consulta SQL para verificar se há registros do user_ID
+    $stmt = $mysqli->prepare("SELECT 1 FROM users_answers WHERE user_ID = ? LIMIT 1");
+    
+    // Verifica se a preparação da consulta foi bem-sucedida
+    if ($stmt === false) {
+        die('Erro na preparação da consulta: ' . $mysqli->error);
+    }
+
+    // Associa o valor do userID à consulta
+    $stmt->bind_param("i", $userID);
+
+    // Executa a consulta
+    $stmt->execute();
+
+    // Armazena o resultado
+    $result = $stmt->get_result();
+
+    // Verifica se algum registro foi encontrado
+    if ($result->num_rows > 0) {
+        // Fecha a declaração e retorna 1 se o registro existir
+        $stmt->close();
+        return 1;
+    } else {
+        // Fecha a declaração e retorna 0 se não houver registros
+        $stmt->close();
+        return 0;
+    }
+}
 
 ?>

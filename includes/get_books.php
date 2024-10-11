@@ -1,6 +1,6 @@
 <?php
 include('./includes/connection.php');
-
+include('./includes/functions.php');
 $userId = $_SESSION['id'];
 
 
@@ -17,23 +17,26 @@ $result_cmts = $stmt->get_result();
 $total_comments = $result_cmts->num_rows;
 
 if ($total_comments > 0) {
-    echo '<ul class="notebook-list">'; // Começa uma lista não ordenada
-    echo '<li class="notebook-item">
-        <div class="notebook-details">
-            <i>📓</i>
-            <div>
-                <p>Caderno de erros</p>
-                <span class="date"> Desde que você se cadastrou | 0 questões</span>
+  
+    echo '<ul class="notebook-list">'; 
+    if (checkUserAnswering($mysqli, $userId) == 1) {
+        echo '
+        <li class="notebook-item">
+            <div class="notebook-details">
+                <i>📓</i>
+                <div>
+                    <p>Caderno de erros</p>
+                    <span class="date"> Desde que você se cadastrou | 0 questões</span>
+                </div>
             </div>
-        </div>
-        <div class="options">
             <div class="options">
                 <form action="./wrong_questions_book.php" method="POST">
                     <button type="submit"><i class="bx bx-play"></i></button>
                 </form>
             </div>
-        </div>
-    </li>';
+        </li>';
+    }
+   
 
     while ($inf_cmts = $result_cmts->fetch_assoc()) {
         // Formata a data

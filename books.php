@@ -41,6 +41,7 @@ include_once('./includes/loading.php');
                     <div class="search-bar">
                         <input type="text" id="searchInput" placeholder="Busque pelo nome">
                         <button class="create-button">Criar <i>+</i></button>
+                        <a href="./books_results.php" class="results-button">Histórico<i class='bx bx-history'></i></a>
                     </div>
                 </div>
 
