@@ -48,7 +48,7 @@ $bookId = getBookName($mysqli, $_POST['id']);
             <div id="questions_container">
                 <?php 
                 if (isset($_SESSION['id'])){
-                    include_once('./includes/wrong_book.php'); 
+                    include_once('./includes/question_book.php'); 
                 }
                 ?>
                 <button id="finish">Finalizar Simulado</button>

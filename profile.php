@@ -72,10 +72,6 @@ if (!$user_data) {
             <a href="./edit-psw.php">
                 <ion-icon name="key-outline"></ion-icon> Alterar senha
             </a>
-            <a>
-                <ion-icon name="calendar-outline"></ion-icon>
-                Ver histórico de atividade
-            </a>
             <a href="logout.php" class="exit">
                 <ion-icon name="exit-outline"></ion-icon>
                 Desconectar

@@ -5,16 +5,6 @@ $answers = getUserAnswers($mysqli, $_SESSION['id']);
 if (!$answers) {
     $answers = []; // Inicializa como array vazio caso não haja respostas
 }
-$incorrectAnswers = getIncorrectAnswers($mysqli, $_SESSION['id']);
-
-// Verifique se o array não está vazio e prepare para enviar ao JavaScript
-if (!empty($incorrectAnswers)) {
-    // Converta o array PHP para JSON e envie ao JavaScript
-    echo "<script>console.log(" . json_encode($incorrectAnswers) . ");</script>";
-} else {
-    // Se não houver respostas incorretas, envia uma mensagem ao console
-    echo "<script>console.log('Nenhuma resposta incorreta encontrada.');</script>";
-}
 // Construa a cláusula WHERE com base nos parâmetros do formulário
 $conditions = [];
 $params = [];
@@ -95,17 +85,11 @@ function getAlternative($mysqli, $question_id, $alternative) {
 // Verifica se há resultados
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $is_correct = isQuestionAnswered($answers, $row['ID']);
         $idQuestion = $row['ID'];
         $random_message = $text[array_rand($text)];
         $liked_class = isQuestionLiked($mysqli, $_SESSION['id'], $row['ID']) ? 'liked' : '';
         // Exibe as informações da questão
-        if ($is_correct == 1 || $is_correct =="") {
-            echo $is_correct;
-            echo '<form class="question" style="display:none!important">';
-        } else if ($is_correct == 0){
-            echo '<form class="question">';
-        }
+        echo '<form class="question">';
         echo '    <div id="question_infos">';
         echo '        <span class="span_number_list">#' . $row['ID'] . '</span>';
         echo '        <span class="span_about">' . $row['year'] . '</span>';
@@ -119,7 +103,7 @@ if ($result && $result->num_rows > 0) {
         echo '        <span class="span_about">' . getJobRole($mysqli, $row['job_role']) . '</span>';
         echo '        <span class="span_about">' . getJobFunction($mysqli, $row['job_function']) . '</span>';
         
-
+        $is_correct = isQuestionAnswered($answers, $row['ID']);
         if ($is_correct !== null) {
             $class = ($is_correct == 1) ? 'correct' : 'incorrect'; // Define a classe com base em is_correct
             echo '<span class="span_respondida ' . $class . '"> ✓ respondida</span>';

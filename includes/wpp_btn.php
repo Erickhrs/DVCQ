@@ -38,7 +38,7 @@ echo '
 }
 </style>
 
-<a href="https://wa.me/SEU_NUMERO_DE_TELEFONE" target="_blank" class="whatsapp-button">
+<a href="https://wa.me/559591133628" target="_blank" class="whatsapp-button">
     <i class="bx bxl-whatsapp"></i>
 </a>
 ';

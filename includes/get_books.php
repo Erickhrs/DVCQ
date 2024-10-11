@@ -3,6 +3,8 @@ include('./includes/connection.php');
 
 $userId = $_SESSION['id'];
 
+
+
 // Prepara a consulta
 $stmt = $mysqli->prepare("SELECT ID, name, owner, created_at FROM users_books WHERE owner = ?");
 $stmt->bind_param("s", $userId); 
@@ -16,6 +18,23 @@ $total_comments = $result_cmts->num_rows;
 
 if ($total_comments > 0) {
     echo '<ul class="notebook-list">'; // Começa uma lista não ordenada
+    echo '<li class="notebook-item">
+        <div class="notebook-details">
+            <i>📓</i>
+            <div>
+                <p>Caderno de erros</p>
+                <span class="date"> Desde que você se cadastrou | 0 questões</span>
+            </div>
+        </div>
+        <div class="options">
+            <div class="options">
+                <form action="./wrong_questions_book.php" method="POST">
+                    <button type="submit"><i class="bx bx-play"></i></button>
+                </form>
+            </div>
+        </div>
+    </li>';
+
     while ($inf_cmts = $result_cmts->fetch_assoc()) {
         // Formata a data
         $formattedDate = date('d/m/Y', strtotime($inf_cmts['created_at']));
@@ -48,7 +67,7 @@ if ($total_comments > 0) {
     }
     echo '</ul>'; // Fecha a lista não ordenada
 } else {
-    echo '<div><i class="bx bx-sad"></i> Nenhum caderno encontrado.</div>';
+    //echo '<div><i class="bx bx-sad"></i> Nenhum caderno encontrado.</div>';
 }
 
 // Fecha a declaração

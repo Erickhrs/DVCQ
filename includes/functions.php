@@ -1002,4 +1002,37 @@ function getBookName($mysqli, $bookID) {
     return $row ? strip_tags($row['name']) : 'Desconhecido';
 }
 
+function getIncorrectAnswers($mysqli, $userID) {
+    // Prepara a consulta SQL
+    $stmt = $mysqli->prepare("SELECT question_ID FROM users_answers WHERE user_ID = ? AND is_correct = 0");
+    
+    // Verifica se a preparação da consulta foi bem-sucedida
+    if ($stmt === false) {
+        die('Erro na preparação da consulta: ' . $mysqli->error);
+    }
+
+    // Associa o valor do userID à consulta
+    $stmt->bind_param("i", $userID);
+
+    // Executa a consulta
+    $stmt->execute();
+
+    // Armazena o resultado
+    $result = $stmt->get_result();
+
+    // Cria um array para armazenar os IDs das questões
+    $incorrectAnswers = [];
+
+    // Loop pelos resultados e armazena os IDs no array
+    while ($row = $result->fetch_assoc()) {
+        $incorrectAnswers[] = $row['question_ID'];
+    }
+
+    // Fecha a declaração
+    $stmt->close();
+
+    // Retorna os IDs das questões incorretas
+    return $incorrectAnswers;
+}
+
 ?>
