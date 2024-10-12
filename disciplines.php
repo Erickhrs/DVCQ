@@ -21,16 +21,7 @@ include_once('./includes/loading.php');
         <?php require_once('./includes/nav_menu.php');?>
     </div>
     <main id="root">
-        <link rel="stylesheet" href="./style/protect.css">
-        <div class="not-user-container">
-
-            <ion-icon name="sad-outline"></ion-icon>
-            <h1>
-                Quem é você?
-            </h1>
-            <p>parece que você não está conectado...</p>
-            <a href="./login.php">Fazer Login</a>
-        </div>
+        <?php require_once('./includes/ranking_disciplines.php');?>
     </main>
 </body><?php include_once('./includes/footer.php')?>
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
