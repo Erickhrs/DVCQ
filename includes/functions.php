@@ -1135,6 +1135,38 @@ function countQuestionsForBook($mysqli, $bookId) {
     // 5. Retornar o total de questões
     return $totalQuestions;
 }
+function countQuestionsInExam($mysqli, $examId) {
+    // Prepara a consulta SQL
+    $query = "SELECT questions FROM exams WHERE ID = ?";
+    $stmt = $mysqli->prepare($query);
+    
+    if ($stmt === false) {
+        die('Erro ao preparar a consulta: ' . $mysqli->error);
+    }
+    
+    // Liga o parâmetro examId
+    $stmt->bind_param('i', $examId);
+    
+    // Executa a consulta
+    $stmt->execute();
+    
+    // Obtém o resultado
+    $result = $stmt->get_result();
+    $examData = $result->fetch_assoc();
+    
+    // Verifica se o exame foi encontrado
+    if (!$examData) {
+        return 0; // Retorna 0 se o exame não for encontrado
+    }
+    
+    // Se a coluna questions estiver vazia, retorna 0
+    if (empty($examData['questions'])) {
+        return 0;
+    }
 
+    // Separa as questões pela barra e conta quantas existem
+    $questions = explode('/', $examData['questions']);
+    return count($questions);
+}
 
 ?>

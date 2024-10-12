@@ -43,7 +43,7 @@ $bookName = getBookName($mysqli, $_POST['id']);
         </div>
         <div>
             <div id="book_header">
-                <h1>📓 <?php echo $bookName;?></h1>
+                <h1>📓 <span id="book_title"><?php echo $bookName;?></span></h1>
             </div>
             <div id="questions_container">
                 <?php 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados dos Cadernos</title>
+    <title>Resultados dos Cadernos e Simulados</title>
 
     <!-- Boxicons Icons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
@@ -131,19 +131,18 @@
         <!-- Botão para voltar à área de cadernos -->
         <a href="books.php" class="back-button"><i class='bx bx-arrow-back'></i> Voltar para Área de Cadernos</a>
 
-        <h1><i class='bx bx-book-alt'></i> Resultados dos Cadernos</h1>
+        <h1><i class='bx bx-book-alt'></i>Resultados dos Cadernos e Simulados</h1>
 
         <!-- Barra de pesquisa -->
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Pesquisar pelo nome do Caderno..."
-                onkeyup="filterResults()">
+            <input type="text" id="searchInput" placeholder="Pesquisar pelo nome..." onkeyup="filterResults()">
         </div>
 
         <!-- Tabela de resultados -->
         <table id="resultsTable">
             <thead>
                 <tr>
-                    <th><i class='bx bx-book'></i> Caderno</th>
+                    <th><i class='bx bx-book'></i> Caderno/Simulado</th>
                     <th><i class='bx bx-edit-alt'></i> Total Respondido</th>
                     <th><i class='bx bx-check'></i> Corretas</th>
                     <th><i class='bx bx-x'></i> Erradas</th>
@@ -164,7 +163,7 @@
                     $userId = $_SESSION['id'];
 
                     // Consulta ao banco, ordenando pelos resultados mais recentes
-                    $query = "SELECT book, user_ID, total_answered, corrects, wrongs, finished_time FROM users_books_results WHERE user_ID = ? ORDER BY finished_time DESC";
+                    $query = "SELECT book, user_ID, total_answered, corrects, wrongs, finished_time FROM users_books_results WHERE user_ID = ? ORDER BY ID DESC";
                     $stmt = $mysqli->prepare($query);
                     $stmt->bind_param('i', $userId);
                     $stmt->execute();

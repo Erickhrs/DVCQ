@@ -9,7 +9,7 @@ if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $title = htmlspecialchars($row['title']);
         $description = htmlspecialchars($row['description']); // Captura a descrição
-        $questionsCount = htmlspecialchars($row['questions']);
+        $questionsCount = countQuestionsInExam($mysqli, $row['id']);
         $createdAt = htmlspecialchars(date('d/m/Y', strtotime($row['created_at'])));
         $id = htmlspecialchars($row['id']);
         
@@ -20,7 +20,7 @@ if ($result && $result->num_rows > 0) {
         echo '<p>' . $questionsCount . ' questões</p>';
         echo '<div class="footer-card">';
         echo '<i class="fa fa-calendar"></i>';
-        echo '<span>' . $createdAt . '/ </span>';
+        echo '<span>' . $createdAt . '</span>';
         echo '</div>';
         echo '</div>';
     }
