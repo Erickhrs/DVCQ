@@ -5,7 +5,7 @@ require_once('./includes/functions.php');
 require_once('./includes/protect.php');
 include_once('./includes/loading.php');
 
-$bookId = getBookName($mysqli, $_POST['id']);
+$bookName = getBookName($mysqli, $_POST['id']);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -43,7 +43,7 @@ $bookId = getBookName($mysqli, $_POST['id']);
         </div>
         <div>
             <div id="book_header">
-                <h1>📓 <?php echo $bookId;?></h1>
+                <h1>📓 <?php echo $bookName;?></h1>
             </div>
             <div id="questions_container">
                 <?php 

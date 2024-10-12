@@ -5,10 +5,20 @@ $answers = getUserAnswers($mysqli, $_SESSION['id']);
 if (!$answers) {
     $answers = []; // Inicializa como array vazio caso não haja respostas
 }
-// Construa a cláusula WHERE com base nos parâmetros do formulário
-$conditions = [];
-$params = [];
-$types = '';
+
+$bookId = $_POST['id'];
+// Busque os dados da tabela users_books
+$queryBook = "SELECT disciplines, subjects, courses, job_functions, job_role FROM users_books WHERE ID = ?";
+$stmtBook = $mysqli->prepare($queryBook);
+$stmtBook->bind_param('i', $bookId);
+$stmtBook->execute();
+$resultBook = $stmtBook->get_result();
+$bookData = $resultBook->fetch_assoc();
+
+if (!$bookData) {
+    die('Erro: Livro não encontrado.');
+}
+
 $text = [
     "Você acertou! Continue assim!",
     "Certo! Muito bem!",
@@ -22,53 +32,50 @@ $text = [
     "Certo! Bela resposta!"
 ];
 
-// Seleciona uma mensagem aleatória
+// Construa a cláusula WHERE com base nos valores obtidos da tabela users_books
+$conditions = [];
 
-// Verifica e adiciona filtros baseados nos parâmetros do formulário
-if (!empty($_GET['keys'])) {
-    $conditions[] = "question LIKE '%" . $mysqli->real_escape_string($_GET['keys']) . "%'";
+// Adicionar filtro para disciplinas
+if (!empty($bookData['disciplines'])) {
+    $disciplines = explode('/', $bookData['disciplines']);
+    $disciplines = array_map('intval', $disciplines); // Converte os valores para inteiros
+    $conditions[] = "discipline IN (" . implode(',', $disciplines) . ")";
 }
-if (!empty($_GET['discipline'])) {
-    $conditions[] = "discipline = '" . $mysqli->real_escape_string($_GET['discipline']) . "'";
+
+// Adicionar filtro para subjects
+if (!empty($bookData['subjects'])) {
+    $subjects = explode('/', $bookData['subjects']);
+    $subjects = array_map('intval', $subjects);
+    $conditions[] = "subject IN (" . implode(',', $subjects) . ")";
 }
-if (!empty($_GET['subject'])) {
-    $conditions[] = "subject = '" . $mysqli->real_escape_string($_GET['subject']) . "'";
+
+// Adicionar filtro para courses
+if (!empty($bookData['courses'])) {
+    $courses = explode('/', $bookData['courses']);
+    $courses = array_map('intval', $courses);
+    $conditions[] = "course IN (" . implode(',', $courses) . ")";
 }
-if (!empty($_GET['banca'])) {
-    $conditions[] = "banca = '" . $mysqli->real_escape_string($_GET['banca']) . "'";
+
+// Adicionar filtro para job_functions
+if (!empty($bookData['job_functions'])) {
+    $job_functions = explode('/', $bookData['job_functions']);
+    $job_functions = array_map('intval', $job_functions);
+    $conditions[] = "job_function IN (" . implode(',', $job_functions) . ")";
 }
-if (!empty($_GET['year'])) {
-    $conditions[] = "year = '" . $mysqli->real_escape_string($_GET['year']) . "'";
+
+// Adicionar filtro para job_roles
+if (!empty($bookData['job_role'])) {
+    $job_roles = explode('/', $bookData['job_role']);
+    $job_roles = array_map('intval', $job_roles);
+    $conditions[] = "job_role IN (" . implode(',', $job_roles) . ")";
 }
-if (!empty($_GET['job_roles'])) {
-    $conditions[] = "job_role = '" . $mysqli->real_escape_string($_GET['job_roles']) . "'";
-}
-if (!empty($_GET['grade_level'])) {
-    $conditions[] = "grade_level = '" . $mysqli->real_escape_string($_GET['grade_level']) . "'";
-}
-if (!empty($_GET['course'])) {
-    $conditions[] = "course = '" . $mysqli->real_escape_string($_GET['course']) . "'";
-}
-if (!empty($_GET['job_function'])) {
-    $conditions[] = "job_function = '" . $mysqli->real_escape_string($_GET['job_function']) . "'";
-}
-if (!empty($_GET['question_type'])) {
-    $conditions[] = "question_type = '" . $mysqli->real_escape_string($_GET['question_type']) . "'";
-}
-if (!empty($_GET['level'])) {
-    $conditions[] = "level = '" . $mysqli->real_escape_string($_GET['level']) . "'";
-}
+
+
 
 // Adiciona a cláusula WHERE à consulta SQL se houver filtros
 $where_clause = !empty($conditions) ? 'WHERE ' . implode(' AND ', $conditions) : '';
 
-// Consulta SQL para contar o número total de registros
-$total_query = "SELECT COUNT(*) AS total FROM questions $where_clause";
-$total_result = $mysqli->query($total_query);
-$total_row = $total_result->fetch_assoc();
-
-
-// Consulta SQL para buscar as questões da página atual
+// Consulta SQL para buscar as questões filtradas
 $query = "SELECT * FROM questions $where_clause ORDER BY ID DESC";
 $result = $mysqli->query($query);
 
@@ -186,8 +193,7 @@ echo '</div>';
 echo '</form>';
 }
 } else {
-echo '<span style="text-align: center;">Nenhuma questão encontrad</span>';
+echo '<span style="text-align: center; margin: 12%;">Nenhuma questão encontrada</span>';
 }
 
-// Exibe links de navegação para as páginas
-        ?>
+ ?>

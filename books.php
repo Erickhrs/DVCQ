@@ -66,6 +66,24 @@ include_once('./includes/loading.php');
 
 </body>
 <?php include_once('./includes/footer.php')?>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+// Função para verificar o número de questões e mostrar o alerta
+function checkQuestions(totalQuestions, form) {
+    if (totalQuestions === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Ops...',
+            text: 'Este caderno não tem questões!'
+        });
+    } else {
+        form.submit(); // Se houver questões, o formulário é submetido
+    }
+}
+</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="./scripts/books.js"></script>
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>

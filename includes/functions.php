@@ -1063,5 +1063,72 @@ function checkUserAnswering($mysqli, $userID) {
         return 0;
     }
 }
+function countQuestionsForBook($mysqli, $bookId) {
+    // 1. Buscar os IDs relacionados ao caderno na tabela users_book
+    $sql = "SELECT disciplines, subjects, courses, job_functions, job_role 
+            FROM users_books 
+            WHERE ID = ?";
+    
+    // Inicializar as variáveis
+    $disciplines = $subjects = $courses = $job_functions = $job_role = '';
+
+    // Preparar e executar a consulta
+    if ($stmt = $mysqli->prepare($sql)) {
+        $stmt->bind_param("i", $bookId);
+        $stmt->execute();
+        $stmt->bind_result($disciplines, $subjects, $courses, $job_functions, $job_role);
+        $stmt->fetch();
+        $stmt->close();
+    } else {
+        return "Erro ao preparar a consulta: " . $mysqli->error;
+    }
+
+    // 2. Separar os IDs que estão concatenados por barra "/"
+    $disciplineIds = !empty($disciplines) ? explode("/", $disciplines) : [];
+    $subjectIds = !empty($subjects) ? explode("/", $subjects) : [];
+    $courseIds = !empty($courses) ? explode("/", $courses) : [];
+    $jobFunctionIds = !empty($job_functions) ? explode("/", $job_functions) : [];
+    $jobRoleIds = !empty($job_role) ? explode("/", $job_role) : [];
+
+    // 3. Montar a consulta para buscar as questões únicas, verificando se os arrays não estão vazios
+    $sqlQuestions = "SELECT DISTINCT q.id FROM questions q WHERE ";
+    $conditions = [];
+
+    if (!empty($subjectIds)) {
+        $conditions[] = "q.subject IN (" . implode(',', $subjectIds) . ")";
+    }
+    if (!empty($disciplineIds)) {
+        $conditions[] = "q.discipline IN (" . implode(',', $disciplineIds) . ")";
+    }
+    if (!empty($courseIds)) {
+        $conditions[] = "q.course IN (" . implode(',', $courseIds) . ")";
+    }
+    if (!empty($jobFunctionIds)) {
+        $conditions[] = "q.job_function IN (" . implode(',', $jobFunctionIds) . ")";
+    }
+    if (!empty($jobRoleIds)) {
+        $conditions[] = "q.job_role IN (" . implode(',', $jobRoleIds) . ")";
+    }
+
+    // Se houver condições, montar a query
+    if (!empty($conditions)) {
+        $sqlQuestions .= implode(" OR ", $conditions);
+    } else {
+        return 0; // Se não houver IDs, retornar 0 (sem questões)
+    }
+
+    // 4. Executar a consulta e contar as questões
+    $totalQuestions = 0;
+    if ($result = $mysqli->query($sqlQuestions)) {
+        $totalQuestions = $result->num_rows; // Contar o número de questões únicas
+        $result->free(); // Liberar o resultado
+    } else {
+        return "Erro ao executar a consulta de questões: " . $mysqli->error;
+    }
+   // echo "ERICK ESSE FOI O RESULTADO: " . $totalQuestions;
+    // 5. Retornar o total de questões
+    return $totalQuestions;
+}
+
 
 ?>
