@@ -43,7 +43,7 @@ include_once('./includes/loading.php');
                     </div>
 
                     <div class="form-link">
-                        <a href="#" class="forgot-pass">Esqueceu a senha?</a>
+                        <a href="./reset_password.php" class="forgot-pass">Esqueceu a senha?</a>
                     </div>
 
                     <div class="field button-field">
