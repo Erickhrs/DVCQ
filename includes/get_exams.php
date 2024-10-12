@@ -14,7 +14,7 @@ if ($result && $result->num_rows > 0) {
         $id = htmlspecialchars($row['id']);
         
         // Gerando o card para cada simulado
-        echo '<div class="simulado-card" onclick="window.location=\'detalhes_simulado.php?id=' . $id . '\';" style="cursor: pointer;">';
+        echo '<div class="simulado-card" onclick="window.location=\'exam.php?id=' . $id . '\';" style="cursor: pointer;">';
         echo '<h2>' . $title . '</h2>';
         echo '<p>' . $description . '</p>'; // Adiciona a descrição aqui
         echo '<p>' . $questionsCount . ' questões</p>';

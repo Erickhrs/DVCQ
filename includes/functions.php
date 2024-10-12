@@ -1001,6 +1001,12 @@ function getBookName($mysqli, $bookID) {
     $row = $result->fetch_assoc();
     return $row ? strip_tags($row['name']) : 'Desconhecido';
 }
+function getExamName($mysqli, $bookID) {
+    $query = "SELECT title FROM exams WHERE ID = '" . $bookID . "' LIMIT 1";
+    $result = $mysqli->query($query);
+    $row = $result->fetch_assoc();
+    return $row ? strip_tags($row['title']) : 'Desconhecido';
+}
 
 function getIncorrectAnswers($mysqli, $userID) {
     // Prepara a consulta SQL
