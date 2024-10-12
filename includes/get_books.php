@@ -4,7 +4,7 @@ include('./includes/functions.php');
 $userId = $_SESSION['id'];
 
 // Prepara a consulta
-$stmt = $mysqli->prepare("SELECT ID, name, owner, created_at FROM users_books WHERE owner = ?");
+$stmt = $mysqli->prepare("SELECT ID, name, owner, created_at FROM users_books WHERE owner = ? ORDER BY ID DESC");
 $stmt->bind_param("s", $userId); 
 
 // Executa a consulta
@@ -16,7 +16,7 @@ $total_comments = $result_cmts->num_rows;
 
 if ($total_comments > 0) {
     echo '<ul class="notebook-list">'; 
-    
+   
     if (checkUserAnswering($mysqli, $userId) == 1) {
         echo '
         <li class="notebook-item">
@@ -49,7 +49,7 @@ if ($total_comments > 0) {
         echo '</div>';
         echo '</div>';
         echo '<div class="options">';
-        
+
         // Botão de play com SweetAlert caso não tenha questões
         echo '
         <form action="./question_book.php" method="POST" class="play-form">
@@ -63,7 +63,14 @@ if ($total_comments > 0) {
             <input name="id" type="hidden" value="' . $inf_cmts['ID']  . '">
             <button class="options"><i class="bx bx-edit-alt"></i></button>
         </form>';
-        
+
+        // Botão de exclusão
+        echo '
+        <form action="./actions/delete_book.php" method="POST" class="delete-form" style="display:inline;">
+            <input name="id" type="hidden" value="' . $inf_cmts['ID'] . '">
+            <button type="button" class="delete-button" onclick="confirmDelete(this.form)"><i class="bx bx-trash"></i></button>
+        </form>';
+
         echo '</div>';
         echo '</li>';
     }
@@ -75,5 +82,24 @@ if ($total_comments > 0) {
 
 // Fecha a declaração
 $stmt->close();
-
 ?>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+function confirmDelete(form) {
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Você não poderá reverter isso!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sim, excluir!',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.submit(); // Envia o formulário se o usuário confirmar
+        }
+    });
+}
+</script>

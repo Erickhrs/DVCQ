@@ -43,7 +43,8 @@ $(document).ready(function() {
             success: function(response) {
                 // Aqui você pode manipular a resposta do servidor
                 if (response.trim() === 'success') {
-                    $('#notebookList').html('');
+                    location.reload();
+                   $('#notebookList').html('');
                     $('#notebookList').append(`
                         <li class="notebook-item">
                             <div class="notebook-details">
