@@ -1169,4 +1169,25 @@ function countQuestionsInExam($mysqli, $examId) {
     return count($questions);
 }
 
+function getPlanName($planId){
+    if ($planId == 0){
+        return 'Padrão';
+    } else if ($planId == 1) {
+        return 'Pro';
+    } else if ($planId == 2) {
+        return 'Avançado';
+    }
+    else{
+        return 'Não encontrado';
+    }
+}
+function getPlanProfileStyle($planId){
+    if ($planId == 0){
+        return '';
+    } else if ($planId == 1) {
+        return 'style="border: 3px solid #FFCE26;"';
+    } else if ($planId == 2) {
+        return 'style="border: 3px solid #FFCE26;"';
+    }
+}
 ?>

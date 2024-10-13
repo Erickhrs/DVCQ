@@ -3,6 +3,7 @@ session_start();
 require_once('./includes/connection.php'); // Supondo que você tenha um arquivo de conexão
 require_once('./includes/protect.php');
 include_once('./includes/loading.php');
+include_once('./includes/functions.php');
 // Recuperar o ID do usuário da sessão
 $user_id = $_SESSION['id'];
 
@@ -51,11 +52,12 @@ if (!$user_data) {
         <!-- User Header (Picture, Name, Status, Plan) -->
         <section class="user-header-section">
             <div class="user-header">
-                <img src="<?php echo $_SESSION['picture'];?>" alt="User Picture" class="user-picture">
+                <img src="<?php echo $_SESSION['picture'];?>"
+                    <?php echo getPlanProfileStyle($_SESSION['plan']);?>alt="User Picture" class="user-picture">
                 <h1 class="user-name"><?php echo $_SESSION['name'];?></h1>
                 <div id="infos">
                     <p class="user-status">Status: Ativo</p>
-                    <p class="user-plan">Plano: <?php echo $_SESSION['plan'];?></p>
+                    <p class="user-plan">Plano: <?php echo getPlanName($_SESSION['plan']); ?></p>
                 </div>
             </div>
         </section>
