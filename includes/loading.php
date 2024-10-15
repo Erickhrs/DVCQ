@@ -1,11 +1,5 @@
 <?php
-echo '
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página com Loading</title>
+echo '  
     <style>
         :root {
             --main-color: #648e4a;
@@ -80,8 +74,6 @@ echo '
             padding: 20px; /* Espaçamento do conteúdo */
         }
     </style>
-</head>
-<body>
     <!-- Tela de loading -->
     <div id="loading" class="loading">
         <img src="./assets/logo.png" alt="Logo" class="logo">
@@ -94,7 +86,5 @@ echo '
            document.getElementById("loading").style.display = "none"; // Esconde a tela de loading
         });
     </script>
-</body>
-</html>
 ';
 ?>

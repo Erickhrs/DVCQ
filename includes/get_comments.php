@@ -84,6 +84,7 @@ $stmt->close();
     display: flex;
     gap: 10px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .new-comment-form input[type="text"] {

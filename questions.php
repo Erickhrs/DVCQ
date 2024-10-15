@@ -174,8 +174,8 @@ include_once('./includes/loading.php');
             <a href="./login.php" class="login-link">Ir para Login</a>
         </div>
     </div>
-
-</body><?php include_once('./includes/footer.php')?>
+    <?php include_once('./includes/footer.php')?>
+</body>
 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 
 <script src="./scripts/questions.js"></script>

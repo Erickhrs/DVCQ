@@ -101,7 +101,6 @@ if ($result && $result->num_rows > 0) {
         $liked_class = isQuestionLiked($mysqli, $_SESSION['id'], $row['ID']) ? 'liked' : '';
         // Exibe as informações da questão
         if ($is_correct == 1 || $is_correct =="") {
-            echo $is_correct;
             echo '<form class="question" style="display:none!important">';
         } else if ($is_correct == 0){
             echo '<form class="question">';

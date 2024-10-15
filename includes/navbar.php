@@ -9,7 +9,7 @@ echo '
     </div>
     <div id="nav-second-container">';
 
-if (!isset($_SESSION["id"])) {
+    if (!isset($_SESSION["id"]) || $_SESSION["id"] === null || $_SESSION["id"] === '') {
     echo '
         <a href="./login.php">Entrar</a>
         <a href="./signup.html">Criar uma conta gratuitamente</a>
@@ -23,7 +23,6 @@ if (!isset($_SESSION["id"])) {
             </a>
         </div>';
 }
-
 echo '
     </div>
 </header>';

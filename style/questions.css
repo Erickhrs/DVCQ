@@ -568,3 +568,10 @@ canvas {
     text-decoration: none;
     cursor: pointer;
 }
+@media (max-width: 430px){
+    #btns{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}

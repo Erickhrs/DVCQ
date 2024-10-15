@@ -161,3 +161,11 @@ display: none;
 #charts_view{
   display: flex;
 }
+@media (max-width: 920px) {
+  .grid3 {
+    grid-template-columns: repeat(1, 1fr)!important;
+  }
+  #chart_infos{
+    flex-wrap: wrap;
+  }
+}

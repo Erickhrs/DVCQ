@@ -13,7 +13,7 @@ $wrong = total_user_cw($mysqli, $_SESSION['id'], '0'); // Total de erros
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="./assets/logo.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/logo.png" type="image/png" sizes="32x32">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="./style/global.css">
     <link rel="stylesheet" href="./style/index.css">
