@@ -56,16 +56,16 @@ include_once('./includes/loading.php');
                 </div>
             </div>
 
-            <div class="line"></div>
+            <div class="line" style="display: none;"></div>
 
-            <div class="media-options">
+            <div class="media-options" style="display: none;">
                 <a href="#" class="field facebook">
                     <i class='bx bxl-facebook facebook-icon'></i>
                     <span>Login with Facebook</span>
                 </a>
             </div>
 
-            <div class="media-options">
+            <div class="media-options" style="display: none;">
                 <a href="#" class="field google">
                     <img src="./assets/google.png" alt="" class="google-img">
                     <span>Login with Google</span>
